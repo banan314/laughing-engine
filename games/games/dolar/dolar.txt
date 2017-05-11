@@ -1,0 +1,1 @@
+Board game for 2 players, who make moves alternately trying to reach more points than the opponent. The points are given for having a piece in the rival's camp. All pieces have to be connected.

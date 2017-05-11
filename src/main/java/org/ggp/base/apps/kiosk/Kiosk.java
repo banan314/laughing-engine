@@ -108,14 +108,16 @@ public final class Kiosk extends JPanel implements ActionListener, ItemListener,
         setPreferredSize(new Dimension(1050, 900));
 
         NativeUI.setNativeUI();
-        GamerLogger.setFileToDisplay("GamePlayer");
+        GamerLogger.setFileToDisplay("Game Player");
 
         SortedSet<AvailableGame> theAvailableGames = new TreeSet<AvailableGame>();
         Set<Class<? extends GameCanvas>> theAvailableCanvasList = ProjectSearcher.GAME_CANVASES.getConcreteClasses();
+        System.out.println("Available games:");
         for(Class<? extends GameCanvas> availableCanvas : theAvailableCanvasList) {
             try {
                 GameCanvas theCanvas = availableCanvas.newInstance();
                 theAvailableGames.add(new AvailableGame(theCanvas.getGameName(), theCanvas.getGameKey(), availableCanvas));
+                System.out.println(availableCanvas.getName());
             } catch(Exception e) {
                 ;
             }

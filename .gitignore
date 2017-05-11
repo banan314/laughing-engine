@@ -4,3 +4,6 @@
 /.gradle/
 /build/
 /out/
+.idea/
+src/test/resources/
+src/test/scala/
