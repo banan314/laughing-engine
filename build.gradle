@@ -158,6 +158,11 @@ task simpleGameSim(type: JavaExec) {
     classpath = sourceSets.main.runtimeClasspath
 }
 
+task simpleGameDolar(type: JavaExec) {
+    main = 'pl.prz.edu.banan314.utilities.SimpleGameDolar'
+    classpath = sourceSets.main.runtimeClasspath
+}
+
 task tiltyardRequestFarm(type: JavaExec) {
     main = 'org.ggp.base.apps.tiltyard.TiltyardRequestFarm'
     classpath = sourceSets.main.runtimeClasspath

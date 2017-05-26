@@ -123,6 +123,11 @@
             <classpath refid="GGP_Base.classpath"/>
         </java>
     </target>
+    <target name="SimpleGameDolar">
+        <java classname="pl.prz.edu.banan314.utilities.SimpleGameDolar" failonerror="true" fork="yes">
+            <classpath refid="GGP_Base.classpath"/>
+        </java>
+    </target>
     <target name="TiltyardRequestFarm">
         <java classname="org.ggp.base.apps.tiltyard.TiltyardRequestFarm" failonerror="true" fork="yes">
             <classpath refid="GGP_Base.classpath"/>

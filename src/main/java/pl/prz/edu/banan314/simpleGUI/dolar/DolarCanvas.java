@@ -1,12 +1,11 @@
-package pl.prz.edu.banan314.apps.kiosk.games;
+package pl.prz.edu.banan314.simpleGUI.dolar;
 
-import org.ggp.base.apps.kiosk.GameCanvas;
 import org.ggp.base.apps.kiosk.templates.GameCanvas_SimpleGrid;
 
 import java.awt.*;
 
 /**
- * Created by kamil on 10.05.17.
+ * Created by kamil on 26.05.17.
  */
 public class DolarCanvas extends GameCanvas_SimpleGrid {
     @Override
@@ -31,7 +30,7 @@ public class DolarCanvas extends GameCanvas_SimpleGrid {
 
     @Override
     public String getGameName() {
-        return "DolarMainApp";
+        return "Dolar";
     }
 
     @Override
