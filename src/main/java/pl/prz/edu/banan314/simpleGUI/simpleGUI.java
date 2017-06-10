@@ -9,6 +9,7 @@ import javafx.embed.swing.SwingNode;
 import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
+import org.ggp.base.apps.kiosk.games.ConnectFourCanvas;
 import pl.prz.edu.banan314.simpleGUI.dolar.DolarCanvas;
 
 import javax.swing.*;
@@ -35,9 +36,9 @@ public class simpleGUI extends Application {
         SwingUtilities.invokeLater(new Runnable() {
             @Override
             public void run() {
-                GameCanvas dolarCanvas = new DolarCanvas();
+                GameCanvas dolarCanvas = new ConnectFourCanvas();
                 JPanel panel = new GameGUI(dolarCanvas);
-                panel.add(new JButton("Click me!"));
+                //panel.add(new JButton("Click me!"));
                 swingNode.setContent(panel);
             }
         });
