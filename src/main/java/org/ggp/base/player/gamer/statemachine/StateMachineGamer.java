@@ -221,6 +221,7 @@ public abstract class StateMachineGamer extends Gamer
 
             return stateMachineSelectMove(timeout).getContents();
         }
+
         catch (Exception e)
         {
             GamerLogger.logStackTrace("GamePlayer", e);

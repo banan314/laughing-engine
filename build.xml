@@ -123,8 +123,13 @@
             <classpath refid="GGP_Base.classpath"/>
         </java>
     </target>
-    <target name="SimpleGameDolar">
-        <java classname="pl.prz.edu.banan314.utilities.SimpleGameDolar" failonerror="true" fork="yes">
+    <target name="SimpleServerGameDolar">
+        <java classname="pl.prz.edu.banan314.utilities.SimpleServerGameDolar" failonerror="true" fork="yes">
+            <classpath refid="GGP_Base.classpath"/>
+        </java>
+    </target>
+    <target name="simpleDolar">
+        <java classname="pl.prz.edu.banan314.utilities.SimpleServerGameDolar" failonerror="true" fork="yes">
             <classpath refid="GGP_Base.classpath"/>
         </java>
     </target>

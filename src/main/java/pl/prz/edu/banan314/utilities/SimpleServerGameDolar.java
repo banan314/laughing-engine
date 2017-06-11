@@ -23,8 +23,7 @@ import java.util.*;
 /**
  * Created by kamil on 11.05.17.
  */
-public class SimpleGameDolar {
-
+public class SimpleServerGameDolar extends SimpleGameDolar2 {
 
     public static void main(String[] argv) throws InterruptedException {
         final Game game = createDolarGame();
@@ -48,42 +47,5 @@ public class SimpleGameDolar {
 
         theServer.start();
         theServer.join();
-    }
-
-    private static Game createDolarGame() {
-        File dolarKif = fetchKif();
-
-        String rulesheet = extractRuleSheet(dolarKif);
-        return Game.createEphemeralGame(rulesheet);
-    }
-
-    static File fetchKif() {
-        return new File("./games/games/dolar/dolar.kif");
-    }
-
-    static String extractRuleSheet(File dolarKif) {
-        String rulesheet = null;
-        rulesheet = readKif(dolarKif).toString();
-        rulesheet = cleanRuleSheet(rulesheet);
-        return rulesheet;
-    }
-
-    static StringBuffer readKif(File dolarKif) {
-        StringBuffer sb = new StringBuffer();
-        List<String> lines = null;
-        try {
-            lines = Files.readAllLines(dolarKif.toPath(), Charset.defaultCharset());
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        for(String line : lines) {
-            sb.append(line).append('\n');
-        }
-        return sb;
-    }
-
-    private static String cleanRuleSheet(String rulesheet) {
-        rulesheet = Game.preprocessRulesheet(rulesheet);
-        return rulesheet;
     }
 }
