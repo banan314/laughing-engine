@@ -1,0 +1,1 @@
+Próby ze swing-node

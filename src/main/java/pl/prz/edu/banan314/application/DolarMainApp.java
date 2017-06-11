@@ -17,11 +17,13 @@ import javafx.stage.Stage;
 import pl.prz.edu.banan314.application.controller.RootLayout;
 
 import java.io.IOException;
+import java.net.URL;
 import java.util.Optional;
 
 public class DolarMainApp extends Application {
 
     private BorderPane overview;
+    final private String BASE_VIEW_URL = "file:./src/main/java/pl/prz/edu/banan314/application/view/";
 
     public static void main(String[] args) {
         launch(args);
@@ -32,9 +34,8 @@ public class DolarMainApp extends Application {
         primaryStage.setTitle("Dolar");
         try {
             FXMLLoader loader = new FXMLLoader();
-            java.net.URL location = new java.net.URL("file:./src/main/java/pl/prz/edu/banan314/application/view/RootLayout.fxml");
-            if (null == location)
-                throw new Exception("not found");
+            java.net.URL location = new java.net.URL(BASE_VIEW_URL + "RootLayout.fxml");
+            if (null == location) throw new Exception("not found");
             System.out.println(location);
             loader.setLocation(location);
 
@@ -44,9 +45,19 @@ public class DolarMainApp extends Application {
             Scene scene = new Scene(overview);
             primaryStage.setScene(scene);
             primaryStage.show();
+
+            showBoard();
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    private void showBoard() throws Exception {
+        FXMLLoader loader = new FXMLLoader();
+        loader.setLocation(new URL(BASE_VIEW_URL + "Board.fxml"));
+
+        AnchorPane boardOverview = loader.load();
+        overview.setCenter(boardOverview);
     }
 
     private void customizeLayout() {
