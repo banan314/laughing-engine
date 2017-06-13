@@ -9,7 +9,7 @@ public final class GdlProposition extends GdlSentence
 
     private final GdlConstant name;
 
-    public GdlProposition(GdlConstant name)
+    GdlProposition(GdlConstant name)
     {
         this.name = name;
     }

@@ -3,11 +3,13 @@ package pl.prz.edu.banan314.game;
 /**
  * Created by kamil on 04.06.17.
  */
-public class Board {
-    Square[][] squares = new Square[9][9];
+public abstract class Board {
+    Piece[][] squares;
 
-    void initialize() {
-        squares[0][0].setPiece(new Piece(Piece.Color.WHITE));
-        squares[8][8].setPiece(new Piece(Piece.Color.BLACK));
-    }
+    public abstract void initialize();
+
+    public abstract Piece get(int row, int file);
+
+    public abstract void set(int row, int file, Piece square);
+    public abstract void set(Square square);
 }

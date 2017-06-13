@@ -16,14 +16,11 @@ import static org.junit.Assert.*;
 /**
  * Created by kamil on 13.06.17.
  */
-public class MachineStateTest {
+public class MachineStateTest extends MachineStateTester {
 
     @Test
     public void getContents() throws Exception {
-        Set<GdlSentence> sentences = new HashSet<>();
-        sentences.add(new GdlProposition(
-                new GdlConstant("cell 1 1")
-        ));
+        Set<GdlSentence> sentences = generateSimpleSentence();
         MachineState ms = new MachineState(sentences);
 
         String result = ms.getContents().toString();

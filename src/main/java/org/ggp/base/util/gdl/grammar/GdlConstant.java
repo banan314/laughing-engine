@@ -6,7 +6,7 @@ public final class GdlConstant extends GdlTerm
 
     private final String value;
 
-    public GdlConstant(String value)
+    GdlConstant(String value)
     {
         this.value = value.intern();
     }
