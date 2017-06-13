@@ -45,18 +45,6 @@ public class ServerObserver implements Observer {
         }
     }
 
-    private void handleCompletedMatch(ServerCompletedMatchEvent event) {
-        System.out.println("State["+nState+"] Full (Terminal): "+oldContents);
-        if(showMatchInformation)
-            System.out.println("Match information: "+theMatch);
-        System.out.println("Goals: "+event.getGoals());
-        System.out.println("Game over.");
-    }
-
-    private void handleNewMoves(ServerNewMovesEvent event) {
-        System.out.println("Move taken: " + event.getMoves());
-    }
-
     private void handleNewGame(ServerNewGameStateEvent event) {
         MachineState theCurrentState = event.getState();
         /*if (nState > 0) {
@@ -94,5 +82,17 @@ public class ServerObserver implements Observer {
             return true;
         }
         return false;
+    }
+
+    private void handleNewMoves(ServerNewMovesEvent event) {
+        System.out.println("Move taken: " + event.getMoves());
+    }
+
+    private void handleCompletedMatch(ServerCompletedMatchEvent event) {
+        System.out.println("State["+nState+"] Full (Terminal): "+oldContents);
+        if(showMatchInformation)
+            System.out.println("Match information: "+theMatch);
+        System.out.println("Goals: "+event.getGoals());
+        System.out.println("Game over.");
     }
 }
