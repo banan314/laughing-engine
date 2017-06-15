@@ -1,0 +1,1 @@
+ruby boardGenerator.rb | xclip -selection clipboard

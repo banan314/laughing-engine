@@ -45,7 +45,7 @@ public class ServerObserver implements Observer {
         }
     }
 
-    private void handleNewGame(ServerNewGameStateEvent event) {
+    void handleNewGame(ServerNewGameStateEvent event) {
         MachineState theCurrentState = event.getState();
         /*if (nState > 0) {
             System.out.print("State["+nState+"]: ");
@@ -84,11 +84,11 @@ public class ServerObserver implements Observer {
         return false;
     }
 
-    private void handleNewMoves(ServerNewMovesEvent event) {
+    void handleNewMoves(ServerNewMovesEvent event) {
         System.out.println("Move taken: " + event.getMoves());
     }
 
-    private void handleCompletedMatch(ServerCompletedMatchEvent event) {
+    void handleCompletedMatch(ServerCompletedMatchEvent event) {
         System.out.println("State["+nState+"] Full (Terminal): "+oldContents);
         if(showMatchInformation)
             System.out.println("Match information: "+theMatch);

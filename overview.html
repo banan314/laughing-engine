@@ -1,15 +1,16 @@
 <body>
-Application Suite for the General Game Playing Project;<br/>
- - A GUI-based GameKiosk        (for playing human-vs-computer matches)<br/>
- - A GUI-based GamePlayer       (for running computer players)<br/>
- - A GUI-based GameServer       (for hosting matches)<br/>
- - A GUI-based GDLValidator     (for validating game rulesheets)<br/>
- 
-Support code for the above.<br/>
+Application Suite for the General Game Playing Project. It consists of:
+<ul>
+    <li>A GUI-based GameKiosk        (for playing human-vs-computer matches) </li>
+    <li>A GUI-based GamePlayer       (for running computer players) </li>
+    <li>A GUI-based GameServer       (for hosting matches) </li>
+    <li>A GUI-based GDLValidator     (for validating game rulesheets)</li>
+    <li>Support code for the above.</li>
+</ul>
 
 <p>
     Getting started is as simple as writing a new player that inherits from the
-StateMachineGamer class. StateMachineGamer is based on the state machine view
+<b>StateMachineGamer</b> class. StateMachineGamer is based on the state machine view
 of general game playing, in which playing a game is represented as proceeding
 through a state machine. The underlying state machine, which you can access via
 getStateMachine() when inheriting from StateMachineGamer, provides methods that

@@ -72,7 +72,7 @@ public class Square {
         return square;
     }
 
-    static boolean isCell(String cell) {
+    public static boolean isCell(String cell) {
         return cell.matches("(.*cell.*)");
     }
 }

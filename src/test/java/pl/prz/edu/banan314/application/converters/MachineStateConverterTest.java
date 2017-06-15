@@ -1,13 +1,11 @@
-package pl.prz.edu.banan314.utilities.converters;
+package pl.prz.edu.banan314.application.converters;
 
 import org.ggp.base.util.statemachine.MachineState;
 import org.ggp.base.util.statemachine.MachineStateTester;
 import org.junit.Before;
 import org.junit.Test;
 import pl.prz.edu.banan314.game.Board;
-import pl.prz.edu.banan314.game.DolarBoard;
 import pl.prz.edu.banan314.game.Piece;
-import pl.prz.edu.banan314.game.Square;
 
 import static org.junit.Assert.*;
 
@@ -21,7 +19,7 @@ public class MachineStateConverterTest extends MachineStateTester {
         ms = new MachineState(generateSimpleSentence());
     }
 
-    @Test public void toBoardTest() throws Exception {
+    @Test public void simpleSentenceToBoardTest() throws Exception {
         MachineStateConverter msc = new MachineStateConverter(ms);
 
         Board board = msc.toBoard();
@@ -30,5 +28,6 @@ public class MachineStateConverterTest extends MachineStateTester {
         assertNotNull(result);
         assertEquals("piece not white", result, new Piece(Piece.Color.WHITE));
     }
+
 
 }

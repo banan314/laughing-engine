@@ -16,9 +16,10 @@ public class Board {
     public void onSquareClick(MouseEvent event) {
         Rectangle square = (Rectangle) event.getSource();
 
+        AnchorPane root = (AnchorPane) square.getParent();
+
         Circle piece = BoardFactory.makePiece(square, onMove);
 
-        AnchorPane root = (AnchorPane) square.getParent();
         root.getChildren().add(piece);
 
         turnColor();

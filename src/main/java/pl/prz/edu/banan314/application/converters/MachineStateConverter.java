@@ -1,14 +1,11 @@
-package pl.prz.edu.banan314.utilities.converters;
+package pl.prz.edu.banan314.application.converters;
 
 import org.ggp.base.util.gdl.grammar.GdlSentence;
-import org.ggp.base.util.reasoner.gdl.GdlSentenceSet;
 import org.ggp.base.util.statemachine.MachineState;
 import pl.prz.edu.banan314.game.Board;
 import pl.prz.edu.banan314.game.DolarBoard;
-import pl.prz.edu.banan314.game.Piece;
 import pl.prz.edu.banan314.game.Square;
 
-import java.util.Scanner;
 import java.util.Set;
 
 /**

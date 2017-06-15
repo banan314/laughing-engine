@@ -1,9 +1,13 @@
 package pl.prz.edu.banan314.application.controller;
 
+import javafx.scene.input.MouseEvent;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
 import pl.prz.edu.banan314.application.common.Point;
 import pl.prz.edu.banan314.game.Piece;
+
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Type;
 
 public class BoardFactory {
     final static String WHITE_STYLE = "-fx-fill: white";
@@ -25,5 +29,29 @@ public class BoardFactory {
             piece.setStyle(WHITE_STYLE);
         else
             piece.setStyle(BLACK_STYLE);
+    }
+
+    public static Rectangle makeRectangle() {
+        Rectangle rectangle = new Rectangle();
+
+        rectangle.setWidth(30);
+        rectangle.setHeight(30);
+        rectangle.setLayoutX(30);
+        rectangle.setLayoutY(30);
+
+        addOnMouseClickEventTo(rectangle);
+
+        return rectangle;
+    }
+
+    static void addOnMouseClickEventTo(Rectangle rectangle) {
+        rectangle.setOnMouseClicked(event -> {
+                    try {
+                        Board.class.getMethod("onSquareClick", MouseEvent.class).invoke(new Board(), event);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
+        );
     }
 }

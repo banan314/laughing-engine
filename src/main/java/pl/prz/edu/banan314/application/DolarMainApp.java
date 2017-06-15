@@ -8,22 +8,21 @@ import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
-import pl.prz.edu.banan314.application.controller.RootLayout;
+import pl.prz.edu.banan314.application.creators.BoardCreator;
 
-import java.io.IOException;
-import java.net.URL;
 import java.util.Optional;
 
 public class DolarMainApp extends Application {
 
+    public static final String BASE_VIEW_URL = "file:./src/main/java/pl/prz/edu/banan314/application/view/";
+
     private BorderPane overview;
-    final private String BASE_VIEW_URL = "file:./src/main/java/pl/prz/edu/banan314/application/view/";
+    private BoardCreator boardCreator = new BoardCreator();
 
     public static void main(String[] args) {
         launch(args);
@@ -46,18 +45,10 @@ public class DolarMainApp extends Application {
             primaryStage.setScene(scene);
             primaryStage.show();
 
-            showBoard();
+            boardCreator.showBoard(overview);
         } catch (Exception e) {
             e.printStackTrace();
         }
-    }
-
-    private void showBoard() throws Exception {
-        FXMLLoader loader = new FXMLLoader();
-        loader.setLocation(new URL(BASE_VIEW_URL + "Board.fxml"));
-
-        AnchorPane boardOverview = loader.load();
-        overview.setCenter(boardOverview);
     }
 
     private void customizeLayout() {
@@ -69,7 +60,6 @@ public class DolarMainApp extends Application {
         world.setLayoutX(20);
         world.setLayoutY(20);
         anchorPane1.getChildren().add(world);
-
 
     }
 }

@@ -4,9 +4,9 @@ apply plugin: 'checkstyle'
 apply plugin: 'idea'
 apply plugin: 'scala'
 
-// We compile using Java 7.
-sourceCompatibility = 1.7
-targetCompatibility = 1.7
+// We compile using Java 8.
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
 
 /*
  * For now, instead of using an online library repository (e.g. Maven), we keep
@@ -154,12 +154,17 @@ task server(type: JavaExec) {
 }
 
 task simpleGameSim(type: JavaExec) {
-    main = 'org.ggp.base.apps.utilities.SimpleGameSim'
+    main = 'org.ggp.base.apps.utilities.SimpleServerGameSim'
     classpath = sourceSets.main.runtimeClasspath
 }
 
 task simpleGameDolar(type: JavaExec) {
-    main = 'pl.prz.edu.banan314.utilities.SimpleGameDolar'
+    main = 'pl.prz.edu.banan314.utilities.SimpleGamersGameDolar'
+    classpath = sourceSets.main.runtimeClasspath
+}
+
+task simpleServerDolar(type: JavaExec) {
+    main = 'pl.prz.edu.banan314.utilities.SimpleServerGameDolar'
     classpath = sourceSets.main.runtimeClasspath
 }
 
