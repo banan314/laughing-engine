@@ -1,14 +1,13 @@
 package pl.prz.edu.banan314.application.converters;
 
-import org.ggp.base.util.gdl.grammar.GdlSentence;
 import org.ggp.base.util.statemachine.MachineState;
 import org.ggp.base.util.statemachine.MachineStateTester;
-import org.junit.Before;
 import org.junit.Test;
 import pl.prz.edu.banan314.game.Board;
 import pl.prz.edu.banan314.game.Piece;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 
 /**
  * Created by kamil on 13.06.17.
@@ -24,7 +23,7 @@ public class MachineStateConverterTest extends MachineStateTester {
 
 
         Board board = msc.toBoard();
-        Piece result = board.get(1, 1);
+        Piece result = board.get(1, 1).getPiece();
 
         assertNotNull(result);
         assertEquals("piece should be white", result, new Piece(Piece.Color.WHITE));

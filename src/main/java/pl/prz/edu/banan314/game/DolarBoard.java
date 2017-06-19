@@ -7,14 +7,14 @@ public class DolarBoard extends Board {
 
     @Override
     public void initialize() {
-        squares = new Piece[9][9];
+        squares = new Square[9][9];
 
-        squares[0][0] = (new Piece(Piece.Color.WHITE));
-        squares[8][8] = (new Piece(Piece.Color.BLACK));
+        squares[0][0] = new Square(new Piece(Piece.Color.WHITE)); //TODO: flyweight
+        squares[8][8] = new Square(new Piece(Piece.Color.BLACK));
     }
 
     @Override
-    public Piece get(int row, int file) {
+    public Square get(int row, int file) {
         row--; file--;
 
         assert row >= 0 && row <= 8;
@@ -23,7 +23,7 @@ public class DolarBoard extends Board {
         return squares[row][file];
     }
 
-    @Override public void set(int row, int file, Piece square) {
+    @Override public void set(int row, int file, Square square) {
         row--; file--;
 
         assert row >= 0 && row <= 8;
@@ -35,8 +35,7 @@ public class DolarBoard extends Board {
     @Override public void set(Square square) {
         int row = square.getRow();
         int file = square.getFile();
-        Piece piece = square.getPiece();
 
-        set(row, file, piece);
+        set(row, file, square);
     }
 }

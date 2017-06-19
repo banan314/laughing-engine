@@ -14,7 +14,13 @@ public class Square {
     byte file;
     byte row;
     boolean empty = true;
-    Piece piece = new Piece(Piece.Color.WHITE);
+    Piece piece;
+
+    Square() {}
+
+    public Square(Piece piece) {
+        this.piece = piece;
+    }
 
     public byte getFile() {
         return file;
