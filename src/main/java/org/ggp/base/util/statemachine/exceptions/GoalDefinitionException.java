@@ -6,9 +6,12 @@ import org.ggp.base.util.statemachine.Role;
 @SuppressWarnings("serial")
 public final class GoalDefinitionException extends Exception
 {
+    private Role role;
+    private MachineState state;
 
-    private final Role role;
-    private final MachineState state;
+    public GoalDefinitionException(String message) {
+        super(message);
+    }
 
     public GoalDefinitionException(MachineState state, Role role)
     {

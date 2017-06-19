@@ -238,6 +238,7 @@
     (index ?N1)
     (succ ?N ?N1)
 )
+;TODO: it allows far squares to be evaluated as neighbors
 
 (<= (neighbor ?M ?N ?M1 ?N)
     (index ?M) 

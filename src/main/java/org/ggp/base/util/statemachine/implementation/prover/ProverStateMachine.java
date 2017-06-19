@@ -26,9 +26,9 @@ import com.google.common.collect.ImmutableList;
 
 public class ProverStateMachine extends StateMachine
 {
-    private MachineState initialState;
-    private Prover prover;
-    private ImmutableList<Role> roles;
+    protected MachineState initialState;
+    protected Prover prover;
+    protected ImmutableList<Role> roles;
 
     /**
      * Initialize must be called before using the StateMachine
@@ -46,7 +46,7 @@ public class ProverStateMachine extends StateMachine
         initialState = computeInitialState();
     }
 
-    private MachineState computeInitialState()
+    protected MachineState computeInitialState()
     {
         Set<GdlSentence> results = prover.askAll(ProverQueryBuilder.getInitQuery(), new HashSet<GdlSentence>());
         return new ProverResultParser().toState(results);

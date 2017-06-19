@@ -8,14 +8,13 @@ import org.ggp.base.server.GameServer;
 import org.ggp.base.util.game.Game;
 import org.ggp.base.util.match.Match;
 import org.ggp.base.util.statemachine.Role;
-import pl.prz.edu.banan314.utilities.SimpleGameDolar2;
+import pl.prz.edu.banan314.utilities.DolarGameCreator;
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class ServerCreator extends SimpleGameDolar2 {
+public class ServerCreator extends DolarGameCreator {
     public static final Integer WHITE_PORT = 9147;
     public static final Integer BLACK_PORT = 9148;
 
@@ -28,7 +27,7 @@ public class ServerCreator extends SimpleGameDolar2 {
     public GameServer createServer() {
         final Game game = createDolarGame();
 
-        match = new Match("simpleGameSim."+Match.getRandomString(5), -1, 0, 0, game, "");
+        match = new Match("simpleGameSim"+Match.getRandomString(5), -1, 0, 0, game, "");
 
         // Set up fake players to pretend to play the game
         List<String> fakeHosts = new ArrayList<String>();

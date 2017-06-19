@@ -19,3 +19,18 @@ task playerRunner(type: JavaExec) {
     }
 }
 ```
+
+In `RandomGamer`, we can debug legal moves in `stateMachineSelectMove`, using
+```java
+System.out.println("Possible moves: ");
+for(Move move : moves) {
+    System.out.println(move.toString());
+}
+```
+
+Now I know where state machine comes from. Its instance is hard-coded in `GameServer` constructor:
+```java
+stateMachine = new ProverStateMachine();
+stateMachine.initialize(match.getGame().getRules());
+currentState = stateMachine.getInitialState();
+```

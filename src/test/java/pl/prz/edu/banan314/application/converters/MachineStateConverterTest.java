@@ -1,5 +1,6 @@
 package pl.prz.edu.banan314.application.converters;
 
+import org.ggp.base.util.gdl.grammar.GdlSentence;
 import org.ggp.base.util.statemachine.MachineState;
 import org.ggp.base.util.statemachine.MachineStateTester;
 import org.junit.Before;
@@ -14,20 +15,45 @@ import static org.junit.Assert.*;
  */
 public class MachineStateConverterTest extends MachineStateTester {
     MachineState ms;
+    MachineStateConverter msc;
 
-    @Before public void setUp() throws Exception {
+    @Test
+    public void simpleSentenceToBoardTest() throws Exception {
         ms = new MachineState(generateSimpleSentence());
-    }
+        msc = new MachineStateConverter(ms);
 
-    @Test public void simpleSentenceToBoardTest() throws Exception {
-        MachineStateConverter msc = new MachineStateConverter(ms);
 
         Board board = msc.toBoard();
         Piece result = board.get(1, 1);
 
         assertNotNull(result);
-        assertEquals("piece not white", result, new Piece(Piece.Color.WHITE));
+        assertEquals("piece should be white", result, new Piece(Piece.Color.WHITE));
     }
 
+    @Test
+    public void toBoardTest() throws Exception {
+        ms = new MachineState(generateInitialBoard());
+        msc = new MachineStateConverter(ms);
 
+        Board result = msc.toBoard();
+
+        assertInitialBoard(result);
+    }
+
+    void assertInitialBoard(Board result) {
+        assertEquals("piece should be white", result.get(1, 1), Piece.WHITE);
+        assertEquals("piece should be black", result.get(9, 9), Piece.WHITE);
+        assertEquals("piece should be empty", result.get(4, 8), Piece.WHITE);
+        assertEquals("piece should be empty", result.get(8, 9), Piece.WHITE);
+    }
+
+    @Test
+    public void toBoardTrueTest() throws Exception {
+        ms = new MachineState(generateInitialBoard());
+        msc = new MachineStateConverter(ms);
+
+        Board result = msc.toBoard();
+
+        assertInitialBoard(result);
+    }
 }

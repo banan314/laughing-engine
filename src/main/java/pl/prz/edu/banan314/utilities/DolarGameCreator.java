@@ -11,10 +11,10 @@ import java.util.List;
 /**
  * Created by kamil on 11.06.17.
  */
-public abstract class SimpleGameDolar2 {
+public class DolarGameCreator {
     public static final String DOLAR_KIF_PATH = "./games/games/dolar/dolar.kif";
 
-    protected static Game createDolarGame() {
+    public static Game createDolarGame() {
         File dolarKif = fetchKif();
 
         String rulesheet = extractRuleSheet(dolarKif);

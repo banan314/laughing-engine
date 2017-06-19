@@ -56,12 +56,13 @@ public class Square {
 
     public static Square from(GdlSentence sentence) {
         Square square = new Square();
-        square.setPiece(new Piece(Piece.Color.WHITE));
+        square.setPiece(Piece.WHITE);
 
         String cell = sentence.toString();
         assert cell.length() > 5;
         if(isCell(cell)) {
-            Scanner scanner = new Scanner(cell.substring(cell.indexOf('1')));
+            Scanner scanner = makeScanner(cell);
+
             byte row = scanner.nextByte();
             byte file = scanner.nextByte();
 
@@ -70,6 +71,14 @@ public class Square {
         }
 
         return square;
+    }
+
+    static Scanner makeScanner(String cell) {
+        int startIndex = cell.indexOf('l') + 2;
+        //index of 'l' in cell shifted 2
+        // chars right
+        String squareDescription = cell.substring(startIndex);
+        return new Scanner(squareDescription);
     }
 
     public static boolean isCell(String cell) {

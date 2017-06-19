@@ -50,6 +50,7 @@ public class ServerObserver implements Observer {
         /*if (nState > 0) {
             System.out.print("State["+nState+"]: ");
         }*/
+
         Set<GdlSentence> newContents = theCurrentState.getContents();
         processContents(newContents, oldContents, "+");
 //        processContents(oldContents, newContents, "-");
@@ -60,6 +61,9 @@ public class ServerObserver implements Observer {
         if (showCurrentState) {
             System.out.println("State["+nState+"] Full: "+theCurrentState);
         }
+
+        System.out.println();
+
         nState++;
     }
 
