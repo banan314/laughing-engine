@@ -142,11 +142,8 @@
     (true (cell ?M ?N ?player))
     (true (control ?player)))
 
-(<= (legal x noop)
-    (true (control o)))
-
-(<= (legal o noop)
-    (true (control x)))
+;TODO: distinction between noop & pass
+;see ;; pass
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Dynamic Components - next
@@ -178,22 +175,20 @@
     (index ?n))
 
 ;; Control
-(<= (next (control x))
-    (true (control o)))
-(<= (next (control o))
-    (true (control x)))
+(<= (next (control white))
+    (true (control black)))
+
+(<= (next (control black))
+    (true (control white)))
 
 ;; pass
-( <= (next (passed ?role))
-       (true (control ?role))
-       (does ?role noop))
 
 ( <= (next (passed ?role))
    (true (passed ?role))
-   (does ?role noop))
+   (not (control ?role)))
 
 ( <= (next (passed ?role))
-   (not (true (control ?role)))
+    (control ?role)
    (does ?role noop))
 
 ;; step

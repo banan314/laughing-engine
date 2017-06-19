@@ -63,6 +63,8 @@ class StateMachineDecoratorTest {
         }
         System.out.println();
 
+        //TODO: if on move! (noop is a single option)
+
         assertThat(white.toString(), containsString("white"));
         assertTrue(whiteMoves.size() > 1, "white has no more than 1 move");
         assertTrue(blackMoves.size() > 1, "black has no more than 1 move");
