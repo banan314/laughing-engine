@@ -1,12 +1,19 @@
 package pl.prz.edu.banan314.game;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Created by kamil on 13.06.17.
  */
 public class DolarBoard extends Board {
 
+    public static final int MIN_INDEX = 0;
+    public static final int MAX_INDEX = 8;
+
     @Override
     public void initialize() {
+        assert 9 > MAX_INDEX;
         squares = new Square[9][9];
 
         squares[0][0] = new Square(new Piece(Piece.Color.WHITE)); //TODO: flyweight
@@ -17,8 +24,8 @@ public class DolarBoard extends Board {
     public Square get(int row, int file) {
         row--; file--;
 
-        assert row >= 0 && row <= 8;
-        assert file >= 0 && file <= 8;
+        assert row >= MIN_INDEX && row <= MAX_INDEX;
+        assert file >= MIN_INDEX && file <= MAX_INDEX;
 
         return squares[row][file];
     }
@@ -26,8 +33,8 @@ public class DolarBoard extends Board {
     @Override public void set(int row, int file, Square square) {
         row--; file--;
 
-        assert row >= 0 && row <= 8;
-        assert file >= 0 && file <= 8;
+        assert row >= MIN_INDEX && row <= MAX_INDEX;
+        assert file >= MIN_INDEX && file <= MAX_INDEX;
 
         squares[row][file] = square;
     }
@@ -37,5 +44,21 @@ public class DolarBoard extends Board {
         int file = square.getFile();
 
         set(row, file, square);
+    }
+
+    @Override
+    public List<Square> getNeighbors(int file, int row) {
+        List<Square> adjacent = new ArrayList<>();
+
+        if(file > MIN_INDEX)
+            adjacent.add(squares[file-1][row]);
+        if(file < MAX_INDEX)
+            adjacent.add(squares[file+1][row]);
+        if(row > MIN_INDEX)
+            adjacent.add(squares[file][row-1]);
+        if(row < MAX_INDEX)
+            adjacent.add(squares[file][row+1]);
+
+        return adjacent;
     }
 }
