@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Connect Four Interface</title>
+</head>
+<body onload="rerender()" onresize="rerender()">
+<script type='text/javascript'>
+    generateHeaderForViewer(document.getElementById('header'));
+
+    function renderSidePanel() {
+        var spectatorMatch = spectatorView.matchData;
+        if ("playerNamesFromHost" in spectatorMatch) {
+            var nPlayers = spectatorMatch.playerNamesFromHost.length;
+        } else if ("moves" in spectatorMatch && spectatorMatch.moves.length > 0) {
+            var nPlayers = spectatorMatch.moves[0].length;
+        } else {
+            var nPlayers = -1;
+        }
+        var playersWithLogs = [];
+        if ("playerNamesFromHost" in spectatorMatch && (spectatorMatch.isCompleted || spectatorMatch.isAborted)) {
+            playersWithLogs = ResourceLoader.load_json("//database.ggp.org/query/filterLog," + matchURL + '/').playerLogs;
+        }
+
+        var sidePanelHTML = '<br>';
+        var theDate = new Date(spectatorMatch.startTime);
+        sidePanelHTML += '<b>Game:</b> <a href="/view/' + window.location.pathname.split("/")[2] + '/games/' + translateRepositoryIntoCodename(spectatorMatch.gameMetaURL) + '">' + getGameNameForDisplay(spectatorView.metadata, spectatorMatch.gameMetaURL) + '</a><br><br>';
+        sidePanelHTML += '<b>Started ' + UserInterface.renderDateTime(theDate) + '</b><br><br>';
+        sidePanelHTML += '<b>Start clock:</b> ' + spectatorMatch.startClock + '<br>';
+        sidePanelHTML += '<b>Play clock:</b> ' + spectatorMatch.playClock + '<br><br>';
+        sidePanelHTML += '<a href="javascript: spectatorView.switchView(spectatorView.VISUAL_VIEW);">Visual View</a><br>';
+        sidePanelHTML += '<a href="javascript: spectatorView.switchView(spectatorView.LISTING_VIEW);">Listing View</a><br>';
+        sidePanelHTML += '<a href="javascript: spectatorView.switchView(spectatorView.RAW_JSON_VIEW);">JSON View</a><br><br>';
+
+        sidePanelHTML += '<span width=10px></span><b>Players involved:</b> <br> <table>';
+        for (var i = 0; i < nPlayers; i++) {
+            var hasPlayerName = "playerNamesFromHost" in spectatorMatch && spectatorMatch.playerNamesFromHost[i].length > 0;
+            var playerName = hasPlayerName ? spectatorMatch.playerNamesFromHost[i] : null; // only makes sense when hasPlayerName is true
+
+            sidePanelHTML += '<tr><td>';
+            if (hasPlayerName && playersWithLogs.indexOf(playerName) >= 0) {
+                sidePanelHTML += '<a href="' + window.location.href.replace("matches", "logs") + playerName + '"><img src="/viewer/images/glyphicons/glyphicons_040_stats.png" width=20px title="Player log time series for ' + playerName + '"></img></a>';
+            }
+            sidePanelHTML += '</td><td style="text-align: right;">';
+            if (hasPlayerName) {
+                sidePanelHTML += '<a href="/view/' + window.location.pathname.split("/")[2] + '/players/' + playerName + '" title="' + playerName + '">' + UserInterface.trimTo(playerName,12) + '</a>';
+            } else {
+                sidePanelHTML += 'Anonymous';
+            }
+            sidePanelHTML += '</td><td>as <b>' + spectatorView.metadata.roleNames[i] + '</b></td>';
+            if ("goalValues" in spectatorMatch) {
+                sidePanelHTML += '<td><i>(' + spectatorMatch.goalValues[i] + ')</i></td>';
+            }
+            sidePanelHTML += '</tr>';
+        }
+        sidePanelHTML += '</table><br>';
+
+        var nSteps = spectatorMatch.moves.length;
+        var nViewingStep = spectatorView.visibleStateIndex;
+        if (spectatorMatch.isCompleted) {
+            sidePanelHTML += '<b>Match done!</b> (in ' + nSteps + ' steps).<br><br>';
+            sidePanelHTML += 'Viewing step ' + nViewingStep + '. See other steps using the left & right arrow keys.';
+        } else if (spectatorMatch.isAborted) {
+            sidePanelHTML += '<b>Match aborted.</b> (after ' + nSteps + ' steps)';
+        } else {
+            sidePanelHTML += '<i>Match ongoing, ' + nSteps + ' steps in...</i>';
+        }
+        document.getElementById('sidePanel').innerHTML = sidePanelHTML;
+    }
+
+    var matchURL = 'http://matches.ggp.org/matches/' + window.location.pathname.split("/")[4];
+    spectatorView = SpectatorView.construct(matchURL, document.getElementById('spectator_div'), {"update": renderSidePanel});
+    // TODO: Fix the width/height calculation properly.
+    spectatorView.getHeight = function () { return window.innerHeight - 150; };
+    spectatorView.getWidth = function () { return window.innerWidth * 0.79; };
+    renderSidePanel();
+
+    function rerender() {
+        spectatorView.render();
+        document.getElementById("sidePanelDiv").setAttribute("style", "float: left; margin: 0; background-color: #CCC; width: 20%; height: " + (window.innerHeight-40) + "px;");
+    }
+    rerender();
+</script>
+
+<div>
+    <style type="text/css" media="all">
+        td.cell {
+            width: 50px;
+            height: 50px;
+            border: 2px solid #000;
+            background-color: #CCCCCC;
+        }
+
+        table.board {
+            background-color: #000000;
+        }
+
+        img.piece {
+            width: 45px;
+            height: 45px;
+        }
+    </style>
+    <table class="board">
+        <tr>
+            <td class="cell" id="cell_16">
+
+            </td>
+            <td class="cell" id="cell_26">
+                <center/>
+            </td>
+            <td class="cell" id="cell_36">
+                <center/>
+            </td>
+            <td class="cell" id="cell_46">
+                <center/>
+            </td>
+            <td class="cell" id="cell_56">
+                <center/>
+            </td>
+            <td class="cell" id="cell_66">
+                <center/>
+            </td>
+            <td class="cell" id="cell_76">
+                <center/>
+            </td>
+            <td class="cell" id="cell_86">
+                <center/>
+            </td>
+            <td class="cell" id="cell_96">
+                <img class="piece" src="../../resources/images/discs/black.png" alt="X" />
+            </td>
+        </tr>
+        <tr>
+            <td class="cell" id="cell_15">
+                <center/>
+            </td>
+            <td class="cell" id="cell_25">
+                <center/>
+            </td>
+            <td class="cell" id="cell_35">
+                <center/>
+            </td>
+            <td class="cell" id="cell_45">
+                <center/>
+            </td>
+            <td class="cell" id="cell_55">
+                <center/>
+            </td>
+            <td class="cell" id="cell_65">
+                <center/>
+            </td>
+            <td class="cell" id="cell_75">
+                <center/>
+            </td>
+            <td class="cell" id="cell_85">
+                <center/>
+            </td>
+            <td class="cell" id="cell_95">
+                <center/>
+            </td>
+        </tr>
+        <tr>
+            <td class="cell" id="cell_14">
+                <center/>
+            </td>
+            <td class="cell" id="cell_24">
+                <center/>
+            </td>
+            <td class="cell" id="cell_34">
+                <center/>
+            </td>
+            <td class="cell" id="cell_44">
+                <center/>
+            </td>
+            <td class="cell" id="cell_54">
+                <center/>
+            </td>
+            <td class="cell" id="cell_64">
+                <center/>
+            </td>
+            <td class="cell" id="cell_74">
+                <center/>
+            </td>
+            <td class="cell" id="cell_84">
+                <center/>
+            </td>
+            <td class="cell" id="cell_94">
+                <center/>
+            </td>
+        </tr>
+        <tr>
+            <td class="cell" id="cell_13">
+                <center/>
+            </td>
+            <td class="cell" id="cell_23">
+                <center/>
+            </td>
+            <td class="cell" id="cell_33">
+                <center/>
+            </td>
+            <td class="cell" id="cell_43">
+                <center/>
+            </td>
+            <td class="cell" id="cell_53">
+                <center/>
+            </td>
+            <td class="cell" id="cell_63">
+                <center/>
+            </td>
+            <td class="cell" id="cell_73">
+                <center/>
+            </td>
+            <td class="cell" id="cell_83">
+                <center/>
+            </td>
+            <td class="cell" id="cell_93">
+                <center/>
+            </td>
+        </tr>
+        <tr>
+            <td class="cell" id="cell_12">
+                <center/>
+            </td>
+            <td class="cell" id="cell_22">
+                <center/>
+            </td>
+            <td class="cell" id="cell_32">
+                <center/>
+            </td>
+            <td class="cell" id="cell_42">
+                <center/>
+            </td>
+            <td class="cell" id="cell_52">
+                <center/>
+            </td>
+            <td class="cell" id="cell_62">
+                <center/>
+            </td>
+            <td class="cell" id="cell_72">
+                <center/>
+            </td>
+            <td class="cell" id="cell_82">
+                <center/>
+            </td>
+            <td class="cell" id="cell_92">
+                <center/>
+            </td>
+        </tr>
+        <tr>
+            <td class="cell" id="cell_11">
+                <center/>
+            </td>
+            <td class="cell" id="cell_21">
+                <center/>
+            </td>
+            <td class="cell" id="cell_31">
+                <center/>
+            </td>
+            <td class="cell" id="cell_41">
+                <center/>
+            </td>
+            <td class="cell" id="cell_51">
+                <center/>
+            </td>
+            <td class="cell" id="cell_61">
+                <center/>
+            </td>
+            <td class="cell" id="cell_71">
+                <center/>
+            </td>
+            <td class="cell" id="cell_81">
+                <center/>
+            </td>
+            <td class="cell" id="cell_91">
+                <center/>
+            </td>
+        </tr>
+        <tr>
+            <td class="cell" id="cell_10">
+                <center/>
+            </td>
+            <td class="cell" id="cell_20">
+                <center/>
+            </td>
+            <td class="cell" id="cell_30">
+                <center/>
+            </td>
+            <td class="cell" id="cell_40">
+                <center/>
+            </td>
+            <td class="cell" id="cell_50">
+                <center/>
+            </td>
+            <td class="cell" id="cell_60">
+                <center/>
+            </td>
+            <td class="cell" id="cell_70">
+                <center/>
+            </td>
+            <td class="cell" id="cell_80">
+                <center/>
+            </td>
+            <td class="cell" id="cell_90">
+                <center/>
+            </td>
+        </tr>
+        <tr>
+            <td class="cell" id="cell_1-1">
+
+            </td>
+            <td class="cell" id="cell_2-1">
+                <center/>
+            </td>
+            <td class="cell" id="cell_3-1">
+                <center/>
+            </td>
+            <td class="cell" id="cell_4-1">
+                <center/>
+            </td>
+            <td class="cell" id="cell_5-1">
+                <center/>
+            </td>
+            <td class="cell" id="cell_6-1">
+                <center/>
+            </td>
+            <td class="cell" id="cell_7-1">
+                <center/>
+            </td>
+            <td class="cell" id="cell_8-1">
+                <center/>
+            </td>
+            <td class="cell" id="cell_9-1">
+                <center/>
+            </td>
+        </tr>
+        <tr>
+            <td class="cell" id="cell_1-2">
+                <img class="piece" src="../../resources/images/discs/white.png" alt="X" />
+            </td>
+            <td class="cell" id="cell_2-2">
+                <center/>
+            </td>
+            <td class="cell" id="cell_3-2">
+                <center/>
+            </td>
+            <td class="cell" id="cell_4-2">
+                <center/>
+            </td>
+            <td class="cell" id="cell_5-2">
+                <center/>
+            </td>
+            <td class="cell" id="cell_6-2">
+                <center/>
+            </td>
+            <td class="cell" id="cell_7-2">
+                <center/>
+            </td>
+            <td class="cell" id="cell_8-2">
+                <center/>
+            </td>
+            <td class="cell" id="cell_9-2">
+                <center/>
+            </td>
+        </tr>
+    </table>
+</div>
+</div>
+<script type="text/javascript">
+    var initCells = function() {
+        var cells = document.getElementsByClassName("cell");
+        for(var i=0; i < cells.length; i++) {
+            cells[i].onclick = function(e) {
+                if (e.ctrlKey) {
+                    if(this.innerHTML.toString().includes("img")) {
+                        this.innerHTML = this.innerHTML.replace('white', 'black');
+                    } else
+                    this.innerHTML += ('<img class="piece" src="../../resources/images/discs/black.png" alt="O" />');
+                } else {
+                    if(this.innerHTML.toString().includes("img")) {
+                        this.innerHTML = this.innerHTML.replace('black', 'white');
+                    } else
+                    this.innerHTML += ('<img class="piece" src="../../resources/images/discs/white.png" alt="X" />');
+                }
+            }
+        }
+    }();
+</script>
+</body>
+</html>
