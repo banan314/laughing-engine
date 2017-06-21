@@ -16,20 +16,24 @@ targetCompatibility = 1.8
 dependencies {
     compile 'org.scala-lang:scala-library:2.11.7'
     compile files(
-        'lib/Guava/guava-14.0.1.jar',
-        'lib/Jython/jython.jar',
-        'lib/Clojure/clojure.jar',
-        'lib/Batik/batik-1.7.jar',
-        'lib/FlyingSaucer/core-renderer.jar',
-        'lib/javassist/javassist.jar',
-        'lib/reflections/reflections-0.9.9-RC1.jar',
-        'lib/Htmlparser/htmlparser-1.4.jar',
-        'lib/gdl-validation/gdl-validation-0.2.2.jar',
-        'lib/gdl-validation/java-cup-11b-runtime-2015.03.26.jar',
+            'lib/Guava/guava-14.0.1.jar',
+            'lib/Jython/jython.jar',
+            'lib/Clojure/clojure.jar',
+            'lib/Batik/batik-1.7.jar',
+            'lib/FlyingSaucer/core-renderer.jar',
+            'lib/javassist/javassist.jar',
+            'lib/reflections/reflections-0.9.9-RC1.jar',
+            'lib/Htmlparser/htmlparser-1.4.jar',
+            'lib/gdl-validation/gdl-validation-0.2.2.jar',
+            'lib/gdl-validation/java-cup-11b-runtime-2015.03.26.jar',
     )
+    //TODO: move all to test directory
     testCompile files(
-        'lib/JUnit/junit-4.11.jar',
-        'lib/JUnit/hamcrest-core-1.3.jar',
+            'lib/JUnit/junit-4.11.jar',
+            'lib/JUnit/hamcrest-core-1.3.jar',
+            'lib/JUnit/junit-jupiter-api-5.0.0-M3.jar',
+            'lib/JUnit/testng-5.0.jar',
+            'lib/afterburner/afterburner.fx-1.6.0.jar',
     )
 }
 
@@ -45,8 +49,8 @@ repositories {
  * appear in Eclipse.
  */
 def sourceJars = [
-    'lib/Guava/guava-14.0.1.jar' : 'lib/Guava/guava-14.0.1-sources.jar',
-    'lib/gdl-validation/gdl-validation-0.2.2.jar' : 'lib/gdl-validation/gdl-validation-0.2.2-sources.jar'
+        'lib/Guava/guava-14.0.1.jar'                 : 'lib/Guava/guava-14.0.1-sources.jar',
+        'lib/gdl-validation/gdl-validation-0.2.2.jar': 'lib/gdl-validation/gdl-validation-0.2.2-sources.jar'
 ];
 
 /*
@@ -73,7 +77,7 @@ eclipse {
                             classpathEntry.attributes().put('path', relativePath)
                         }
 
-			//Add source jars to .classpath
+                        //Add source jars to .classpath
                         def path = classpathEntry.attribute('path')
                         if (sourceJars.containsKey(path)) {
                             def sourceJarPath = sourceJars.get(path)
@@ -96,7 +100,6 @@ eclipse {
 test {
     include 'org/ggp/base/test/AllTests.class'
 }
-
 
 //Various applications that can be run from Gradle:
 

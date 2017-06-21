@@ -10,24 +10,24 @@ import org.ggp.base.util.observer.Event;
 import org.ggp.base.util.observer.Observer;
 import org.ggp.base.util.statemachine.MachineState;
 import org.ggp.base.util.statemachine.Role;
-import org.testng.annotations.AfterMethod;
-import org.testng.annotations.BeforeMethod;
-import org.testng.annotations.Test;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 import pl.prz.edu.banan314.game.Square;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.junit.Assert.*;
-import static org.hamcrest.CoreMatchers.*;
+import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
- * Created by kamil on 13.06.17.
+ * Created by kamil on 21.06.17.
  */
-public class ServerObserverTest {
+class ServerObserverTest {
     GameServer theServer;
 
-    @BeforeMethod public void setUp() throws Exception {
+    @BeforeEach
+    public void setUp() throws Exception {
         Game game = new SimpleServerGameDolar().createDolarGame();
         Match theMatch = new Match("simpleGameSim."+Match.getRandomString(5), -1, 0, 0, game, "");
 
@@ -48,7 +48,8 @@ public class ServerObserverTest {
         theServer.start();
     }
 
-    @AfterMethod public void tearDown() throws Exception {
+    @AfterEach
+    public void tearDown() throws Exception {
         theServer.join();
     }
 
@@ -66,16 +67,16 @@ public class ServerObserverTest {
                         MachineState state = serverEvent.getState();
                         state.getContents().stream()
                                 //.filter(sentence -> Square.isCell(sentence.toString()))
-                                        .forEach(sentence -> {
-                                assertTrue(sentence.toString() + " should be cell", Square.isCell(sentence.toString())
-                                ||
-                                isPassed(sentence.toString())
-                                ||
-                                isControl(sentence.toString())
-                                ||
-                                isStep(sentence.toString()));
-                            }
-                        );
+                                .forEach(sentence -> {
+                                            assertTrue(sentence.toString() + " should be cell", Square.isCell(sentence.toString())
+                                                    ||
+                                                    isPassed(sentence.toString())
+                                                    ||
+                                                    isControl(sentence.toString())
+                                                    ||
+                                                    isStep(sentence.toString()));
+                                        }
+                                );
                         assertTrue("should be at least 1 sentence in machine state",
                                 state.getContents().size() > 0);
                     }
@@ -134,4 +135,5 @@ public class ServerObserverTest {
             }
         });
     }
+
 }
