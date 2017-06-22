@@ -39,7 +39,6 @@ public class DolarMainApp extends Application {
             loader.setLocation(location);
 
             overview = loader.load();
-            customizeLayout();
 
             Scene scene = new Scene(overview);
             primaryStage.setScene(scene);
@@ -51,17 +50,5 @@ public class DolarMainApp extends Application {
         }
 
         boardCreator.prepareGame();
-    }
-
-    private void customizeLayout() {
-        Optional<Node> anchorPane = overview.getChildren().stream().findFirst();
-        AnchorPane anchorPane1 = (AnchorPane) anchorPane.get();
-        Label world = new Label();
-        world.setFont(new Font(15));
-        world.setText("World!");
-        world.setLayoutX(20);
-        world.setLayoutY(20);
-        anchorPane1.getChildren().add(world);
-
     }
 }

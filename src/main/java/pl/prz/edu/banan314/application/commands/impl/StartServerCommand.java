@@ -7,7 +7,7 @@ import org.ggp.base.server.GameServer;
  */
 public class StartServerCommand extends ServerCommand {
 
-    StartServerCommand(GameServer gameServer) {
+    public StartServerCommand(GameServer gameServer) {
         this.gameServer = gameServer;
     }
 

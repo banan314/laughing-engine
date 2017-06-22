@@ -9,10 +9,10 @@ import java.io.IOException;
  */
 public class CreatePlayerCommand extends PlayerCommand {
 
-    private final int port;
-    private final String name;
+    private int port;
+    private String name;
 
-    CreatePlayerCommand(int port, String playerName) {
+    public CreatePlayerCommand(int port, String playerName) {
         this.port = port;
         this.name = playerName;
     }
@@ -30,5 +30,10 @@ public class CreatePlayerCommand extends PlayerCommand {
         } catch (InvalidPlayerException e) {
             e.printStackTrace();
         }
+    }
+
+    public CreatePlayerCommand setPort(int port) {
+        this.port = port;
+        return this;
     }
 }

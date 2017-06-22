@@ -10,6 +10,9 @@ import pl.prz.edu.banan314.application.creators.ServerCreator;
 public abstract class ServerCommand implements Command {
 
     ServerCreator serverCreator = new ServerCreator();
-    GameServer gameServer;
+    static GameServer gameServer;
 
+    public static GameServer getGameServer() {
+        return gameServer;
+    }
 }
