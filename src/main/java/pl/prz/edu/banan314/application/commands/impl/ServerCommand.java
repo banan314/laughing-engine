@@ -1,6 +1,7 @@
 package pl.prz.edu.banan314.application.commands.impl;
 
 import org.ggp.base.server.GameServer;
+import org.ggp.base.util.match.Match;
 import pl.prz.edu.banan314.application.commands.Command;
 import pl.prz.edu.banan314.application.creators.ServerCreator;
 
@@ -9,10 +10,14 @@ import pl.prz.edu.banan314.application.creators.ServerCreator;
  */
 public abstract class ServerCommand implements Command {
 
-    ServerCreator serverCreator = new ServerCreator();
+    static ServerCreator serverCreator = new ServerCreator();
     static GameServer gameServer;
 
     public static GameServer getGameServer() {
         return gameServer;
+    }
+
+    public static Match getMatch() {
+        return serverCreator.getMatch();
     }
 }

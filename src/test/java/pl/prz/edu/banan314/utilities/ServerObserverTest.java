@@ -61,7 +61,7 @@ class ServerObserverTest {
                 try{
                     if (event instanceof ServerNewGameStateEvent) {
                         ServerNewGameStateEvent serverEvent = (ServerNewGameStateEvent) event;
-                        //observer.handleNewGame(serverEvent);
+                        //observer.handleNewState(serverEvent);
 
                         MachineState state = serverEvent.getState();
                         state.getContents().stream()

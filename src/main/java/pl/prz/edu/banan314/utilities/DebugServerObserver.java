@@ -10,10 +10,8 @@ import org.ggp.base.server.event.ServerNewMovesEvent;
 import org.ggp.base.util.gdl.grammar.GdlSentence;
 import org.ggp.base.util.match.Match;
 import org.ggp.base.util.observer.Event;
-import org.ggp.base.util.observer.Observer;
 import org.ggp.base.util.statemachine.MachineState;
 
-import java.util.HashSet;
 import java.util.Set;
 
 public class DebugServerObserver extends ServerObserver {
@@ -36,7 +34,7 @@ public class DebugServerObserver extends ServerObserver {
     @Override
     public void observe(Event event) {
         if (event instanceof ServerNewGameStateEvent) {
-            handleNewGame((ServerNewGameStateEvent) event);
+            handleNewState((ServerNewGameStateEvent) event);
         } else if (event instanceof ServerNewMovesEvent) {
             handleNewMoves((ServerNewMovesEvent) event);
         } else if (event instanceof ServerCompletedMatchEvent) {
@@ -44,7 +42,7 @@ public class DebugServerObserver extends ServerObserver {
         }
     }
 
-    void handleNewGame(ServerNewGameStateEvent event) {
+    protected void handleNewState(ServerNewGameStateEvent event) {
         MachineState theCurrentState = event.getState();
         /*if (nState > 0) {
             System.out.print("State["+nState+"]: ");
@@ -87,11 +85,11 @@ public class DebugServerObserver extends ServerObserver {
         return false;
     }
 
-    void handleNewMoves(ServerNewMovesEvent event) {
+    protected void handleNewMoves(ServerNewMovesEvent event) {
         System.out.println("Move taken: "+event.getMoves());
     }
 
-    void handleCompletedMatch(ServerCompletedMatchEvent event) {
+    protected void handleCompletedMatch(ServerCompletedMatchEvent event) {
         System.out.println("State["+nState+"] Full (Terminal): "+oldContents);
         if (showMatchInformation) {
             System.out.println("Match information: "+theMatch);

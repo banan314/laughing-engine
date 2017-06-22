@@ -13,6 +13,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
+import pl.prz.edu.banan314.application.controllers.RootLayout;
 import pl.prz.edu.banan314.application.creators.BoardCreator;
 
 import java.util.Optional;
@@ -31,8 +32,8 @@ public class DolarMainApp extends Application {
     @Override
     public void start(Stage primaryStage) {
         primaryStage.setTitle("Dolar");
+        FXMLLoader loader = new FXMLLoader();
         try {
-            FXMLLoader loader = new FXMLLoader();
             java.net.URL location = new java.net.URL(BASE_VIEW_URL + "RootLayout.fxml");
             if (null == location) throw new Exception("not found");
             System.out.println(location);
@@ -50,5 +51,7 @@ public class DolarMainApp extends Application {
         }
 
         boardCreator.prepareGame();
+        RootLayout rootLayout = loader.getController();
+        rootLayout.setBoardModel(boardCreator.getBoardModel());
     }
 }

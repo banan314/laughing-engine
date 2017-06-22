@@ -24,6 +24,9 @@ public class DolarBoard extends Board {
 
         row--; file--;
 
+        if(null == squares[row][file]) {
+            return new Square(); //empty - null pattern
+        }
         return squares[row][file];
     }
 

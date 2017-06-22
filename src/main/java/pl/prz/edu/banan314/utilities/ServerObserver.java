@@ -7,7 +7,6 @@ import org.ggp.base.util.gdl.grammar.GdlSentence;
 import org.ggp.base.util.match.Match;
 import org.ggp.base.util.observer.Event;
 import org.ggp.base.util.observer.Observer;
-import org.ggp.base.util.statemachine.MachineState;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -28,7 +27,7 @@ public abstract class ServerObserver implements Observer {
     @Override
     public void observe(Event event) {
         if (event instanceof ServerNewGameStateEvent) {
-            handleNewGame((ServerNewGameStateEvent) event);
+            handleNewState((ServerNewGameStateEvent) event);
         } else if (event instanceof ServerNewMovesEvent) {
             handleNewMoves((ServerNewMovesEvent) event);
         } else if (event instanceof ServerCompletedMatchEvent) {
@@ -36,7 +35,7 @@ public abstract class ServerObserver implements Observer {
         }
     }
 
-    abstract protected void handleNewGame(ServerNewGameStateEvent event);
+    abstract protected void handleNewState(ServerNewGameStateEvent event);
 
     abstract protected void handleNewMoves(ServerNewMovesEvent event);
 
