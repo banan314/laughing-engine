@@ -49,6 +49,8 @@ public class DolarMainApp extends Application {
         } catch (Exception e) {
             e.printStackTrace();
         }
+
+        boardCreator.prepareGame();
     }
 
     private void customizeLayout() {

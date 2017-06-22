@@ -1,10 +1,8 @@
-package pl.prz.edu.banan314.application.controller;
+package pl.prz.edu.banan314.application.controllers;
 
 import javafx.scene.input.MouseEvent;
 import javafx.scene.shape.Rectangle;
 import org.junit.jupiter.api.Test;
-
-import java.lang.reflect.InvocationTargetException;
 
 import static org.junit.jupiter.api.Assertions.*;
 

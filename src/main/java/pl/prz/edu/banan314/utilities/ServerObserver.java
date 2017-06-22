@@ -1,9 +1,5 @@
 package pl.prz.edu.banan314.utilities;
 
-/**
- * Created by kamil on 11.06.17.
- */
-
 import org.ggp.base.server.event.ServerCompletedMatchEvent;
 import org.ggp.base.server.event.ServerNewGameStateEvent;
 import org.ggp.base.server.event.ServerNewMovesEvent;
@@ -16,18 +12,12 @@ import org.ggp.base.util.statemachine.MachineState;
 import java.util.HashSet;
 import java.util.Set;
 
-public class ServerObserver implements Observer {
-
-    public static final boolean hideStepCounter = true;
-    public static final boolean hideControlProposition = true;
-    public static final boolean showCurrentState = false;
-    public static final boolean showMatchInformation = false;
-
-    // TODO: Allow a custom state machine to be plugged into the GameServer so that we can
-    // simulate games using this tool with custom state machines, to verify they're sane.
+/**
+ * Created by kamil on 22.06.17.
+ */
+public abstract class ServerObserver implements Observer {
 
     final Set<GdlSentence> oldContents = new HashSet<GdlSentence>();
-    int nState = 0;
 
     Match theMatch;
 
@@ -35,7 +25,8 @@ public class ServerObserver implements Observer {
         this.theMatch = theMatch;
     }
 
-    @Override public void observe(Event event) {
+    @Override
+    public void observe(Event event) {
         if (event instanceof ServerNewGameStateEvent) {
             handleNewGame((ServerNewGameStateEvent) event);
         } else if (event instanceof ServerNewMovesEvent) {
@@ -45,58 +36,9 @@ public class ServerObserver implements Observer {
         }
     }
 
-    void handleNewGame(ServerNewGameStateEvent event) {
-        MachineState theCurrentState = event.getState();
-        /*if (nState > 0) {
-            System.out.print("State["+nState+"]: ");
-        }*/
+    abstract protected void handleNewGame(ServerNewGameStateEvent event);
 
-        Set<GdlSentence> newContents = theCurrentState.getContents();
-        processContents(newContents, oldContents, "+");
-//        processContents(oldContents, newContents, "-");
+    abstract protected void handleNewMoves(ServerNewMovesEvent event);
 
-        oldContents.clear();
-        oldContents.addAll(newContents);
-
-        if (showCurrentState) {
-            System.out.println("State["+nState+"] Full: "+theCurrentState);
-        }
-
-        System.out.println();
-
-        nState++;
-    }
-
-    private void processContents(Set<GdlSentence> contents, Set<GdlSentence> other, String sign) {
-        for(GdlSentence sentence : contents) {
-            if (checkForStepAndControl(sentence)) {
-                continue;
-            }
-            if (!other.contains(sentence)) {
-                System.out.print(sign + sentence + ", ");
-            }
-        }
-    }
-
-    private boolean checkForStepAndControl(GdlSentence newSentence) {
-        if (hideStepCounter && newSentence.toString().contains("step")) {
-            return true;
-        }
-        if (hideControlProposition && newSentence.toString().contains("control")) {
-            return true;
-        }
-        return false;
-    }
-
-    void handleNewMoves(ServerNewMovesEvent event) {
-        System.out.println("Move taken: " + event.getMoves());
-    }
-
-    void handleCompletedMatch(ServerCompletedMatchEvent event) {
-        System.out.println("State["+nState+"] Full (Terminal): "+oldContents);
-        if(showMatchInformation)
-            System.out.println("Match information: "+theMatch);
-        System.out.println("Goals: "+event.getGoals());
-        System.out.println("Game over.");
-    }
+    abstract protected void handleCompletedMatch(ServerCompletedMatchEvent event);
 }

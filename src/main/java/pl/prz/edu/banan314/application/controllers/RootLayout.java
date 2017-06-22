@@ -1,4 +1,4 @@
-package pl.prz.edu.banan314.application.controller;
+package pl.prz.edu.banan314.application.controllers;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;

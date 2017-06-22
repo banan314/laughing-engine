@@ -5,6 +5,7 @@ import org.ggp.base.server.GameServer;
 import pl.prz.edu.banan314.application.creators.PlayerCreator;
 import pl.prz.edu.banan314.application.creators.ServerCreator;
 import pl.prz.edu.banan314.application.exceptions.InvalidPlayerException;
+import pl.prz.edu.banan314.application.services.DolarGameCreator;
 
 import java.io.IOException;
 
@@ -20,10 +21,10 @@ public class SimpleServerGameDolar extends DolarGameCreator {
             IllegalAccessException, InvalidPlayerException {
         GameServer theServer = serverCreator.createServer();
 
-        theServer.addObserver(new ServerObserver(serverCreator.getMatch()) );
+        theServer.addObserver(new DebugServerObserver(serverCreator.getMatch()) );
 
-        playerCreator.createWhitePlayer(9147, "RandomGamer");
-        playerCreator.createWhitePlayer(9148, "RandomGamer");
+        playerCreator.createPlayer(9147, "RandomGamer");
+        playerCreator.createPlayer(9148, "RandomGamer");
 
         theServer.start();
         theServer.join();

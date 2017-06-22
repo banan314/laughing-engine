@@ -1,4 +1,4 @@
-package pl.prz.edu.banan314.application.controller;
+package pl.prz.edu.banan314.application.controllers;
 
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;

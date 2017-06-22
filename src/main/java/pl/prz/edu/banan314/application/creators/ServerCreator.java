@@ -8,7 +8,7 @@ import org.ggp.base.server.GameServer;
 import org.ggp.base.util.game.Game;
 import org.ggp.base.util.match.Match;
 import org.ggp.base.util.statemachine.Role;
-import pl.prz.edu.banan314.utilities.DolarGameCreator;
+import pl.prz.edu.banan314.application.services.DolarGameCreator;
 
 import java.util.ArrayList;
 import java.util.Arrays;

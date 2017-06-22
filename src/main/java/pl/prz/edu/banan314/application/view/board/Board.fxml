@@ -6,7 +6,7 @@
 <?import javafx.scene.shape.Circle?>
 <?import javafx.scene.shape.Rectangle?>
 
-<AnchorPane prefHeight="484.0" prefWidth="548.0" xmlns="http://javafx.com/javafx/8.0.112" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pl.prz.edu.banan314.application.controller.Board">
+<AnchorPane prefHeight="484.0" prefWidth="548.0" xmlns="http://javafx.com/javafx/8.0.112" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pl.prz.edu.banan314.application.controllers.Board">
    <children>
       <Canvas height="272.0" layoutX="55.0" layoutY="45.0" width="307.0" />
 

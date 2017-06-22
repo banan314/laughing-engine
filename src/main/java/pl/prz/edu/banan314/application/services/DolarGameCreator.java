@@ -1,4 +1,4 @@
-package pl.prz.edu.banan314.utilities;
+package pl.prz.edu.banan314.application.services;
 
 import org.ggp.base.util.game.Game;
 

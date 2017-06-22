@@ -54,7 +54,7 @@ class ServerObserverTest {
 
     @Test
     public void newGameTest() throws Exception {
-        final ServerObserver observer = new ServerObserver(theServer.getMatch());
+        final DebugServerObserver observer = new DebugServerObserver(theServer.getMatch());
 
         theServer.addObserver(new Observer() {
             @Override public void observe(Event event) {
@@ -100,7 +100,7 @@ class ServerObserverTest {
     }
 
     @Test public void newMovesTest() throws Exception {
-        final ServerObserver observer = new ServerObserver(theServer.getMatch());
+        final DebugServerObserver observer = new DebugServerObserver(theServer.getMatch());
 
         theServer.addObserver(new Observer() {
             @Override public void observe(Event event) {
@@ -118,7 +118,7 @@ class ServerObserverTest {
     }
 
     @Test public void completedMatchTest() throws Exception {
-        final ServerObserver observer = new ServerObserver(theServer.getMatch());
+        final DebugServerObserver observer = new DebugServerObserver(theServer.getMatch());
 
         theServer.addObserver(new Observer() {
             @Override public void observe(Event event) {

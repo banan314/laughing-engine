@@ -18,7 +18,7 @@ public class PlayerCreator {
     public static final Integer WHITE_PORT = 9147;
     public static final Integer BLACK_PORT = 9148;
 
-    public void createWhitePlayer(int port, String name) throws IOException, InstantiationException, IllegalAccessException, InvalidPlayerException {
+    public void createPlayer(int port, String name) throws IOException, InstantiationException, IllegalAccessException, InvalidPlayerException {
         Class<?> chosenGamerClass = null;
 
         List<String> availableGamers = new ArrayList<String>();
