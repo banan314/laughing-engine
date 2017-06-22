@@ -12,13 +12,12 @@ import org.ggp.base.util.statemachine.MachineState;
 import org.ggp.base.util.statemachine.Role;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.*;
-import pl.prz.edu.banan314.game.Square;
+import pl.prz.edu.banan314.application.model.game.Square;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.Assert.assertTrue;
-import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * Created by kamil on 21.06.17.

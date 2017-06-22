@@ -3,8 +3,8 @@ package pl.prz.edu.banan314.application.converters;
 import org.ggp.base.util.statemachine.MachineState;
 import org.ggp.base.util.statemachine.MachineStateTester;
 import org.junit.Test;
-import pl.prz.edu.banan314.game.Board;
-import pl.prz.edu.banan314.game.Piece;
+import pl.prz.edu.banan314.application.model.game.Board;
+import pl.prz.edu.banan314.application.model.game.Piece;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;

@@ -1,4 +1,4 @@
-package pl.prz.edu.banan314.game;
+package pl.prz.edu.banan314.application.model.game;
 
 /**
  * Created by kamil on 04.06.17.
@@ -6,6 +6,10 @@ package pl.prz.edu.banan314.game;
 public class Piece {
     public static final Piece WHITE = new Piece(Color.WHITE);
     public static final Piece BLACK = new Piece(Color.BLACK);
+
+    public Color getColor() {
+        return color;
+    }
 
     public enum Color {WHITE, BLACK;};
     Color color;

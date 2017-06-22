@@ -1,12 +1,9 @@
-package pl.prz.edu.banan314.game;
+package pl.prz.edu.banan314.application.model.game;
 
 import org.ggp.base.util.gdl.grammar.GdlSentence;
 import org.ggp.base.util.statemachine.MachineStateTester;
 import org.junit.Before;
 import org.junit.Test;
-
-import java.util.HashSet;
-import java.util.Set;
 
 import static org.junit.Assert.*;
 

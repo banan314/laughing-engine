@@ -17,12 +17,9 @@ public class BoardCreator {
 
     public void showBoard(BorderPane overview) throws Exception {
         FXMLLoader loader = new FXMLLoader();
-        loader.setLocation(new URL(BASE_VIEW_URL+"Board.fxml"));
+        loader.setLocation(new URL(BASE_VIEW_URL+"board/Board.fxml"));
 
         AnchorPane boardOverview = loader.load();
         overview.setCenter(boardOverview);
-
-        Rectangle square = BoardFactory.makeRectangle();
-        //boardOverview.getChildren().add(square);
     }
 }

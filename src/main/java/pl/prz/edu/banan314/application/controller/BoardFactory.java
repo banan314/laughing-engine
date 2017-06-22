@@ -4,10 +4,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
 import pl.prz.edu.banan314.application.common.Point;
-import pl.prz.edu.banan314.game.Piece;
-
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Type;
+import pl.prz.edu.banan314.application.model.game.Piece;
 
 public class BoardFactory {
     final static String WHITE_STYLE = "-fx-fill: white";

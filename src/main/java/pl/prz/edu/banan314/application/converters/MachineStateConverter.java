@@ -2,9 +2,9 @@ package pl.prz.edu.banan314.application.converters;
 
 import org.ggp.base.util.gdl.grammar.GdlSentence;
 import org.ggp.base.util.statemachine.MachineState;
-import pl.prz.edu.banan314.game.Board;
-import pl.prz.edu.banan314.game.DolarBoard;
-import pl.prz.edu.banan314.game.Square;
+import pl.prz.edu.banan314.application.model.game.Board;
+import pl.prz.edu.banan314.application.model.game.DolarBoard;
+import pl.prz.edu.banan314.application.model.game.Square;
 
 import java.util.Set;
 

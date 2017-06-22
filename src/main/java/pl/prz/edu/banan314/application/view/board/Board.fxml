@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.Group?>
+<?import javafx.scene.canvas.Canvas?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.shape.Circle?>
+<?import javafx.scene.shape.Rectangle?>
+
+<AnchorPane prefHeight="484.0" prefWidth="548.0" xmlns="http://javafx.com/javafx/8.0.112" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pl.prz.edu.banan314.application.controller.Board">
+   <children>
+      <Canvas height="272.0" layoutX="55.0" layoutY="45.0" width="307.0" />
+
+      <Group fx:id="board">
+         <children>
+            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="44.0" layoutX="80.0" layoutY="43.0" onMouseClicked="#onSquareClick" stroke="BLACK" strokeType="INSIDE" width="45.0" />
+            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="44.0" layoutX="125.0" layoutY="43.0" onMouseClicked="#onSquareClick" stroke="BLACK" strokeType="INSIDE" width="45.0" />
+            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="44.0" layoutX="170.0" layoutY="43.0" onMouseClicked="#onSquareClick" stroke="BLACK" strokeType="INSIDE" width="45.0" />
+            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="44.0" layoutX="215.0" layoutY="43.0" onMouseClicked="#onSquareClick" stroke="BLACK" strokeType="INSIDE" width="45.0" />
+            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="44.0" layoutX="260.0" layoutY="43.0" onMouseClicked="#onSquareClick" stroke="BLACK" strokeType="INSIDE" width="45.0" />
+            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="44.0" layoutX="305.0" layoutY="43.0" onMouseClicked="#onSquareClick" stroke="BLACK" strokeType="INSIDE" width="45.0" />
+            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="44.0" layoutX="350.0" layoutY="43.0" onMouseClicked="#onSquareClick" stroke="BLACK" strokeType="INSIDE" width="45.0" />
+            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="44.0" layoutX="395.0" layoutY="43.0" onMouseClicked="#onSquareClick" stroke="BLACK" strokeType="INSIDE" width="45.0" />
+            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="44.0" layoutX="440.0" layoutY="43.0" onMouseClicked="#onSquareClick" stroke="BLACK" strokeType="INSIDE" width="45.0" />
+            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="44.0" layoutX="80.0" layoutY="87.0" onMouseClicked="#onSquareClick" stroke="BLACK" strokeType="INSIDE" width="45.0" />
+            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="44.0" layoutX="125.0" layoutY="87.0" onMouseClicked="#onSquareClick" stroke="BLACK" strokeType="INSIDE" width="45.0" />
+            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="44.0" layoutX="170.0" layoutY="87.0" onMouseClicked="#onSquareClick" stroke="BLACK" strokeType="INSIDE" width="45.0" />
+            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="44.0" layoutX="215.0" layoutY="87.0" onMouseClicked="#onSquareClick" stroke="BLACK" strokeType="INSIDE" width="45.0" />
+            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="44.0" layoutX="260.0" layoutY="87.0" onMouseClicked="#onSquareClick" stroke="BLACK" strokeType="INSIDE" width="45.0" />
+            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="44.0" layoutX="305.0" layoutY="87.0" onMouseClicked="#onSquareClick" stroke="BLACK" strokeType="INSIDE" width="45.0" />
+            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="44.0" layoutX="350.0" layoutY="87.0" onMouseClicked="#onSquareClick" stroke="BLACK" strokeType="INSIDE" width="45.0" />
+            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="44.0" layoutX="395.0" layoutY="87.0" onMouseClicked="#onSquareClick" stroke="BLACK" strokeType="INSIDE" width="45.0" />
+            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="44.0" layoutX="440.0" layoutY="87.0" onMouseClicked="#onSquareClick" stroke="BLACK" strokeType="INSIDE" width="45.0" />
+            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="44.0" layoutX="80.0" layoutY="131.0" onMouseClicked="#onSquareClick" stroke="BLACK" strokeType="INSIDE" width="45.0" />
+            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="44.0" layoutX="125.0" layoutY="131.0" onMouseClicked="#onSquareClick" stroke="BLACK" strokeType="INSIDE" width="45.0" />
+            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="44.0" layoutX="170.0" layoutY="131.0" onMouseClicked="#onSquareClick" stroke="BLACK" strokeType="INSIDE" width="45.0" />
+            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="44.0" layoutX="215.0" layoutY="131.0" onMouseClicked="#onSquareClick" stroke="BLACK" strokeType="INSIDE" width="45.0" />
+            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="44.0" layoutX="260.0" layoutY="131.0" onMouseClicked="#onSquareClick" stroke="BLACK" strokeType="INSIDE" width="45.0" />
+            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="44.0" layoutX="305.0" layoutY="131.0" onMouseClicked="#onSquareClick" stroke="BLACK" strokeType="INSIDE" width="45.0" />
+            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="44.0" layoutX="350.0" layoutY="131.0" onMouseClicked="#onSquareClick" stroke="BLACK" strokeType="INSIDE" width="45.0" />
+            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="44.0" layoutX="395.0" layoutY="131.0" onMouseClicked="#onSquareClick" stroke="BLACK" strokeType="INSIDE" width="45.0" />
+            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="44.0" layoutX="440.0" layoutY="131.0" onMouseClicked="#onSquareClick" stroke="BLACK" strokeType="INSIDE" width="45.0" />
+            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="44.0" layoutX="80.0" layoutY="175.0" onMouseClicked="#onSquareClick" stroke="BLACK" strokeType="INSIDE" width="45.0" />
+            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="44.0" layoutX="125.0" layoutY="175.0" onMouseClicked="#onSquareClick" stroke="BLACK" strokeType="INSIDE" width="45.0" />
+            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="44.0" layoutX="170.0" layoutY="175.0" onMouseClicked="#onSquareClick" stroke="BLACK" strokeType="INSIDE" width="45.0" />
+            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="44.0" layoutX="215.0" layoutY="175.0" onMouseClicked="#onSquareClick" stroke="BLACK" strokeType="INSIDE" width="45.0" />
+            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="44.0" layoutX="260.0" layoutY="175.0" onMouseClicked="#onSquareClick" stroke="BLACK" strokeType="INSIDE" width="45.0" />
+            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="44.0" layoutX="305.0" layoutY="175.0" onMouseClicked="#onSquareClick" stroke="BLACK" strokeType="INSIDE" width="45.0" />
+            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="44.0" layoutX="350.0" layoutY="175.0" onMouseClicked="#onSquareClick" stroke="BLACK" strokeType="INSIDE" width="45.0" />
+            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="44.0" layoutX="395.0" layoutY="175.0" onMouseClicked="#onSquareClick" stroke="BLACK" strokeType="INSIDE" width="45.0" />
+            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="44.0" layoutX="440.0" layoutY="175.0" onMouseClicked="#onSquareClick" stroke="BLACK" strokeType="INSIDE" width="45.0" />
+            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="44.0" layoutX="80.0" layoutY="219.0" onMouseClicked="#onSquareClick" stroke="BLACK" strokeType="INSIDE" width="45.0" />
+            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="44.0" layoutX="125.0" layoutY="219.0" onMouseClicked="#onSquareClick" stroke="BLACK" strokeType="INSIDE" width="45.0" />
+            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="44.0" layoutX="170.0" layoutY="219.0" onMouseClicked="#onSquareClick" stroke="BLACK" strokeType="INSIDE" width="45.0" />
+            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="44.0" layoutX="215.0" layoutY="219.0" onMouseClicked="#onSquareClick" stroke="BLACK" strokeType="INSIDE" width="45.0" />
+            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="44.0" layoutX="260.0" layoutY="219.0" onMouseClicked="#onSquareClick" stroke="BLACK" strokeType="INSIDE" width="45.0" />
+            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="44.0" layoutX="305.0" layoutY="219.0" onMouseClicked="#onSquareClick" stroke="BLACK" strokeType="INSIDE" width="45.0" />
+            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="44.0" layoutX="350.0" layoutY="219.0" onMouseClicked="#onSquareClick" stroke="BLACK" strokeType="INSIDE" width="45.0" />
+            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="44.0" layoutX="395.0" layoutY="219.0" onMouseClicked="#onSquareClick" stroke="BLACK" strokeType="INSIDE" width="45.0" />
+            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="44.0" layoutX="440.0" layoutY="219.0" onMouseClicked="#onSquareClick" stroke="BLACK" strokeType="INSIDE" width="45.0" />
+            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="44.0" layoutX="80.0" layoutY="263.0" onMouseClicked="#onSquareClick" stroke="BLACK" strokeType="INSIDE" width="45.0" />
+            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="44.0" layoutX="125.0" layoutY="263.0" onMouseClicked="#onSquareClick" stroke="BLACK" strokeType="INSIDE" width="45.0" />
+            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="44.0" layoutX="170.0" layoutY="263.0" onMouseClicked="#onSquareClick" stroke="BLACK" strokeType="INSIDE" width="45.0" />
+            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="44.0" layoutX="215.0" layoutY="263.0" onMouseClicked="#onSquareClick" stroke="BLACK" strokeType="INSIDE" width="45.0" />
+            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="44.0" layoutX="260.0" layoutY="263.0" onMouseClicked="#onSquareClick" stroke="BLACK" strokeType="INSIDE" width="45.0" />
+            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="44.0" layoutX="305.0" layoutY="263.0" onMouseClicked="#onSquareClick" stroke="BLACK" strokeType="INSIDE" width="45.0" />
+            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="44.0" layoutX="350.0" layoutY="263.0" onMouseClicked="#onSquareClick" stroke="BLACK" strokeType="INSIDE" width="45.0" />
+            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="44.0" layoutX="395.0" layoutY="263.0" onMouseClicked="#onSquareClick" stroke="BLACK" strokeType="INSIDE" width="45.0" />
+            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="44.0" layoutX="440.0" layoutY="263.0" onMouseClicked="#onSquareClick" stroke="BLACK" strokeType="INSIDE" width="45.0" />
+            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="44.0" layoutX="80.0" layoutY="307.0" onMouseClicked="#onSquareClick" stroke="BLACK" strokeType="INSIDE" width="45.0" />
+            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="44.0" layoutX="125.0" layoutY="307.0" onMouseClicked="#onSquareClick" stroke="BLACK" strokeType="INSIDE" width="45.0" />
+            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="44.0" layoutX="170.0" layoutY="307.0" onMouseClicked="#onSquareClick" stroke="BLACK" strokeType="INSIDE" width="45.0" />
+            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="44.0" layoutX="215.0" layoutY="307.0" onMouseClicked="#onSquareClick" stroke="BLACK" strokeType="INSIDE" width="45.0" />
+            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="44.0" layoutX="260.0" layoutY="307.0" onMouseClicked="#onSquareClick" stroke="BLACK" strokeType="INSIDE" width="45.0" />
+            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="44.0" layoutX="305.0" layoutY="307.0" onMouseClicked="#onSquareClick" stroke="BLACK" strokeType="INSIDE" width="45.0" />
+            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="44.0" layoutX="350.0" layoutY="307.0" onMouseClicked="#onSquareClick" stroke="BLACK" strokeType="INSIDE" width="45.0" />
+            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="44.0" layoutX="395.0" layoutY="307.0" onMouseClicked="#onSquareClick" stroke="BLACK" strokeType="INSIDE" width="45.0" />
+            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="44.0" layoutX="440.0" layoutY="307.0" onMouseClicked="#onSquareClick" stroke="BLACK" strokeType="INSIDE" width="45.0" />
+            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="44.0" layoutX="80.0" layoutY="351.0" onMouseClicked="#onSquareClick" stroke="BLACK" strokeType="INSIDE" width="45.0" />
+            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="44.0" layoutX="125.0" layoutY="351.0" onMouseClicked="#onSquareClick" stroke="BLACK" strokeType="INSIDE" width="45.0" />
+            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="44.0" layoutX="170.0" layoutY="351.0" onMouseClicked="#onSquareClick" stroke="BLACK" strokeType="INSIDE" width="45.0" />
+            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="44.0" layoutX="215.0" layoutY="351.0" onMouseClicked="#onSquareClick" stroke="BLACK" strokeType="INSIDE" width="45.0" />
+            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="44.0" layoutX="260.0" layoutY="351.0" onMouseClicked="#onSquareClick" stroke="BLACK" strokeType="INSIDE" width="45.0" />
+            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="44.0" layoutX="305.0" layoutY="351.0" onMouseClicked="#onSquareClick" stroke="BLACK" strokeType="INSIDE" width="45.0" />
+            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="44.0" layoutX="350.0" layoutY="351.0" onMouseClicked="#onSquareClick" stroke="BLACK" strokeType="INSIDE" width="45.0" />
+            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="44.0" layoutX="395.0" layoutY="351.0" onMouseClicked="#onSquareClick" stroke="BLACK" strokeType="INSIDE" width="45.0" />
+            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="44.0" layoutX="440.0" layoutY="351.0" onMouseClicked="#onSquareClick" stroke="BLACK" strokeType="INSIDE" width="45.0" />
+            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="44.0" layoutX="80.0" layoutY="395.0" onMouseClicked="#onSquareClick" stroke="BLACK" strokeType="INSIDE" width="45.0" />
+            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="44.0" layoutX="125.0" layoutY="395.0" onMouseClicked="#onSquareClick" stroke="BLACK" strokeType="INSIDE" width="45.0" />
+            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="44.0" layoutX="170.0" layoutY="395.0" onMouseClicked="#onSquareClick" stroke="BLACK" strokeType="INSIDE" width="45.0" />
+            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="44.0" layoutX="215.0" layoutY="395.0" onMouseClicked="#onSquareClick" stroke="BLACK" strokeType="INSIDE" width="45.0" />
+            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="44.0" layoutX="260.0" layoutY="395.0" onMouseClicked="#onSquareClick" stroke="BLACK" strokeType="INSIDE" width="45.0" />
+            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="44.0" layoutX="305.0" layoutY="395.0" onMouseClicked="#onSquareClick" stroke="BLACK" strokeType="INSIDE" width="45.0" />
+            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="44.0" layoutX="350.0" layoutY="395.0" onMouseClicked="#onSquareClick" stroke="BLACK" strokeType="INSIDE" width="45.0" />
+            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="44.0" layoutX="395.0" layoutY="395.0" onMouseClicked="#onSquareClick" stroke="BLACK" strokeType="INSIDE" width="45.0" />
+            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="44.0" layoutX="440.0" layoutY="395.0" onMouseClicked="#onSquareClick" stroke="BLACK" strokeType="INSIDE" width="45.0" />
+         </children>
+      </Group>
+      
+      <Circle fill="WHITE" layoutX="103.0" layoutY="417.0" radius="15.0" stroke="BLACK" strokeType="INSIDE" />
+      <Circle layoutX="463.0" layoutY="65.0" radius="15.0" stroke="BLACK" strokeType="INSIDE" />
+   </children>
+</AnchorPane>

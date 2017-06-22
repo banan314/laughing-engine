@@ -5,7 +5,7 @@ import org.ggp.base.util.statemachine.Role;
 import org.ggp.base.util.statemachine.exceptions.GoalDefinitionException;
 import org.ggp.base.util.statemachine.implementation.prover.ProverStateMachine;
 import pl.prz.edu.banan314.application.converters.MachineStateConverter;
-import pl.prz.edu.banan314.game.Board;
+import pl.prz.edu.banan314.application.model.game.Board;
 
 /**
  * Created by kamil on 19.06.17.

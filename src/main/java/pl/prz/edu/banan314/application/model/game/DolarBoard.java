@@ -1,4 +1,4 @@
-package pl.prz.edu.banan314.game;
+package pl.prz.edu.banan314.application.model.game;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -8,12 +8,9 @@ import java.util.List;
  */
 public class DolarBoard extends Board {
 
-    public static final int MIN_INDEX = 0;
-    public static final int MAX_INDEX = 8;
-
     @Override
     public void initialize() {
-        assert 9 > MAX_INDEX;
+        assert 9 >= MAX_INDEX;
         squares = new Square[9][9];
 
         squares[0][0] = new Square(new Piece(Piece.Color.WHITE)); //TODO: flyweight
@@ -22,19 +19,19 @@ public class DolarBoard extends Board {
 
     @Override
     public Square get(int row, int file) {
-        row--; file--;
-
         assert row >= MIN_INDEX && row <= MAX_INDEX;
         assert file >= MIN_INDEX && file <= MAX_INDEX;
+
+        row--; file--;
 
         return squares[row][file];
     }
 
     @Override public void set(int row, int file, Square square) {
-        row--; file--;
-
         assert row >= MIN_INDEX && row <= MAX_INDEX;
         assert file >= MIN_INDEX && file <= MAX_INDEX;
+
+        row--; file--;
 
         squares[row][file] = square;
     }

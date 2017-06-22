@@ -1,4 +1,4 @@
-package pl.prz.edu.banan314.game;
+package pl.prz.edu.banan314.application.model.game;
 
 import org.ggp.base.util.gdl.grammar.GdlSentence;
 

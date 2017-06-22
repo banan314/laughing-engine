@@ -1,4 +1,4 @@
-package pl.prz.edu.banan314.game;
+package pl.prz.edu.banan314.application.model.game;
 
 /**
  * Created by kamil on 04.06.17.

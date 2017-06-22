@@ -1,7 +1,7 @@
 package pl.prz.edu.banan314.utilities.decorators;
 
-import pl.prz.edu.banan314.game.Board;
-import pl.prz.edu.banan314.game.Square;
+import pl.prz.edu.banan314.application.model.game.Board;
+import pl.prz.edu.banan314.application.model.game.Square;
 
 import java.util.ArrayList;
 import java.util.List;
