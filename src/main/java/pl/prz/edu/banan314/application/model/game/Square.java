@@ -60,6 +60,7 @@ public class Square {
         return empty;
     }
 
+    /*TODO: simplify with GdlSentence.get(index)*/
     public static Square from(GdlSentence sentence) {
         Square square = new Square();
         square.setPiece(Piece.WHITE);

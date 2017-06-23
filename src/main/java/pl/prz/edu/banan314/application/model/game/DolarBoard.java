@@ -8,6 +8,10 @@ import java.util.List;
  */
 public class DolarBoard extends Board {
 
+    public DolarBoard() {
+        initialize();
+    }
+
     @Override
     public void initialize() {
         assert 9 >= MAX_INDEX;

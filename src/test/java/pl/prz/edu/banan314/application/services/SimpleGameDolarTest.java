@@ -1,8 +1,10 @@
-package pl.prz.edu.banan314.utilities;
+package pl.prz.edu.banan314.application.services;
 
 import org.ggp.base.util.game.Game;
 import org.ggp.base.util.statemachine.Role;
 import org.junit.Test;
+import pl.prz.edu.banan314.application.services.DolarGameCreator;
+import pl.prz.edu.banan314.utilities.SimpleServerGameDolar;
 
 import java.io.File;
 
@@ -15,14 +17,14 @@ public class SimpleGameDolarTest {
 
     @Test
     public void fetchKif() throws Exception {
-        File dolarKif = SimpleServerGameDolar.fetchKif();
+        File dolarKif = DolarGameCreator.fetchKif();
         assertTrue(dolarKif.exists());
         assertTrue(dolarKif.canRead());
     }
 
     @Test
     public void readKif() throws Exception {
-        StringBuffer sb = SimpleServerGameDolar.readKif(SimpleServerGameDolar.fetchKif());
+        StringBuffer sb = DolarGameCreator.readKif(DolarGameCreator.fetchKif());
         assertNotNull(sb);
         assertNotSame(new String(""), sb.toString());
         assertSame(';', sb.charAt(3));
@@ -30,8 +32,8 @@ public class SimpleGameDolarTest {
 
     @Test
     public void testRoles() throws Exception{
-        File dolarKif = SimpleServerGameDolar.fetchKif();
-        String rulesheet = SimpleServerGameDolar.extractRuleSheet(dolarKif);
+        File dolarKif = DolarGameCreator.fetchKif();
+        String rulesheet = DolarGameCreator.extractRuleSheet(dolarKif);
         final Game game = Game.createEphemeralGame(rulesheet);
 
         assertEquals(2, Role.computeRoles(game.getRules()).size());

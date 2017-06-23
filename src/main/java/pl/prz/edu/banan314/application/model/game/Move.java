@@ -3,23 +3,34 @@ package pl.prz.edu.banan314.application.model.game;
 /**
  * Created by kamil on 04.06.17.
  */
+
+import lombok.*;
+import org.ggp.base.util.gdl.grammar.GdlSentence;
+
+import java.util.Scanner;
+
 public class Move {
-    Piece piece;
-    Square square;
+    @Getter @Setter int file;
+    @Getter @Setter  int row;
+    @Getter @Setter Piece piece;
 
-    public Piece getPiece() {
-        return piece;
+    public static Move from(GdlSentence sentence) {
+        Move move = new Move();
+
+        assert isMark(sentence.toString());
+
+        final int file = Byte.parseByte(sentence.get(0).toString());
+        final int row =Byte.parseByte(sentence.get(1).toString());
+        final Piece piece = Piece.from(sentence.get(2).toString());
+
+        move.setFile(file);
+        move.setRow(row);
+        move.setPiece(piece);
+
+        return move;
     }
 
-    public void setPiece(Piece piece) {
-        this.piece = piece;
-    }
-
-    public Square getSquare() {
-        return square;
-    }
-
-    public void setSquare(Square square) {
-        this.square = square;
+    private static boolean isMark(String mark) {
+        return mark.contains("mark");
     }
 }

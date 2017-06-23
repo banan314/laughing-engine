@@ -3,6 +3,8 @@ package pl.prz.edu.banan314.application.commands.impl;
 import pl.prz.edu.banan314.application.exceptions.InvalidPlayerException;
 
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Created by kamil on 22.06.17.
@@ -11,6 +13,7 @@ public class CreatePlayerCommand extends PlayerCommand {
 
     private int port;
     private String name;
+    static Map<Integer, Boolean> playing = new HashMap<>();
 
     public CreatePlayerCommand(int port, String playerName) {
         this.port = port;
@@ -19,8 +22,13 @@ public class CreatePlayerCommand extends PlayerCommand {
 
     @Override
     public void execute() {
+        if(playing.containsKey(port)) {
+            if(playing.get(port))
+                return;
+        }
         try {
             playerCreator.createPlayer(port, name);
+            playing.put(port, true);
         } catch (IOException e) {
             e.printStackTrace();
         } catch (InstantiationException e) {

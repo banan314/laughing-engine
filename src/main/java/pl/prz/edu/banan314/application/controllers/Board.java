@@ -13,6 +13,8 @@ import org.ggp.base.util.observer.Event;
 import org.ggp.base.util.observer.Observer;
 import pl.prz.edu.banan314.application.model.BoardModel;
 import pl.prz.edu.banan314.application.model.event.BoardEvent;
+import pl.prz.edu.banan314.application.model.event.MoveEvent;
+import pl.prz.edu.banan314.application.model.game.Move;
 import pl.prz.edu.banan314.application.model.game.Piece;
 import pl.prz.edu.banan314.application.model.game.Square;
 
@@ -31,8 +33,6 @@ public class Board implements Observer {
 
     @FXML private AnchorPane root;
 
-    private volatile boolean circleRemoved = true;
-
     @FXML
     public void onSquareClick(MouseEvent event) {
         Rectangle square = (Rectangle) event.getSource();
@@ -47,7 +47,6 @@ public class Board implements Observer {
     }
 
     public void updateBoard(pl.prz.edu.banan314.application.model.game.Board board) {
-        ObservableList<Node> rectangles = this.board.getChildren();
 
         takeOffPiecesFromBoard();
         for(int i = MIN_INDEX; i <= MAX_INDEX; i++) {
@@ -57,7 +56,7 @@ public class Board implements Observer {
                 if (square.isEmpty()) {
                     continue;
                 }
-                putSquarePiece((Rectangle) rectangles.get(i * MAX_INDEX+j), square.getPiece().getColor());
+                putSquarePiece(getRectangle(i, j), square.getPiece().getColor());
             }
         }
     }
@@ -65,11 +64,11 @@ public class Board implements Observer {
     @FXML
     private void takeOffPiecesFromBoard() {
         System.out.println("root children");
-        Platform.runLater(() -> {
+        if(Platform.isFxApplicationThread()) {
             removeCircles();
-        });
+        }
         try {
-            Thread.sleep(500);
+            Thread.sleep(30);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
@@ -79,10 +78,30 @@ public class Board implements Observer {
         board.getChildren().removeIf(node -> node instanceof Circle);
     }
 
-    private void putSquarePiece(Rectangle rectangle, Piece.Color piece) {
-        Circle circle = BoardFactory.makePiece(rectangle, onMove);
+    private void putSquarePiece(Move move) {
+        Rectangle rectangle = getRectangle(move.getRow(), move.getFile());
 
-        board.getChildren().add(circle);
+        putSquarePiece(rectangle , move.getPiece().getColor());
+    }
+
+    private Rectangle getRectangle(int row, int file) {
+        ObservableList<Node> rectangles = this.board.getChildren();
+        return (Rectangle) rectangles.get((MAX_INDEX-row)*MAX_INDEX + file-1);
+    }
+
+    private void putSquarePiece(Rectangle rectangle, Piece.Color piece) {
+        Circle circle = BoardFactory.makePiece(rectangle, piece);
+
+        if(Platform.isFxApplicationThread()) {
+            board.getChildren().add(circle);
+        } else {
+            Platform.runLater(() -> board.getChildren().add(circle));
+            try {
+                Thread.sleep(15);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
     }
 
     @Override
@@ -92,6 +111,10 @@ public class Board implements Observer {
             pl.prz.edu.banan314.application.model.game.Board board = boardEvent.board;
 
             updateBoard(board);
+        } else if (event instanceof MoveEvent) {
+            MoveEvent moveEvent = (MoveEvent) event;
+
+            putSquarePiece(moveEvent.getMove());
         }
     }
 }

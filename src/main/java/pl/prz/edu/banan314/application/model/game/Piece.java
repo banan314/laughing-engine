@@ -6,16 +6,22 @@ package pl.prz.edu.banan314.application.model.game;
 public class Piece {
     public static final Piece WHITE = new Piece(Color.WHITE);
     public static final Piece BLACK = new Piece(Color.BLACK);
-
-    public Color getColor() {
-        return color;
-    }
-
-    public enum Color {WHITE, BLACK;};
     Color color;
 
     public Piece(Color color) {
         this.color = color;
+    }
+
+    public static Piece from(String s) {
+        if (s.equals("white")) {
+            return WHITE;
+        } else {
+            return BLACK;
+        }
+    }
+
+    public Color getColor() {
+        return color;
     }
 
     public boolean isWhite() {
@@ -26,7 +32,8 @@ public class Piece {
         return this.equals(BLACK);
     }
 
-    @Override public boolean equals(Object o) {
+    @Override
+    public boolean equals(Object o) {
         if (this == o) {
             return true;
         }
@@ -39,7 +46,10 @@ public class Piece {
         return color == piece.color;
     }
 
-    @Override public int hashCode() {
+    @Override
+    public int hashCode() {
         return color.hashCode();
     }
+
+    public enum Color {WHITE, BLACK;}
 }

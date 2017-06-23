@@ -26,6 +26,7 @@ dependencies {
             'lib/Htmlparser/htmlparser-1.4.jar',
             'lib/gdl-validation/gdl-validation-0.2.2.jar',
             'lib/gdl-validation/java-cup-11b-runtime-2015.03.26.jar',
+            'lib/lombok.jar',
     )
     //TODO: move all to test directory
     testCompile files(
@@ -43,6 +44,7 @@ dependencies {
 repositories {
     mavenCentral()
 }
+
 
 /*
  * Source jars can be specified here so the sources for these libraries will
