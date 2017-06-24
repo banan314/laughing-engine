@@ -1,5 +1,11 @@
 package pl.prz.edu.banan314.application.model;
 
+import javafx.application.Platform;
+import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.SimpleIntegerProperty;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.StringProperty;
+import javafx.beans.value.ObservableValue;
 import org.ggp.base.util.observer.Event;
 import org.ggp.base.util.observer.Observer;
 import org.ggp.base.util.observer.Subject;
@@ -24,6 +30,8 @@ public class BoardModel implements Subject {
     public Board getBoard() {
         return board;
     }
+
+    StringProperty whiteGoal = new SimpleStringProperty("-1"), blackGoal = new SimpleStringProperty("-1");
 
     public void initialize() {
         assert board != null;
@@ -51,5 +59,25 @@ public class BoardModel implements Subject {
 
         MoveEvent moveEvent = new MoveEvent(move);
         notifyObservers(moveEvent);
+    }
+
+    public void changeGoals(int whiteGoal, int blackGoal) {
+        Platform.runLater(() -> {
+            this.whiteGoal.set(String.valueOf(whiteGoal));
+            this.blackGoal.set(String.valueOf(blackGoal));
+        });
+        try {
+            Thread.sleep(20);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public StringProperty getWhiteGoalProperty() {
+        return whiteGoal;
+    }
+
+    public StringProperty getBlackGoalProperty() {
+        return blackGoal;
     }
 }

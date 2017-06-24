@@ -6,12 +6,14 @@ import javafx.fxml.FXML;
 import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
 import org.ggp.base.util.observer.Event;
 import org.ggp.base.util.observer.Observer;
+import pl.prz.edu.banan314.application.model.BoardModel;
 import pl.prz.edu.banan314.application.model.event.BoardEvent;
 import pl.prz.edu.banan314.application.model.event.MoveEvent;
 import pl.prz.edu.banan314.application.model.game.Move;
@@ -34,6 +36,19 @@ public class Board implements Observer {
     @FXML private Group piecesGroup;
     @FXML private ChoiceBox whiteEngineChoiceBox;
     @FXML private ChoiceBox blackEngineChoiceBox;
+    @FXML private Label whiteGoal, blackGoal;
+
+    private BoardModel boardModel;
+
+    public void setBoardModel(BoardModel boardModel) {
+        whiteGoal.textProperty().unbind();
+        blackGoal.textProperty().unbind();
+
+        this.boardModel = boardModel;
+
+        whiteGoal.textProperty().bind(boardModel.getWhiteGoalProperty());
+        blackGoal.textProperty().bind(boardModel.getBlackGoalProperty());
+    }
 
     @FXML
     public void onSquareClick(MouseEvent event) {

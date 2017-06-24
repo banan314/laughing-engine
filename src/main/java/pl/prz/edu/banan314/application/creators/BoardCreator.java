@@ -38,6 +38,7 @@ public class BoardCreator {
 
     private void bindModel() {
         assert boardController != null;
+        boardController.setBoardModel(boardModel);
         boardModel.addObserver(boardController);
     }
 
