@@ -5,13 +5,13 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.Group;
 import javafx.scene.Node;
+import javafx.scene.control.ChoiceBox;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
 import org.ggp.base.util.observer.Event;
 import org.ggp.base.util.observer.Observer;
-import pl.prz.edu.banan314.application.model.BoardModel;
 import pl.prz.edu.banan314.application.model.event.BoardEvent;
 import pl.prz.edu.banan314.application.model.event.MoveEvent;
 import pl.prz.edu.banan314.application.model.game.Move;
@@ -30,8 +30,10 @@ public class Board implements Observer {
     Piece.Color onMove = Piece.Color.WHITE;
 
     @FXML private Group board;
-
     @FXML private AnchorPane root;
+    @FXML private Group piecesGroup;
+    @FXML private ChoiceBox whiteEngineChoiceBox;
+    @FXML private ChoiceBox blackEngineChoiceBox;
 
     @FXML
     public void onSquareClick(MouseEvent event) {
@@ -63,8 +65,8 @@ public class Board implements Observer {
 
     @FXML
     private void takeOffPiecesFromBoard() {
-        System.out.println("root children");
-        if(Platform.isFxApplicationThread()) {
+        System.out.println("take off pieces");
+        if (Platform.isFxApplicationThread()) {
             removeCircles();
         }
         try {
@@ -75,25 +77,25 @@ public class Board implements Observer {
     }
 
     private synchronized void removeCircles() {
-        board.getChildren().removeIf(node -> node instanceof Circle);
+        piecesGroup.getChildren().clear();
     }
 
     private void putSquarePiece(Move move) {
         Rectangle rectangle = getRectangle(move.getRow(), move.getFile());
 
-        putSquarePiece(rectangle , move.getPiece().getColor());
+        putSquarePiece(rectangle, move.getPiece().getColor());
     }
 
     private Rectangle getRectangle(int row, int file) {
         ObservableList<Node> rectangles = this.board.getChildren();
-        return (Rectangle) rectangles.get((MAX_INDEX-row)*MAX_INDEX + file-1);
+        return (Rectangle) rectangles.get((MAX_INDEX-row) * MAX_INDEX+file-1);
     }
 
     private void putSquarePiece(Rectangle rectangle, Piece.Color piece) {
         Circle circle = BoardFactory.makePiece(rectangle, piece);
 
-        if(Platform.isFxApplicationThread()) {
-            board.getChildren().add(circle);
+        if (Platform.isFxApplicationThread()) {
+            piecesGroup.getChildren().add(circle);
         } else {
             Platform.runLater(() -> board.getChildren().add(circle));
             try {

@@ -5,6 +5,7 @@ package pl.prz.edu.banan314.application;
  */
 
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Scene;
