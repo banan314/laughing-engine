@@ -80,4 +80,8 @@ public class BoardModel implements Subject {
     public StringProperty getBlackGoalProperty() {
         return blackGoal;
     }
+
+    public boolean isLegal(Move move) {
+        return board.isLegal(move);
+    }
 }

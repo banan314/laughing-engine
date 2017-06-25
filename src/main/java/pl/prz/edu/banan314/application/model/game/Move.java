@@ -15,7 +15,7 @@ public class Move {
     @Getter @Setter Piece piece;
 
     public static Move from(GdlSentence sentence) {
-        Move move = new Move();
+        val move = new Move();
 
         assert isMark(sentence.toString());
 

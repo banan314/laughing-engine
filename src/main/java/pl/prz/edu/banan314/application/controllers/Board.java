@@ -11,8 +11,10 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
+import lombok.val;
 import org.ggp.base.util.observer.Event;
 import org.ggp.base.util.observer.Observer;
+import pl.prz.edu.banan314.application.common.Point;
 import pl.prz.edu.banan314.application.model.BoardModel;
 import pl.prz.edu.banan314.application.model.event.BoardEvent;
 import pl.prz.edu.banan314.application.model.event.MoveEvent;
@@ -54,9 +56,33 @@ public class Board implements Observer {
     public void onSquareClick(MouseEvent event) {
         Rectangle square = (Rectangle) event.getSource();
 
-        putSquarePiece(square, onMove);
+        try {
+            val point = rectangle2Point(square);
+            Move move = new Move();
+            move.setRow(point.y);
+            move.setFile(point.x);
+            move.setPiece(new Piece(onMove));
 
-        turnColor();
+            if(boardModel.isLegal(move)) {
+                boardModel.makeMove(move);
+                putSquarePiece(square, onMove);
+                turnColor();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    private Point<Integer> rectangle2Point(Rectangle rectangle) throws Exception {
+        int which = 0;
+        for(Node square : board.getChildren()) {
+            Rectangle squareRectangle = (Rectangle)square;
+            if(rectangle == squareRectangle) {
+                return new Point(which%MAX_INDEX+1, MAX_INDEX - which/MAX_INDEX);
+            }
+            which++;
+        }
+        throw new Exception("not in board children");
     }
 
     private void turnColor() {

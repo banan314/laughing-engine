@@ -20,5 +20,7 @@ public abstract class Board {
 
     public abstract void set(Square square);
 
-    public abstract List<Square> getNeighbors(int file, int row);
+    public abstract List<Square> get8Neighbors(int file, int row);
+
+    public abstract boolean isLegal(Move move);
 }

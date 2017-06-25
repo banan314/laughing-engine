@@ -7,3 +7,4 @@
 .idea/
 src/test/resources/
 src/test/scala/
+src/main/other/*

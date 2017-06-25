@@ -11,14 +11,16 @@ public class BoardFactory {
     final static String BLACK_STYLE = "-fx-fill: black";
 
     static Circle makePiece(Rectangle square, Piece.Color color) {
-        Point squareCenter = new Point(square.getLayoutX()+square.getWidth() / 2, square.getLayoutY()+square.getHeight() / 2);
+        Point squareCenter = new Point(square.getLayoutX()+square.getWidth() / 2, square.getLayoutY()
+                +square
+                .getHeight() / 2);
 
         Circle piece = new Circle();
         initializePiece(squareCenter, piece, color);
         return piece;
     }
 
-    static void initializePiece(Point squareCenter, Circle piece, Piece.Color color) {
+    static void initializePiece(Point<Double> squareCenter, Circle piece, Piece.Color color) {
         piece.setCenterX(squareCenter.x);
         piece.setCenterY(squareCenter.y);
         piece.setRadius(13);
