@@ -52,6 +52,11 @@ public class ServerObserverImpl extends ServerObserver {
             assert whiteMove.getPiece().isWhite();
             boardModel.makeMove(whiteMove);
         }
+        try {
+            Thread.sleep(20); //so that view can be updated
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
     }
 
     private boolean isNoop(GdlSentence blackSentence) {

@@ -102,7 +102,6 @@ eclipse {
 test {
     include 'org/ggp/base/test/AllTests.class'
 }
-
 //Various applications that can be run from Gradle:
 
 //Note: The clojureConsole task should be run with the -q flag to quiet Gradle's normal output.

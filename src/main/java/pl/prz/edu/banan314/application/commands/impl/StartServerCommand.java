@@ -14,10 +14,5 @@ public class StartServerCommand extends ServerCommand {
     @Override
     public void execute() {
         gameServer.start();
-        try {
-            gameServer.join();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
     }
 }
