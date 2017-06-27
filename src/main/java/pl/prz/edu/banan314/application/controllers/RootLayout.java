@@ -3,11 +3,12 @@ package pl.prz.edu.banan314.application.controllers;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
 import pl.prz.edu.banan314.application.DolarMainApp;
-import pl.prz.edu.banan314.application.commands.impl.CreatePlayerCommand;
-import pl.prz.edu.banan314.application.commands.impl.ServerCommand;
-import pl.prz.edu.banan314.application.commands.impl.StartServerCommand;
+import pl.prz.edu.banan314.application.commands.ConfigurableCommand;
+import pl.prz.edu.banan314.application.commands.impl.player.CreatePlayerCommand;
+import pl.prz.edu.banan314.application.commands.impl.player.CreatePlayersCommand;
+import pl.prz.edu.banan314.application.commands.impl.server.ServerCommand;
+import pl.prz.edu.banan314.application.commands.impl.server.StartServerCommand;
 import pl.prz.edu.banan314.application.model.BoardModel;
 
 /**
@@ -16,9 +17,14 @@ import pl.prz.edu.banan314.application.model.BoardModel;
 public class RootLayout {
 
     BoardModel boardModel;
+    DolarMainApp parentApp;
 
     public void setBoardModel(BoardModel boardModel) {
         this.boardModel = boardModel;
+    }
+
+    public void setParentApp(DolarMainApp parentApp) {
+        this.parentApp = parentApp;
     }
 
     public void newGameWithRandomPlayers() {
@@ -55,6 +61,12 @@ public class RootLayout {
                 "to go)");
 
         alert.showAndWait();
+    }
+
+    @FXML
+    public void handleNewGame() {
+        ConfigurableCommand command = new CreatePlayersCommand();
+        parentApp.getBoardController().execute(command);
     }
 
     @FXML

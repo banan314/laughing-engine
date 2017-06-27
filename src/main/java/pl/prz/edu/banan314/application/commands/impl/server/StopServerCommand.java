@@ -1,4 +1,4 @@
-package pl.prz.edu.banan314.application.commands.impl;
+package pl.prz.edu.banan314.application.commands.impl.server;
 
 /**
  * Created by kamil on 25.06.17.

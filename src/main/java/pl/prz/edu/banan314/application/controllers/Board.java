@@ -1,11 +1,16 @@
 package pl.prz.edu.banan314.application.controllers;
 
 import javafx.application.Platform;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
 import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
@@ -14,14 +19,19 @@ import javafx.scene.shape.Rectangle;
 import lombok.val;
 import org.ggp.base.util.observer.Event;
 import org.ggp.base.util.observer.Observer;
+import pl.prz.edu.banan314.application.commands.ConfigurableCommand;
 import pl.prz.edu.banan314.application.common.Point;
 import pl.prz.edu.banan314.application.model.BoardModel;
+import pl.prz.edu.banan314.application.model.ConfigurationModel;
 import pl.prz.edu.banan314.application.model.event.BoardEvent;
 import pl.prz.edu.banan314.application.model.event.MoveEvent;
 import pl.prz.edu.banan314.application.model.game.Move;
 import pl.prz.edu.banan314.application.model.game.Piece;
 import pl.prz.edu.banan314.application.model.game.Square;
 
+
+import java.net.URL;
+import java.util.ResourceBundle;
 
 import static pl.prz.edu.banan314.application.model.game.Board.MIN_INDEX;
 import static pl.prz.edu.banan314.application.model.game.Board.MAX_INDEX;
@@ -30,17 +40,34 @@ import static pl.prz.edu.banan314.application.model.game.Board.MAX_INDEX;
 /**
  * Created by kamil on 10.06.17.
  */
-public class Board implements Observer {
+public class Board implements Observer, Initializable {
     Piece.Color onMove = Piece.Color.WHITE;
 
     @FXML private Group board;
     @FXML private AnchorPane root;
     @FXML private Group piecesGroup;
-    @FXML private ChoiceBox whiteEngineChoiceBox;
-    @FXML private ChoiceBox blackEngineChoiceBox;
+    @FXML private ChoiceBox<String> whiteEngineChoiceBox;
+    @FXML private ChoiceBox<String> blackEngineChoiceBox;
     @FXML private Label whiteGoal, blackGoal;
+    @FXML private ComboBox<String> engineComboBox;
 
     private BoardModel boardModel;
+    private ConfigurationModel configurationModel;
+
+    @Override // This method is called by the FXMLLoader when initialization is complete
+    public void initialize(URL fxmlFileLocation, ResourceBundle resources) {
+        /*engineComboBox.getItems().addAll(
+                "random",
+                "noop",
+                "monte carlo"
+        );*/
+        /*whiteEngineChoiceBox.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>() {
+            @Override
+            public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+                configurationModel
+            }
+        });*/
+    }
 
     public void setBoardModel(BoardModel boardModel) {
         whiteGoal.textProperty().unbind();
@@ -50,6 +77,16 @@ public class Board implements Observer {
 
         whiteGoal.textProperty().bind(boardModel.getWhiteGoalProperty());
         blackGoal.textProperty().bind(boardModel.getBlackGoalProperty());
+    }
+
+    public void setConfigurationModel(ConfigurationModel configurationModel) {
+        whiteEngineChoiceBox.valueProperty().unbind();
+        blackEngineChoiceBox.valueProperty().unbind();
+
+        this.configurationModel = configurationModel;
+
+        whiteEngineChoiceBox.valueProperty().bind(configurationModel.whiteEngineProperty());
+        blackEngineChoiceBox.valueProperty().bind(configurationModel.blackEngineProperty());
     }
 
     @FXML
@@ -145,6 +182,12 @@ public class Board implements Observer {
                 e.printStackTrace();
             }
         }
+    }
+
+    public void execute(ConfigurableCommand command) {
+        System.out.println(whiteEngineChoiceBox.getValue());
+//        command.configure(configurationModel);
+//        command.execute();
     }
 
     @Override

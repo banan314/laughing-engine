@@ -27,11 +27,11 @@ public class BoardModel implements Subject {
     Board board = new DolarBoard();
     private List<Observer> observers = new ArrayList<Observer>();
 
+    StringProperty whiteGoal = new SimpleStringProperty("-1"), blackGoal = new SimpleStringProperty("-1");
+
     public Board getBoard() {
         return board;
     }
-
-    StringProperty whiteGoal = new SimpleStringProperty("-1"), blackGoal = new SimpleStringProperty("-1");
 
     public void initialize() {
         assert board != null;

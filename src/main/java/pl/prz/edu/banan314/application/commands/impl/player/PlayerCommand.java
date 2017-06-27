@@ -1,4 +1,4 @@
-package pl.prz.edu.banan314.application.commands.impl;
+package pl.prz.edu.banan314.application.commands.impl.player;
 
 import pl.prz.edu.banan314.application.commands.Command;
 import pl.prz.edu.banan314.application.creators.PlayerCreator;

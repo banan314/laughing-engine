@@ -1,4 +1,4 @@
-package pl.prz.edu.banan314.application.commands.impl;
+package pl.prz.edu.banan314.application.commands.impl.server;
 
 import org.ggp.base.server.GameServer;
 

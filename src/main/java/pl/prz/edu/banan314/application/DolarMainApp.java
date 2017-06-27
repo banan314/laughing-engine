@@ -14,6 +14,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
+import pl.prz.edu.banan314.application.controllers.Board;
 import pl.prz.edu.banan314.application.controllers.RootLayout;
 import pl.prz.edu.banan314.application.creators.BoardCreator;
 
@@ -52,7 +53,13 @@ public class DolarMainApp extends Application {
         }
 
         boardCreator.prepareGame();
+
         RootLayout rootLayout = loader.getController();
         rootLayout.setBoardModel(boardCreator.getBoardModel());
+        rootLayout.setParentApp(this);
+    }
+
+    public Board getBoardController() {
+        return boardCreator.getController();
     }
 }
