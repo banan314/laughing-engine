@@ -166,7 +166,8 @@
 
 (<= (next (cell ?x ?y ?mark))
     (true (cell ?x ?y ?mark))
-    (does ?player noop))
+    (does ?player noop)
+    (true (control ?player)))
 
 (<= (distinctCell ?x ?y ?m ?n)
     (distinct ?x ?m)
