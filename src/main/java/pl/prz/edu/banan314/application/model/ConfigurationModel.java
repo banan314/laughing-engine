@@ -2,32 +2,27 @@ package pl.prz.edu.banan314.application.model;
 
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
+import lombok.Setter;
 import pl.prz.edu.banan314.application.model.engine.Engine;
 
 /**
  * Created by kamil on 26.06.17.
  */
 public class ConfigurationModel {
-    private StringProperty whiteEngineProperty = new SimpleStringProperty();
-    private StringProperty blackEngineProperty = new SimpleStringProperty();
 
-    public StringProperty whiteEngineProperty() {
-        return whiteEngineProperty;
-    }
-
-    public StringProperty blackEngineProperty() {
-        return blackEngineProperty;
-    }
+    @Setter String whiteEngine, blackEngine;
 
     public String getWhiteEngineProperty() {
-        return toEngineName(whiteEngineProperty.getValue());
+        return toEngineName(whiteEngine);
     }
 
     public String getBlackEngineProperty() {
-        return toEngineName(blackEngineProperty.get());
+        return toEngineName(blackEngine);
     }
 
     private String toEngineName(String choice) {
+        if(null == choice)
+            return Engine.RANDOM_ENGINE.toString();
         if(choice.toLowerCase().contains("noop"))
             return Engine.NOOP_ENGINE.toString();
         else if(choice.toLowerCase().contains("random"))

@@ -31,6 +31,7 @@ public final class RandomGamer extends StateMachineGamer
     @Override
     public Move stateMachineSelectMove(long timeout) throws TransitionDefinitionException, MoveDefinitionException, GoalDefinitionException
     {
+        System.out.println("Hello from random gamer 1");
         long start = System.currentTimeMillis();
 
         List<Move> moves = getStateMachine().getLegalMoves(getCurrentState(), getRole());

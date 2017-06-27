@@ -202,6 +202,7 @@ public abstract class StateMachineGamer extends Gamer
     @Override
     public final GdlTerm selectMove(long timeout) throws MoveSelectionException
     {
+        System.out.println("Hello from random gamer (selectMove)");
         try
         {
             stateMachine.doPerMoveWork();

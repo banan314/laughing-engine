@@ -96,6 +96,8 @@ public final class GamePlayer extends Thread implements Subject
                 Request request = new RequestFactory().create(gamer, in);
                 String out = request.process(System.currentTimeMillis());
 
+                System.out.printf("request out: %s\n", out);
+
                 HttpWriter.writeAsServer(connection, out);
                 connection.close();
                 notifyObservers(new PlayerSentMessageEvent(out));

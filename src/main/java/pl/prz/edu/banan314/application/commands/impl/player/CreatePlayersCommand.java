@@ -14,6 +14,8 @@ public class CreatePlayersCommand implements ConfigurableCommand  {
     public void execute() {
         new CreatePlayerCommand(whiteEngine.port, whiteEngine.getName()).execute();
         new CreatePlayerCommand(blackEngine.port, blackEngine.getName()).execute();
+
+        System.out.printf("white: %s\nblack: %s\n", whiteEngine.getName(), blackEngine.getName());
     }
 
     @Override

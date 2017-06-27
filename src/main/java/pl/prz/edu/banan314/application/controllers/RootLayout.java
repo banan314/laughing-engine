@@ -34,6 +34,10 @@ public class RootLayout {
         createPlayerCommand.setPort(9148)
                 .execute();
 
+        prepareGameEnvironment();
+    }
+
+    private void prepareGameEnvironment() {
         StartServerCommand startServerCommand = new StartServerCommand(ServerCommand.getGameServer());
         startServerCommand.execute();
 
@@ -67,6 +71,8 @@ public class RootLayout {
     public void handleNewGame() {
         ConfigurableCommand command = new CreatePlayersCommand();
         parentApp.getBoardController().execute(command);
+
+        prepareGameEnvironment();
     }
 
     @FXML

@@ -17,7 +17,7 @@ public final class SampleNoopGamer extends SampleGamer
     @Override
     public Move stateMachineSelectMove(long timeout) throws TransitionDefinitionException, MoveDefinitionException, GoalDefinitionException
     {
-        return new Move(GdlPool.getConstant("NOOP"));
+        return new Move(GdlPool.getConstant("noop"));
     }
 
     @Override

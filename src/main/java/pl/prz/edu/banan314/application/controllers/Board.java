@@ -56,17 +56,18 @@ public class Board implements Observer, Initializable {
 
     @Override // This method is called by the FXMLLoader when initialization is complete
     public void initialize(URL fxmlFileLocation, ResourceBundle resources) {
-        /*engineComboBox.getItems().addAll(
-                "random",
-                "noop",
-                "monte carlo"
-        );*/
-        /*whiteEngineChoiceBox.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>() {
+        whiteEngineChoiceBox.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>() {
             @Override
             public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
-                configurationModel
+                configurationModel.setWhiteEngine(newValue);
             }
-        });*/
+        });
+        blackEngineChoiceBox.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>() {
+            @Override
+            public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+                configurationModel.setBlackEngine(newValue);
+            }
+        });
     }
 
     public void setBoardModel(BoardModel boardModel) {
@@ -80,13 +81,10 @@ public class Board implements Observer, Initializable {
     }
 
     public void setConfigurationModel(ConfigurationModel configurationModel) {
-        whiteEngineChoiceBox.valueProperty().unbind();
-        blackEngineChoiceBox.valueProperty().unbind();
-
         this.configurationModel = configurationModel;
 
-        whiteEngineChoiceBox.valueProperty().bind(configurationModel.whiteEngineProperty());
-        blackEngineChoiceBox.valueProperty().bind(configurationModel.blackEngineProperty());
+        configurationModel.setWhiteEngine(whiteEngineChoiceBox.getSelectionModel().getSelectedItem());
+        configurationModel.setBlackEngine(blackEngineChoiceBox.getSelectionModel().getSelectedItem());
     }
 
     @FXML
@@ -185,9 +183,8 @@ public class Board implements Observer, Initializable {
     }
 
     public void execute(ConfigurableCommand command) {
-        System.out.println(whiteEngineChoiceBox.getValue());
-//        command.configure(configurationModel);
-//        command.execute();
+        command.configure(configurationModel);
+        command.execute();
     }
 
     @Override

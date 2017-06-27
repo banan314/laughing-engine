@@ -17,8 +17,8 @@ public enum Engine {
     public String toString() {
         switch (this) {
             case RANDOM_ENGINE: return "RandomGamer";
-            case NOOP_ENGINE: return "NoopGamer";
-            case MONTE_CARLO_ENGINE: return "MonteCarloEngine";
+            case NOOP_ENGINE: return "SampleNoopGamer";
+            case MONTE_CARLO_ENGINE: return "SampleMonteCarloGamer";
         }
         return "undefined";
     }
