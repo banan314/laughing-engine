@@ -5,6 +5,8 @@ import org.ggp.base.server.event.ServerNewGameStateEvent;
 import org.ggp.base.server.event.ServerNewMovesEvent;
 import org.ggp.base.util.gdl.grammar.GdlSentence;
 import org.ggp.base.util.match.Match;
+import pl.prz.edu.banan314.application.commands.impl.server.NewServerCommand;
+import pl.prz.edu.banan314.application.commands.impl.server.StopServerCommand;
 import pl.prz.edu.banan314.application.model.BoardModel;
 import pl.prz.edu.banan314.application.model.game.Move;
 import pl.prz.edu.banan314.utilities.ServerObserver;
@@ -68,5 +70,8 @@ public class ServerObserverImpl extends ServerObserver {
         List<Integer> goals = event.getGoals();
         int blackGoal = goals.get(BLACK_INDEX), whiteGoal = goals.get(WHITE_INDEX);
         boardModel.changeGoals(whiteGoal, blackGoal);
+
+        new StopServerCommand().execute();
+        new NewServerCommand().execute();
     }
 }

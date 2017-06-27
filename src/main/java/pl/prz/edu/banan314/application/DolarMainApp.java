@@ -25,7 +25,7 @@ public class DolarMainApp extends Application {
     public static final String BASE_VIEW_URL = "file:./src/main/java/pl/prz/edu/banan314/application/view/";
 
     private BorderPane overview;
-    private BoardCreator boardCreator = new BoardCreator();
+    private BoardCreator boardCreator = BoardCreator.getInstance();
 
     public static void main(String[] args) {
         launch(args);

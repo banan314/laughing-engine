@@ -7,12 +7,10 @@ public class StopServerCommand extends ServerCommand {
 
     @Override
     public void execute() {
-        try {
-            gameServer.join();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
+        if(gameServer != null) {
+            gameServer.abort();
+            gameServer = null;
+            System.gc();
         }
-        //FIXME: it won't work
-        gameServer.abort();
     }
 }

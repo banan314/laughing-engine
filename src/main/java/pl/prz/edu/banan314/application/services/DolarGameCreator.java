@@ -13,11 +13,14 @@ import java.util.List;
  */
 public class DolarGameCreator {
     public static final String DOLAR_KIF_PATH = "./games/games/dolar/dolar.kif";
+    private static String rulesheet = null;
 
     public static Game createDolarGame() {
         File dolarKif = fetchKif();
 
-        String rulesheet = extractRuleSheet(dolarKif);
+        if (rulesheet == null) {
+            rulesheet = extractRuleSheet(dolarKif);
+        }
         return Game.createEphemeralGame(rulesheet);
     }
 
@@ -37,11 +40,11 @@ public class DolarGameCreator {
         List<String> lines = null;
         try {
             lines = Files.readAllLines(dolarKif.toPath(), Charset.defaultCharset());
+            for(String line : lines) {
+                sb.append(line).append('\n');
+            }
         } catch (IOException e) {
             e.printStackTrace();
-        }
-        for(String line : lines) {
-            sb.append(line).append('\n');
         }
         return sb;
     }

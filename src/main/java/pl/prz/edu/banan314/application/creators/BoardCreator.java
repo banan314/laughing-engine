@@ -15,8 +15,21 @@ import java.net.URL;
 
 /**
  * Created by kamil on 14.06.17.
+ * I make singleton because I don't see any other way
  */
 public class BoardCreator {
+    private static BoardCreator instance = null;
+
+    protected BoardCreator() {
+    }
+
+    public static BoardCreator getInstance() {
+        if(null == instance) {
+            instance = new BoardCreator();
+        }
+        return instance;
+    }
+
     final private static String BASE_VIEW_URL = DolarMainApp.BASE_VIEW_URL;
 
     BoardModel boardModel = new BoardModel();
@@ -51,6 +64,10 @@ public class BoardCreator {
         NewServerCommand newServerCommand = new NewServerCommand();
         newServerCommand.execute();
 
+        fillServerTraits();
+    }
+
+    public synchronized void fillServerTraits() {
         ServerObserverImpl serverObserver = new ServerObserverImpl(ServerCommand.getMatch());
         serverObserver.setBoardModel(boardModel);
         ServerCommand.getGameServer().addObserver(serverObserver);

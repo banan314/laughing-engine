@@ -7,7 +7,7 @@ import pl.prz.edu.banan314.application.model.ConfigurationModel;
 /**
  * Created by kamil on 26.06.17.
  */
-public class CreatePlayersCommand implements ConfigurableCommand  {
+public class CreatePlayersCommand extends ConfigurablePlayerCommand  {
     EngineConfiguration whiteEngine, blackEngine;
 
     @Override

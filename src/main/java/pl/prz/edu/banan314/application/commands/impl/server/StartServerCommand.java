@@ -13,6 +13,10 @@ public class StartServerCommand extends ServerCommand {
 
     @Override
     public void execute() {
+        if(gameServer == null) {
+            new NewServerCommand().execute();
+        }
+        assert gameServer != null : "game server is null";
         gameServer.start();
     }
 }

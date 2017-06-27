@@ -125,7 +125,6 @@ public class Board implements Observer, Initializable {
     }
 
     public void updateBoard(pl.prz.edu.banan314.application.model.game.Board board) {
-
         takeOffPiecesFromBoard();
         for(int i = MIN_INDEX; i <= MAX_INDEX; i++) {
             for(int j = MIN_INDEX; j < MAX_INDEX; j++) {
@@ -145,10 +144,13 @@ public class Board implements Observer, Initializable {
         if (Platform.isFxApplicationThread()) {
             removeCircles();
         }
-        try {
-            Thread.sleep(30);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
+        else {
+            Platform.runLater(() -> removeCircles());
+            try {
+                Thread.sleep(30);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
         }
     }
 
@@ -173,7 +175,7 @@ public class Board implements Observer, Initializable {
         if (Platform.isFxApplicationThread()) {
             piecesGroup.getChildren().add(circle);
         } else {
-            Platform.runLater(() -> board.getChildren().add(circle));
+            Platform.runLater(() -> piecesGroup.getChildren().add(circle));
             try {
                 Thread.sleep(15);
             } catch (InterruptedException e) {
