@@ -7,6 +7,7 @@ import random
 from org.ggp.base.util.statemachine import MachineState
 from org.ggp.base.util.statemachine.implementation.prover import ProverStateMachine
 from org.ggp.base.player.gamer.statemachine import StateMachineGamer
+from pl.prz.edu.banan314.utilities.decorators import StateMachineDecorator
 
 class SamplePythonGamer(StateMachineGamer):
 
@@ -28,4 +29,4 @@ class SamplePythonGamer(StateMachineGamer):
         pass        
         
     def getInitialStateMachine(self):
-        return ProverStateMachine()
+        return StateMachineDecorator()

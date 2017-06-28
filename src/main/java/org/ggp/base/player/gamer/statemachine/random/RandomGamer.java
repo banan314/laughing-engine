@@ -16,6 +16,7 @@ import org.ggp.base.util.statemachine.exceptions.GoalDefinitionException;
 import org.ggp.base.util.statemachine.exceptions.MoveDefinitionException;
 import org.ggp.base.util.statemachine.exceptions.TransitionDefinitionException;
 import org.ggp.base.util.statemachine.implementation.prover.ProverStateMachine;
+import pl.prz.edu.banan314.utilities.decorators.StateMachineDecorator;
 
 /**
  * RandomGamer is a very simple state-machine-based Gamer that will always
@@ -45,7 +46,7 @@ public final class RandomGamer extends StateMachineGamer
 
     @Override
     public StateMachine getInitialStateMachine() {
-        return new CachedStateMachine(new ProverStateMachine());
+        return new CachedStateMachine(new StateMachineDecorator());
     }
 
     @Override

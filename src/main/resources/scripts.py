@@ -6,10 +6,11 @@
 
 from org.ggp.base.util.game import GameRepository
 from org.ggp.base.util.statemachine.implementation.prover import ProverStateMachine
+from pl.prz.edu.banan314.utilities.decorators import StateMachineDecorator
 
 def load_game(game_name):
     game_description = GameRepository.getDefaultRepository().getGame(game_name).getRules()
-    machine = ProverStateMachine()
+    machine = StateMachineDecorator()
     machine.initialize(game_description)
     return machine
     

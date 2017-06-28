@@ -38,6 +38,7 @@ import org.ggp.base.util.statemachine.StateMachine;
 import org.ggp.base.util.statemachine.exceptions.GoalDefinitionException;
 import org.ggp.base.util.statemachine.exceptions.MoveDefinitionException;
 import org.ggp.base.util.statemachine.implementation.prover.ProverStateMachine;
+import pl.prz.edu.banan314.utilities.decorators.StateMachineDecorator;
 
 public final class GameServer extends Thread implements Subject
 {
@@ -75,7 +76,7 @@ public final class GameServer extends Thread implements Subject
             }
         }
 
-        stateMachine = new ProverStateMachine();
+        stateMachine = new StateMachineDecorator();
         stateMachine.initialize(match.getGame().getRules());
         currentState = stateMachine.getInitialState();
         previousMoves = null;

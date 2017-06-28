@@ -42,6 +42,7 @@ import org.ggp.base.util.ui.GameSelector;
 import org.ggp.base.util.ui.JLabelBold;
 import org.ggp.base.util.ui.NativeUI;
 import org.ggp.base.util.ui.PlayerSelector;
+import pl.prz.edu.banan314.utilities.decorators.StateMachineDecorator;
 
 @SuppressWarnings("serial")
 public final class Server extends JPanel implements ActionListener
@@ -211,7 +212,7 @@ public final class Server extends JPanel implements ActionListener
             if (theGame == null)
                 return;
 
-            StateMachine stateMachine = new ProverStateMachine();
+            StateMachine stateMachine = new StateMachineDecorator();
             stateMachine.initialize(theGame.getRules());
             List<Role> roles = stateMachine.getRoles();
 
