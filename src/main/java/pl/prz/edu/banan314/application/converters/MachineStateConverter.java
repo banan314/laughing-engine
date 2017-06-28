@@ -2,6 +2,7 @@ package pl.prz.edu.banan314.application.converters;
 
 import org.ggp.base.util.gdl.grammar.GdlSentence;
 import org.ggp.base.util.statemachine.MachineState;
+import pl.prz.edu.banan314.application.exceptions.InvalidCellSentenceException;
 import pl.prz.edu.banan314.application.model.game.Board;
 import pl.prz.edu.banan314.application.model.game.DolarBoard;
 import pl.prz.edu.banan314.application.model.game.Square;
@@ -23,7 +24,11 @@ public class MachineStateConverter {
         Board board = new DolarBoard();
         board.initialize();
         for(GdlSentence sentence : sentences) {
-            board.set(Square.from(sentence));
+            try {
+                board.set(Square.from(sentence));
+            } catch (InvalidCellSentenceException e) {
+                //it is either step or something
+            }
         }
         return board;
     }

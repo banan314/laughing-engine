@@ -1,6 +1,7 @@
 package pl.prz.edu.banan314.application.model.game;
 
 import org.ggp.base.util.gdl.grammar.GdlSentence;
+import pl.prz.edu.banan314.application.exceptions.InvalidCellSentenceException;
 
 import java.util.Scanner;
 
@@ -61,7 +62,7 @@ public class Square {
     }
 
     /*TODO: simplify with GdlSentence.get(index)*/
-    public static Square from(GdlSentence sentence) {
+    public static Square from(GdlSentence sentence) throws InvalidCellSentenceException {
         Square square = new Square();
         square.setPiece(Piece.WHITE);
 
@@ -75,9 +76,11 @@ public class Square {
 
             square.setFile(file);
             square.setRow(row);
+
+            return square;
         }
 
-        return square;
+        throw new InvalidCellSentenceException("sentence is not cell");
     }
 
     static Scanner makeScanner(String cell) {
