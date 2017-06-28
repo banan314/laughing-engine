@@ -13,7 +13,7 @@ public class Piece {
     }
 
     public static Piece from(String s) {
-        if (s.equals("white")) {
+        if (s.toLowerCase().equals("white")) {
             return WHITE;
         } else {
             return BLACK;

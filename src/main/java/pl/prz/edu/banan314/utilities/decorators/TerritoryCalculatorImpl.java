@@ -2,55 +2,53 @@ package pl.prz.edu.banan314.utilities.decorators;
 
 import pl.prz.edu.banan314.application.model.game.Board;
 import pl.prz.edu.banan314.application.model.game.Square;
+import sun.security.provider.SHA;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
-import java.util.stream.IntStream;
-import java.util.stream.Stream;
 
 /**
  * Created by kamil on 19.06.17.
  */
+
 public class TerritoryCalculatorImpl implements TerritoryCalculator {
 
-    public static final int MIN_INDEX = 0;
-    public static final int MAX_INDEX = 8;
+    public static final int MIN_INDEX = 1;
+    public static final int MAX_INDEX = 9;
 
     private final Board board;
-    private CellStateEnum[][] cellBoard = new CellStateEnum[10][10]; //board is 9x9, but we index from 1
-
-    private Stream<CellState> stateStream = IntStream.range(0, 64)
-            .mapToObj(i -> {
-                int row = i / 8;
-                int column = i % 8;
-                return new CellState(row, column, cellBoard[row][column]);
-            });
+    private CellState[][] cellBoard = new CellState[10][10]; //board is 9x9, but we index from 1
+    private CellState[][] rememberedBoard = new CellState[10][10];
 
     private int whiteScore, blackScore;
 
     TerritoryCalculatorImpl(Board board) {
         this.board = board;
-
     }
 
+    //FIXME: the cell state board is changing every time we process single cell. Should work on remembered board from
+    // previous step
     /*TODO: test it!!!!!!*/
     @Override
     public void calculate() {
         initializeCellBoard();
         copyStatesFromGameBoard();
+        copyToRemembered();
 
         while(shouldContinueCalculation()) {
             traverseBoard((i, j, state) -> {
                 processCellState(i, j, state);
             });
+            copyToRemembered();
         }
 
         ExtendedInt scoreBlack = new ExtendedInt(0),
             scoreWhite = new ExtendedInt(0);
         traverseBoard((i, j, state) -> {
-            if(state == CellStateEnum.SEEDED_WHITE)
+            if(state == CellState.SEEDED_WHITE)
                 scoreWhite.increment();
-            else if(state == CellStateEnum.SEEDED_BLACK)
+            else if(state == CellState.SEEDED_BLACK)
                 scoreBlack.increment();
         });
 
@@ -68,13 +66,15 @@ public class TerritoryCalculatorImpl implements TerritoryCalculator {
         return blackScore;
     }
 
-    private void processCellState(int file, int row, CellStateEnum state) {
-        List<CellStateEnum> adjacent;
+    private void processCellState(int file, int row, CellState state) {
+        List<CellState> adjacent;
         switch (state) {
             case EMPTY:
+                //TODO: should take 8-neighbors
                 adjacent = getNeighbors(file, row);
-                boolean white = false, black = false;
-                for(CellStateEnum square : adjacent) {
+                boolean white = false, black = false, shared = false;
+                for(CellState square : adjacent) {
+                    if(square.isDame())
                     if (square.isEmpty()) {
                         continue;
                     }
@@ -86,13 +86,13 @@ public class TerritoryCalculatorImpl implements TerritoryCalculator {
                     }
                 }
                 if(white && black)
-                    cellBoard[file][row] = CellStateEnum.SHARED;
+                    cellBoard[file][row] = CellState.SHARED;
                 else {
                     if (white) {
-                        cellBoard[file][row] = CellStateEnum.SEEDED_WHITE;
+                        cellBoard[file][row] = CellState.SEEDED_WHITE;
                     }
                     else { //black
-                        cellBoard[file][row] = CellStateEnum.SEEDED_BLACK;
+                        cellBoard[file][row] = CellState.SEEDED_BLACK;
                     }
                 }
                 break;
@@ -103,16 +103,47 @@ public class TerritoryCalculatorImpl implements TerritoryCalculator {
             case SEEDED_WHITE:
             case SEEDED_BLACK:
                 adjacent = getNeighbors(file, row);
-                for(CellStateEnum square : adjacent) {
-                    if (square == CellStateEnum.SHARED)
-                        cellBoard[file][row] = CellStateEnum.SHARED;
+                for(CellState neighbor : adjacent) {
+                    if (neighbor.isDame())
+                        cellBoard[file][row] = CellState.CONTAMINATED;
+                    if(neighbor.isSeeded() && neighbor != state) {
+                        cellBoard[file][row] = CellState.CONTAMINATED;
+                    }
                 }
+                break;
+            case CONTAMINATED:
+                System.out.println("contaminated: " + file + ", " + row);
+                cellBoard[file][row] = CellState.SHARED;
                 break;
         }
     }
 
-    protected List<CellStateEnum> getNeighbors(int file, int row) {
-        List<CellStateEnum> adjacent = new ArrayList<>();
+    private void copyToRemembered() {
+        rememberedBoard = Arrays.copyOf(cellBoard, cellBoard.length);
+    }
+
+    protected List<CellState> getNeighbors(int file, int row) {
+//        return get4Neighbors(file, row);
+        return get8Neighbors(file, row);
+    }
+
+    private List<CellState> get8Neighbors(int file, int row) {
+        List<CellState> adjacent = get4Neighbors(file, row);
+
+        if(file > MIN_INDEX && row > MIN_INDEX)
+            adjacent.add(cellBoard[file-1][row-1]);
+        if(file > MIN_INDEX && row < MAX_INDEX)
+            adjacent.add(cellBoard[file-1][row+1]);
+        if(file < MAX_INDEX && row > MIN_INDEX)
+            adjacent.add(cellBoard[file+1][row-1]);
+        if(file < MAX_INDEX && row < MAX_INDEX)
+            adjacent.add(cellBoard[file+1][row+1]);
+
+        return adjacent;
+    }
+
+    private List<CellState> get4Neighbors(int file, int row) {
+        List<CellState> adjacent = new ArrayList<>();
 
         if(file > MIN_INDEX)
             adjacent.add(cellBoard[file-1][row]);
@@ -122,15 +153,15 @@ public class TerritoryCalculatorImpl implements TerritoryCalculator {
             adjacent.add(cellBoard[file][row-1]);
         if(row < MAX_INDEX)
             adjacent.add(cellBoard[file][row+1]);
-
         return adjacent;
     }
 
+    //FIXME: bad condition - should be no change
     private boolean shouldContinueCalculation() {
-        Mutable<Boolean> should = new Mutable<>(true);
+        Mutable<Boolean> should = new Mutable<>(false);
         traverseBoard((i, j, state) -> {
-            if (state == CellStateEnum.EMPTY || state == CellStateEnum.CONTAMINATED) {
-                should.set(false);
+            if (state == CellState.EMPTY || state == CellState.CONTAMINATED) {
+                should.set(true);
             }
         });
         return should.get();
@@ -139,7 +170,7 @@ public class TerritoryCalculatorImpl implements TerritoryCalculator {
     private void traverseBoard(Command method) {
         for(int i = 1; i < 10; i++) {
             for(int j = 1; j < 10; j++) {
-                method.execute(i, j, cellBoard[i][j]);
+                method.execute(i, j, rememberedBoard[i][j]);
             }
         }
     }
@@ -149,10 +180,10 @@ public class TerritoryCalculatorImpl implements TerritoryCalculator {
             Square square = board.get(i, j);
             if (!square.isEmpty()) {
                 if(square.getPiece().isBlack())
-                    cellBoard[i][j] = CellStateEnum.OCCUPIED_BLACK;
+                    cellBoard[i][j] = CellState.OCCUPIED_BLACK;
                 else {
                     assert square.getPiece().isWhite();
-                    cellBoard[i][j] = CellStateEnum.OCCUPIED_WHITE;
+                    cellBoard[i][j] = CellState.OCCUPIED_WHITE;
                 }
             }
         });
@@ -160,7 +191,7 @@ public class TerritoryCalculatorImpl implements TerritoryCalculator {
 
     private void initializeCellBoard() {
         traverseBoard((i, j, state) -> {
-            cellBoard[i][j] = CellStateEnum.EMPTY;
+            cellBoard[i][j] = CellState.EMPTY;
         });
     }
 
@@ -171,7 +202,7 @@ public class TerritoryCalculatorImpl implements TerritoryCalculator {
     * SHARED - piece with access to both black and white pieces
     * CONTAMINATED - temporary state (from SEEDED to SHARED), used to tell when to terminate
     * */
-    protected enum CellStateEnum {
+    protected enum CellState {
         EMPTY,
         SEEDED_WHITE, SEEDED_BLACK,
         OCCUPIED_WHITE, OCCUPIED_BLACK,
@@ -188,43 +219,18 @@ public class TerritoryCalculatorImpl implements TerritoryCalculator {
         public boolean isBlack() {
             return this.equals(SEEDED_BLACK) || this.equals(OCCUPIED_BLACK);
         }
+
+        public boolean isSeeded() {
+            return this.equals(SEEDED_WHITE) || this.equals(SEEDED_BLACK);
+        }
+
+        public boolean isDame() {
+            return this.equals(SHARED) || this.equals(CONTAMINATED);
+        }
     }
 
     protected interface Command {
-        public void execute(int x, int y, CellStateEnum state);
-    }
-
-    private static class CellState {
-        private final int row;
-        private final int column;
-        private final CellStateEnum state;
-
-        public CellState(int row, int column, CellStateEnum state) {
-            this.row = row;
-            this.column = column;
-            this.state = state;
-        }
-
-        public int getRow() {
-            return row;
-        }
-
-        public int getColumn() {
-            return column;
-        }
-
-        public CellStateEnum getState() {
-            return state;
-        }
-
-        @Override
-        public String toString() {
-            return "Cell{" +
-                    "row=" + row +
-                    ", column=" + column +
-                    ", state=" + state +
-                    '}';
-        }
+        public void execute(int x, int y, CellState state);
     }
 
     public class Mutable<T> {

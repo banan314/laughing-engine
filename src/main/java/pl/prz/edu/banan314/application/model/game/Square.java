@@ -17,10 +17,52 @@ public class Square {
     boolean empty = true;
     Piece piece;
 
-    Square() {}
+    Square() {
+    }
 
     public Square(Piece piece) {
         this.piece = piece;
+    }
+
+    /*TODO: simplify with GdlSentence.get(index)*/
+    public static Square from(GdlSentence sentence) throws InvalidCellSentenceException {
+        Square square = new Square();
+        square.setPiece(Piece.WHITE);
+
+        String cell = sentence.toString();
+        assert cell.length() > 5;
+        if (isCell(cell)) {
+            Scanner scanner = makeScanner(cell);
+
+            byte row = scanner.nextByte();
+            byte file = scanner.nextByte();
+
+            String colorString = scanner.next();
+
+            square.setFile(file);
+            square.setRow(row);
+            if (colorString.equals("empty")) {
+                square.setEmpty();
+            } else {
+                square.setPiece(Piece.from(colorString));
+            }
+
+            return square;
+        }
+
+        throw new InvalidCellSentenceException("sentence is not cell");
+    }
+
+    static Scanner makeScanner(String cell) {
+        int startIndex = cell.indexOf('l')+2;
+        //index of 'l' in cell shifted 2
+        // chars right
+        String squareDescription = cell.substring(startIndex);
+        return new Scanner(squareDescription);
+    }
+
+    public static boolean isCell(String cell) {
+        return cell.matches("(.*cell.*)");
     }
 
     public byte getFile() {
@@ -61,37 +103,8 @@ public class Square {
         return empty;
     }
 
-    /*TODO: simplify with GdlSentence.get(index)*/
-    public static Square from(GdlSentence sentence) throws InvalidCellSentenceException {
-        Square square = new Square();
-        square.setPiece(Piece.WHITE);
-
-        String cell = sentence.toString();
-        assert cell.length() > 5;
-        if(isCell(cell)) {
-            Scanner scanner = makeScanner(cell);
-
-            byte row = scanner.nextByte();
-            byte file = scanner.nextByte();
-
-            square.setFile(file);
-            square.setRow(row);
-
-            return square;
-        }
-
-        throw new InvalidCellSentenceException("sentence is not cell");
-    }
-
-    static Scanner makeScanner(String cell) {
-        int startIndex = cell.indexOf('l') + 2;
-        //index of 'l' in cell shifted 2
-        // chars right
-        String squareDescription = cell.substring(startIndex);
-        return new Scanner(squareDescription);
-    }
-
-    public static boolean isCell(String cell) {
-        return cell.matches("(.*cell.*)");
+    private void setEmpty() {
+        empty = true;
+        piece = null;
     }
 }

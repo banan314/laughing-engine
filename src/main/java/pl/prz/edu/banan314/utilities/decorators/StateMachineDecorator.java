@@ -13,6 +13,7 @@ import pl.prz.edu.banan314.application.model.game.Board;
 public class StateMachineDecorator extends ProverStateMachine {
 
     private Board board;
+    private TerritoryCalculator territoryCalculator;
 
     @Override
     public int getGoal(MachineState state, Role role) throws GoalDefinitionException {
@@ -23,33 +24,32 @@ public class StateMachineDecorator extends ProverStateMachine {
 
         MachineStateConverter converter = new MachineStateConverter(state);
 
-        if(null == board) {
-            board = converter.toBoard();
-        }
+        board = converter.toBoard();
+        territoryCalculator = new TerritoryCalculatorImpl(board);
 
+        territoryCalculator.calculate();
         int whiteTerritory = computeWhiteTerritory();
         int blackTerritory = computeBlackTerritory();
 
-        ourGoal += white(role) ? (whiteTerritory-blackTerritory) : (blackTerritory-whiteTerritory);
+        ourGoal += isWhite(role) ? (whiteTerritory-blackTerritory) : (blackTerritory-whiteTerritory);
 
         return ourGoal-rivalGoal;
     }
 
-    private boolean white(Role role) {
+    private boolean isWhite(Role role) {
         final String WHITE = "white";
         String roleString = role.toString();
 
         return roleString.indexOf(WHITE) >= 0;
     }
 
-    //TODO: implement
     private int computeBlackTerritory() {
-        return 0;
+        return territoryCalculator.getBlack();
     }
 
     //TODO: implement
     private int computeWhiteTerritory() {
-        return 0;
+        return territoryCalculator.getWhite();
     }
 
     Role getTheSecondRole(Role role) throws GoalDefinitionException {
