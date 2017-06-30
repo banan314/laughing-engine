@@ -4,6 +4,8 @@ import org.ggp.base.util.gdl.grammar.GdlSentence;
 import org.ggp.base.util.statemachine.MachineStateTester;
 import org.junit.Before;
 import org.junit.Test;
+import pl.edu.prz.klopusz.application.model.game.Piece;
+import pl.edu.prz.klopusz.application.model.game.Square;
 
 import static org.junit.Assert.*;
 

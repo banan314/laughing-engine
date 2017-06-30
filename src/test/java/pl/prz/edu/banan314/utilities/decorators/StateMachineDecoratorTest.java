@@ -6,7 +6,8 @@ import org.ggp.base.util.statemachine.Move;
 import org.ggp.base.util.statemachine.Role;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import pl.prz.edu.banan314.application.services.DolarGameCreator;
+import pl.edu.prz.klopusz.application.services.DolarGameCreator;
+import pl.edu.prz.klopusz.utilities.decorators.StateMachineDecorator;
 
 import java.util.List;
 

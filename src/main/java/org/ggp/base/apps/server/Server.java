@@ -37,12 +37,11 @@ import org.ggp.base.util.presence.PlayerPresence;
 import org.ggp.base.util.presence.PlayerPresenceManager.InvalidHostportException;
 import org.ggp.base.util.statemachine.Role;
 import org.ggp.base.util.statemachine.StateMachine;
-import org.ggp.base.util.statemachine.implementation.prover.ProverStateMachine;
 import org.ggp.base.util.ui.GameSelector;
 import org.ggp.base.util.ui.JLabelBold;
 import org.ggp.base.util.ui.NativeUI;
 import org.ggp.base.util.ui.PlayerSelector;
-import pl.prz.edu.banan314.utilities.decorators.StateMachineDecorator;
+import pl.edu.prz.klopusz.utilities.decorators.StateMachineDecorator;
 
 @SuppressWarnings("serial")
 public final class Server extends JPanel implements ActionListener

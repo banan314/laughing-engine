@@ -10,8 +10,7 @@ import org.ggp.base.util.statemachine.cache.CachedStateMachine;
 import org.ggp.base.util.statemachine.exceptions.GoalDefinitionException;
 import org.ggp.base.util.statemachine.exceptions.MoveDefinitionException;
 import org.ggp.base.util.statemachine.exceptions.TransitionDefinitionException;
-import org.ggp.base.util.statemachine.implementation.prover.ProverStateMachine;
-import pl.prz.edu.banan314.utilities.decorators.StateMachineDecorator;
+import pl.edu.prz.klopusz.utilities.decorators.StateMachineDecorator;
 
 /**
  * SampleGamer is a simplified version of the StateMachineGamer, dropping some

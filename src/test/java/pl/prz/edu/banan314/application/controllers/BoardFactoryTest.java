@@ -3,6 +3,8 @@ package pl.prz.edu.banan314.application.controllers;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.shape.Rectangle;
 import org.junit.jupiter.api.Test;
+import pl.edu.prz.klopusz.application.controllers.Board;
+import pl.edu.prz.klopusz.application.controllers.BoardFactory;
 
 import static org.junit.jupiter.api.Assertions.*;
 

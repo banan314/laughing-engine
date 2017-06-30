@@ -3,8 +3,7 @@ package pl.prz.edu.banan314.application.services;
 import org.ggp.base.util.game.Game;
 import org.ggp.base.util.statemachine.Role;
 import org.junit.Test;
-import pl.prz.edu.banan314.application.services.DolarGameCreator;
-import pl.prz.edu.banan314.utilities.SimpleServerGameDolar;
+import pl.edu.prz.klopusz.application.services.DolarGameCreator;
 
 import java.io.File;
 
