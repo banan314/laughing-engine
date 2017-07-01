@@ -9,6 +9,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
+import pl.edu.prz.klopusz.application.commands.impl.ShowStatusCommand;
 import pl.edu.prz.klopusz.application.controllers.Board;
 import pl.edu.prz.klopusz.application.controllers.RootLayout;
 import pl.edu.prz.klopusz.application.creators.BoardCreator;
@@ -19,6 +20,8 @@ public class DolarMainApp extends Application {
 
     private BorderPane overview;
     private BoardCreator boardCreator = BoardCreator.getInstance();
+
+    RootLayout rootLayoutController;
 
     public static void main(String[] args) {
         launch(args);
@@ -46,13 +49,18 @@ public class DolarMainApp extends Application {
         }
 
         boardCreator.prepareGame();
+        boardCreator.getController().setParentApp(this);
 
-        RootLayout rootLayout = loader.getController();
-        rootLayout.setBoardModel(boardCreator.getBoardModel());
-        rootLayout.setParentApp(this);
+        rootLayoutController = loader.getController();
+        rootLayoutController.setBoardModel(boardCreator.getBoardModel());
+        rootLayoutController.setParentApp(this);
+        ShowStatusCommand.setRootLayout(rootLayoutController);
     }
 
     public Board getBoardController() {
         return boardCreator.getController();
+    }
+    public void showLeftStatus(String status) {
+        rootLayoutController.showLeftStatus(status);
     }
 }

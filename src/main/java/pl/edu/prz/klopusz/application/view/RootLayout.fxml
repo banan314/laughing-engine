@@ -1,20 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.canvas.Canvas?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Menu?>
 <?import javafx.scene.control.MenuBar?>
 <?import javafx.scene.control.MenuItem?>
-<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.control.RadioMenuItem?>
+<?import javafx.scene.control.ToggleGroup?>
+<?import javafx.scene.input.KeyCodeCombination?>
 <?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.paint.Color?>
+<?import javafx.scene.text.Font?>
 
 <BorderPane prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pl.edu.prz.klopusz.application.controllers.RootLayout">
-   <center>
-      <AnchorPane prefHeight="500.0" prefWidth="714.0">
-         <children>
-            <Canvas height="257.0" layoutX="301.0" layoutY="106.0" width="261.0" />
-         </children>
-      </AnchorPane>
-   </center>
    <top>
       <MenuBar BorderPane.alignment="CENTER">
         <menus>
@@ -25,8 +26,24 @@
           </Menu>
           <Menu mnemonicParsing="false" text="Game">
             <items>
-              <MenuItem mnemonicParsing="false" onAction="#handleNewGame" text="New" />
-                  <MenuItem mnemonicParsing="false" onAction="#newGameWithRandomPlayers" text="New with random players" />
+              <MenuItem mnemonicParsing="false" onAction="#handleNewGame" text="New">
+                     <accelerator>
+                        <KeyCodeCombination alt="UP" code="N" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
+                     </accelerator></MenuItem>
+                  <MenuItem mnemonicParsing="false" onAction="#newGameWithRandomPlayers" text="New with random players">
+                     <accelerator>
+                        <KeyCodeCombination alt="DOWN" code="N" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
+                     </accelerator></MenuItem>
+                  <Menu mnemonicParsing="false" text="Mode">
+                    <items>
+                        <RadioMenuItem mnemonicParsing="false" onAction="#handleEnginesMode" text="Engine vs. Engine">
+                           <toggleGroup>
+                              <ToggleGroup fx:id="gameMode" />
+                           </toggleGroup>
+                        </RadioMenuItem>
+                        <RadioMenuItem mnemonicParsing="false" onAction="#handlePlayersMode" selected="true" text="Player vs. Player" toggleGroup="$gameMode" />
+                    </items>
+                  </Menu>
             </items>
           </Menu>
           <Menu mnemonicParsing="false" text="Help">
@@ -38,4 +55,23 @@
         </menus>
       </MenuBar>
    </top>
+   <bottom>
+       <HBox id="HBox" alignment="CENTER_LEFT" spacing="5.0" VBox.vgrow="NEVER">
+           <children>
+               <Label fx:id="leftStatus" maxHeight="1.7976931348623157E308" maxWidth="-1.0" text="Left status" HBox.hgrow="ALWAYS">
+                   <font>
+                       <Font size="11.0" fx:id="x3" />
+                   </font>
+                   <textFill>
+                       <Color blue="0.625" green="0.625" red="0.625" fx:id="x4" />
+                   </textFill>
+               </Label>
+               <Pane prefHeight="-1.0" prefWidth="-1.0" HBox.hgrow="ALWAYS" />
+               <Label fx:id="rightStatus" font="$x3" maxWidth="-1.0" text="Right status" textFill="$x4" HBox.hgrow="NEVER" />
+           </children>
+           <padding>
+               <Insets bottom="3.0" left="3.0" right="3.0" top="3.0" />
+           </padding>
+       </HBox>
+   </bottom>
 </BorderPane>

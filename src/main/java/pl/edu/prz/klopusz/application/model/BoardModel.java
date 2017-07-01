@@ -8,10 +8,7 @@ import org.ggp.base.util.observer.Observer;
 import org.ggp.base.util.observer.Subject;
 import pl.edu.prz.klopusz.application.model.event.BoardEvent;
 import pl.edu.prz.klopusz.application.model.event.MoveEvent;
-import pl.edu.prz.klopusz.application.model.game.Board;
-import pl.edu.prz.klopusz.application.model.game.DolarBoard;
-import pl.edu.prz.klopusz.application.model.game.Move;
-import pl.edu.prz.klopusz.application.model.game.Square;
+import pl.edu.prz.klopusz.application.model.game.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,6 +19,10 @@ import java.util.List;
 public class BoardModel implements Subject {
     Board board = new DolarBoard();
     private List<Observer> observers = new ArrayList<Observer>();
+
+    Piece.Color onMove = Piece.Color.WHITE;
+
+    boolean whitePassed = false, blackPassed = false;
 
     StringProperty whiteGoal = new SimpleStringProperty("-1"), blackGoal = new SimpleStringProperty("-1");
 
@@ -36,6 +37,22 @@ public class BoardModel implements Subject {
 
         BoardEvent boardEvent = new BoardEvent(board);
         notifyObservers(boardEvent);
+    }
+
+    public void setTurn(Piece.Color onMove) {
+        this.onMove = onMove;
+    }
+
+    public Piece.Color whoseTurn() {
+        return onMove;
+    }
+
+    public void setWhitePassed(boolean whitePassed) {
+        this.whitePassed = whitePassed;
+    }
+
+    public void setBlackPassed(boolean blackPassed) {
+        this.blackPassed = blackPassed;
     }
 
     @Override

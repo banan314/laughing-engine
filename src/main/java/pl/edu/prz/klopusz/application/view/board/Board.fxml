@@ -11,7 +11,7 @@
 <?import javafx.scene.shape.Circle?>
 <?import javafx.scene.shape.Rectangle?>
 
-<AnchorPane fx:id="root" prefHeight="550.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pl.edu.prz.klopusz.application.controllers.Board">
+<AnchorPane fx:id="root" prefHeight="550.0" prefWidth="800.0" styleClass="body" stylesheets="@board.css" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pl.edu.prz.klopusz.application.controllers.Board">
    <children>
       <Canvas height="272.0" layoutX="55.0" layoutY="45.0" width="307.0" />
 
@@ -105,13 +105,13 @@
       <Circle fill="WHITE" layoutX="103.0" layoutY="417.0" radius="15.0" stroke="BLACK" strokeType="INSIDE" />
       <Circle layoutX="463.0" layoutY="65.0" radius="15.0" stroke="BLACK" strokeType="INSIDE" />
       <Button layoutX="197.0" layoutY="457.0" mnemonicParsing="false" onAction="#takeOffPiecesFromBoard" prefHeight="21.0" prefWidth="123.0" text="Clear board" textAlignment="CENTER" textOverrun="CLIP" wrapText="true" />
-      <Label alignment="CENTER" layoutX="27.0" layoutY="475.0" prefHeight="16.0" prefWidth="150.0" text="WHITE ENGINE" />
-      <ChoiceBox fx:id="whiteEngineChoiceBox" layoutX="27.0" layoutY="500.0" prefWidth="150.0" value="NoopGamer">
+      <Label alignment="CENTER" layoutX="26.0" layoutY="486.0" prefHeight="16.0" prefWidth="150.0" text="WHITE ENGINE" />
+      <ChoiceBox fx:id="whiteEngineChoiceBox" layoutX="26.0" layoutY="511.0" prefWidth="150.0" value="NoopGamer">
          <items>
             <FXCollections fx:factory="observableArrayList">
-               <String fx:value="NoopGamer" />
-               <String fx:value="RandomGamer" />
-               <String fx:value="MonteCarloGamer" />
+               <!--<String fx:value="NoopGamer" />-->
+               <String fx:value="Random Gamer" />
+               <String fx:value="Monte-Carlo Gamer" />
             </FXCollections>
          </items>
       </ChoiceBox>
@@ -119,9 +119,9 @@
       <ChoiceBox fx:id="blackEngineChoiceBox" layoutX="508.0" layoutY="90.0" prefWidth="150.0" value="NoopGamer">
          <items>
             <FXCollections fx:factory="observableArrayList">
-               <String fx:value="NoopGamer" />
-               <String fx:value="RandomGamer" />
-               <String fx:value="MonteCarloGamer" />
+               <!--<String fx:value="NoopGamer" />-->
+               <String fx:value="Random Gamer" />
+               <String fx:value="Monte-Carlo Gamer" />
             </FXCollections>
          </items>
       </ChoiceBox>
@@ -130,5 +130,7 @@
       <Label layoutX="658.0" layoutY="198.0" text="Black" />
       <Label fx:id="whiteGoal" layoutX="546.0" layoutY="233.0" />
       <Label fx:id="blackGoal" layoutX="658.0" layoutY="233.0" />
+      <Button fx:id="whitePass" layoutX="29.0" layoutY="438.0" mnemonicParsing="false" onMouseClicked="#handlePass" opacity="0.8" prefHeight="26.0" prefWidth="52.0" text="Pass" />
+      <Button fx:id="blackPass" disable="true" layoutX="484.0" layoutY="17.0" mnemonicParsing="false" onMouseClicked="#handlePass" opacity="0.8" prefHeight="26.0" prefWidth="52.0" text="Pass" />
    </children>
 </AnchorPane>

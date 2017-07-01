@@ -1,0 +1,11 @@
+.button {
+    -fx-font-family: fantasy;
+    -fx-text-fill: linear-gradient(from 0px 0px to 0px 50px, orange, maroon 50%, darkblue 99%, darkviolet);
+    -fx-font-weight: 500;
+    -fx-background-color: #32e2ff;
+}
+
+/* FIXME: background doesn't change */
+body {
+    -fx-background-color: #aeff32;
+}

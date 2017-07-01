@@ -5,8 +5,10 @@ import org.ggp.base.server.event.ServerNewGameStateEvent;
 import org.ggp.base.server.event.ServerNewMovesEvent;
 import org.ggp.base.util.gdl.grammar.GdlSentence;
 import org.ggp.base.util.match.Match;
+import pl.edu.prz.klopusz.application.commands.impl.ShowRightStatusCommand;
 import pl.edu.prz.klopusz.application.commands.impl.server.NewServerCommand;
 import pl.edu.prz.klopusz.application.commands.impl.server.StopServerCommand;
+import pl.edu.prz.klopusz.application.common.Messages;
 import pl.edu.prz.klopusz.application.model.BoardModel;
 import pl.edu.prz.klopusz.application.model.game.Move;
 import pl.edu.prz.klopusz.utilities.ServerObserver;
@@ -73,5 +75,7 @@ public class ServerObserverImpl extends ServerObserver {
 
         new StopServerCommand().execute();
         new NewServerCommand().execute();
+
+        new ShowRightStatusCommand(Messages.GAME_FINISHED).execute();
     }
 }

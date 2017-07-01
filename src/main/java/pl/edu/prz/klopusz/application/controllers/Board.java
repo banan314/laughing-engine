@@ -8,6 +8,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Group;
 import javafx.scene.Node;
+import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
@@ -18,8 +19,11 @@ import javafx.scene.shape.Rectangle;
 import lombok.val;
 import org.ggp.base.util.observer.Event;
 import org.ggp.base.util.observer.Observer;
+import pl.edu.prz.klopusz.application.DolarMainApp;
 import pl.edu.prz.klopusz.application.commands.ConfigurableCommand;
+import pl.edu.prz.klopusz.application.common.Messages;
 import pl.edu.prz.klopusz.application.common.Point;
+import pl.edu.prz.klopusz.application.common.ThreadHelper;
 import pl.edu.prz.klopusz.application.model.BoardModel;
 import pl.edu.prz.klopusz.application.model.event.BoardEvent;
 import pl.edu.prz.klopusz.application.model.event.MoveEvent;
@@ -32,12 +36,14 @@ import pl.edu.prz.klopusz.application.model.game.Piece;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+import static pl.edu.prz.klopusz.application.common.Messages.*;
 
 /**
  * Created by kamil on 10.06.17.
  */
 public class Board implements Observer, Initializable {
-    Piece.Color onMove = Piece.Color.WHITE;
+
+    GameMode gameMode = GameMode.PLAYERS;
 
     @FXML private Group board;
     @FXML private AnchorPane root;
@@ -45,10 +51,12 @@ public class Board implements Observer, Initializable {
     @FXML private ChoiceBox<String> whiteEngineChoiceBox;
     @FXML private ChoiceBox<String> blackEngineChoiceBox;
     @FXML private Label whiteGoal, blackGoal;
-    @FXML private ComboBox<String> engineComboBox;
-
+    @FXML private Button whitePass;
+    @FXML private Button blackPass;
     private BoardModel boardModel;
     private ConfigurationModel configurationModel;
+
+    DolarMainApp parentApp;
 
     @Override // This method is called by the FXMLLoader when initialization is complete
     public void initialize(URL fxmlFileLocation, ResourceBundle resources) {
@@ -64,6 +72,10 @@ public class Board implements Observer, Initializable {
                 configurationModel.setBlackEngine(newValue);
             }
         });
+    }
+
+    public void setGameMode(GameMode gameMode) {
+        this.gameMode = gameMode;
     }
 
     public void setBoardModel(BoardModel boardModel) {
@@ -83,6 +95,10 @@ public class Board implements Observer, Initializable {
         configurationModel.setBlackEngine(blackEngineChoiceBox.getSelectionModel().getSelectedItem());
     }
 
+    public void setParentApp(DolarMainApp parentApp) {
+        this.parentApp = parentApp;
+    }
+
     @FXML
     public void onSquareClick(MouseEvent event) {
         Rectangle square = (Rectangle) event.getSource();
@@ -92,11 +108,11 @@ public class Board implements Observer, Initializable {
             Move move = new Move();
             move.setRow(point.y);
             move.setFile(point.x);
-            move.setPiece(new Piece(onMove));
+            move.setPiece(new Piece(boardModel.whoseTurn()));
 
-            if(boardModel.isLegal(move)) {
+            if (boardModel.isLegal(move)) {
                 boardModel.makeMove(move);
-                putSquarePiece(square, onMove);
+                putSquarePiece(square, boardModel.whoseTurn());
                 turnColor();
             }
         } catch (Exception e) {
@@ -104,13 +120,32 @@ public class Board implements Observer, Initializable {
         }
     }
 
+    @FXML
+    public void handlePass(MouseEvent event) {
+        Node passButton = (Node) event.getSource();
+        if (passButton.getId().equals("whitePass")) {
+            whitePass.setDisable(true);
+            blackPass.setDisable(false);
+            boardModel.setWhitePassed(true);
+            turnColor();
+            parentApp.showLeftStatus(WHITE_PASSED);
+        } else if (passButton.getId().equals("blackPass")) {
+            whitePass.setDisable(false);
+            blackPass.setDisable(true);
+            boardModel.setBlackPassed(true);
+            turnColor();
+            parentApp.showLeftStatus(BLACK_PASSED);
+        }
+    }
+
     private Point<Integer> rectangle2Point(Rectangle rectangle) throws Exception {
         int which = 0;
         for(Node square : board.getChildren()) {
-            Rectangle squareRectangle = (Rectangle)square;
-            if(rectangle == squareRectangle) {
-                return new Point(which% pl.edu.prz.klopusz.application.model.game.Board.MAX_INDEX+1, pl.edu.prz
-                        .klopusz.application.model.game.Board.MAX_INDEX - which/ pl.edu.prz.klopusz.application.model.game.Board.MAX_INDEX);
+            Rectangle squareRectangle = (Rectangle) square;
+            if (rectangle == squareRectangle) {
+                return new Point(which % pl.edu.prz.klopusz.application.model.game.Board.MAX_INDEX+1, pl.edu.prz
+                        .klopusz.application.model.game.Board.MAX_INDEX-which / pl.edu.prz.klopusz.application.model
+                        .game.Board.MAX_INDEX);
             }
             which++;
         }
@@ -118,13 +153,16 @@ public class Board implements Observer, Initializable {
     }
 
     private void turnColor() {
-        onMove = onMove == Piece.Color.WHITE ? Piece.Color.BLACK : Piece.Color.WHITE;
+        Piece.Color onMove = boardModel.whoseTurn();
+        boardModel.setTurn(onMove == Piece.Color.WHITE ? Piece.Color.BLACK : Piece.Color.WHITE);
     }
 
     public void updateBoard(pl.edu.prz.klopusz.application.model.game.Board board) {
         takeOffPiecesFromBoard();
-        for(int i = pl.edu.prz.klopusz.application.model.game.Board.MIN_INDEX; i <= pl.edu.prz.klopusz.application.model.game.Board.MAX_INDEX; i++) {
-            for(int j = pl.edu.prz.klopusz.application.model.game.Board.MIN_INDEX; j < pl.edu.prz.klopusz.application.model.game.Board.MAX_INDEX; j++) {
+        for(int i = pl.edu.prz.klopusz.application.model.game.Board.MIN_INDEX; i <= pl.edu.prz.klopusz.application
+                .model.game.Board.MAX_INDEX; i++) {
+            for(int j = pl.edu.prz.klopusz.application.model.game.Board.MIN_INDEX; j < pl.edu.prz.klopusz.application
+                    .model.game.Board.MAX_INDEX; j++) {
                 //if empty do nothing
                 Square square = board.get(i, j);
                 if (square.isEmpty()) {
@@ -140,14 +178,9 @@ public class Board implements Observer, Initializable {
         System.out.println("take off pieces");
         if (Platform.isFxApplicationThread()) {
             removeCircles();
-        }
-        else {
+        } else {
             Platform.runLater(() -> removeCircles());
-            try {
-                Thread.sleep(30);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
+            ThreadHelper.sleep(30);
         }
     }
 
@@ -200,4 +233,6 @@ public class Board implements Observer, Initializable {
             putSquarePiece(moveEvent.getMove());
         }
     }
+
+    enum GameMode {PLAYERS, ENGINES;}
 }
