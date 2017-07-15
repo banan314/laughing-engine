@@ -104,7 +104,7 @@
       
       <Circle fill="WHITE" layoutX="103.0" layoutY="417.0" radius="15.0" stroke="BLACK" strokeType="INSIDE" />
       <Circle layoutX="463.0" layoutY="65.0" radius="15.0" stroke="BLACK" strokeType="INSIDE" />
-      <Button layoutX="197.0" layoutY="457.0" mnemonicParsing="false" onAction="#takeOffPiecesFromBoard" prefHeight="21.0" prefWidth="123.0" text="Clear board" textAlignment="CENTER" textOverrun="CLIP" wrapText="true" />
+      <Button layoutX="197.0" layoutY="457.0" mnemonicParsing="false" onAction="#handleClearBoard" prefHeight="21.0" prefWidth="123.0" text="Clear board" textAlignment="CENTER" textOverrun="CLIP" wrapText="true" />
       <Label alignment="CENTER" layoutX="26.0" layoutY="486.0" prefHeight="16.0" prefWidth="150.0" text="WHITE ENGINE" />
       <ChoiceBox fx:id="whiteEngineChoiceBox" layoutX="26.0" layoutY="511.0" prefWidth="150.0" value="NoopGamer">
          <items>

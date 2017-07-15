@@ -20,13 +20,16 @@ import lombok.val;
 import org.ggp.base.util.observer.Event;
 import org.ggp.base.util.observer.Observer;
 import pl.edu.prz.klopusz.application.DolarMainApp;
+import pl.edu.prz.klopusz.application.commands.Command;
 import pl.edu.prz.klopusz.application.commands.ConfigurableCommand;
+import pl.edu.prz.klopusz.application.commands.impl.ShowRightStatusCommand;
 import pl.edu.prz.klopusz.application.commands.impl.server.StopServerCommand;
 import pl.edu.prz.klopusz.application.common.Messages;
 import pl.edu.prz.klopusz.application.common.Point;
 import pl.edu.prz.klopusz.application.common.ThreadHelper;
 import pl.edu.prz.klopusz.application.model.BoardModel;
 import pl.edu.prz.klopusz.application.model.event.BoardEvent;
+import pl.edu.prz.klopusz.application.model.event.EndEvent;
 import pl.edu.prz.klopusz.application.model.event.MoveEvent;
 import pl.edu.prz.klopusz.application.model.game.Move;
 import pl.edu.prz.klopusz.application.model.game.Square;
@@ -45,6 +48,7 @@ import static pl.edu.prz.klopusz.application.common.Messages.*;
 public class Board implements Observer, Initializable {
 
     GameMode gameMode = GameMode.PLAYERS;
+    boolean gameEnded = false;
 
     @FXML private Group board;
     @FXML private AnchorPane root;
@@ -102,7 +106,7 @@ public class Board implements Observer, Initializable {
 
     @FXML
     public void onSquareClick(MouseEvent event) {
-        if(gameMode == GameMode.ENGINES) {
+        if(shouldIgnoreMove()) {
             return;
         }
 
@@ -127,20 +131,35 @@ public class Board implements Observer, Initializable {
 
     @FXML
     public void handlePass(MouseEvent event) {
+        if(shouldIgnoreMove()) {
+            return;
+        }
+
         Node passButton = (Node) event.getSource();
         if (passButton.getId().equals("whitePass")) {
-            whitePass.setDisable(true);
-            blackPass.setDisable(false);
+            parentApp.showLeftStatus(WHITE_PASSED);
             boardModel.passAsWhite();
             turnColor();
-            parentApp.showLeftStatus(WHITE_PASSED);
         } else if (passButton.getId().equals("blackPass")) {
-            whitePass.setDisable(false);
-            blackPass.setDisable(true);
+            parentApp.showLeftStatus(BLACK_PASSED);
             boardModel.passAsBlack();
             turnColor();
-            parentApp.showLeftStatus(BLACK_PASSED);
         }
+        updatePassDisability();
+    }
+
+    private void updatePassDisability() {
+        if(boardModel.whoseTurn().equals(Piece.Color.WHITE)) {
+            whitePass.setDisable(false);
+            blackPass.setDisable(true);
+        } else {
+            whitePass.setDisable(true);
+            blackPass.setDisable(false);
+        }
+    }
+
+    private boolean shouldIgnoreMove() {
+        return gameMode == GameMode.ENGINES || gameEnded;
     }
 
     private Point<Integer> rectangle2Point(Rectangle rectangle) throws Exception {
@@ -179,6 +198,10 @@ public class Board implements Observer, Initializable {
     }
 
     @FXML
+    private void handleClearBoard() {
+        initializeGame();
+    }
+
     private void takeOffPiecesFromBoard() {
         System.out.println("take off pieces");
         if (Platform.isFxApplicationThread()) {
@@ -187,6 +210,15 @@ public class Board implements Observer, Initializable {
             Platform.runLater(() -> removeCircles());
             ThreadHelper.sleep(30);
         }
+    }
+
+    private void initializeGame() {
+        gameEnded = false;
+        boardModel.initialize();
+
+        updatePassDisability();
+
+        takeOffPiecesFromBoard();
     }
 
     private synchronized void removeCircles() {
@@ -225,6 +257,11 @@ public class Board implements Observer, Initializable {
         command.execute();
     }
 
+    public void handleNewGame() {
+        boardModel.setTurn(Piece.Color.WHITE);
+        initializeGame();
+    }
+
     @Override
     public void observe(Event event) {
         if (event instanceof BoardEvent) {
@@ -236,11 +273,18 @@ public class Board implements Observer, Initializable {
             MoveEvent moveEvent = (MoveEvent) event;
 
             putSquarePiece(moveEvent.getMove());
+        } else if (event instanceof EndEvent) {
+            new ShowRightStatusCommand(Messages.GAME_FINISHED).execute();
+            gameEnded = true;
         }
     }
 
     public void stopEngineGame() {
         new StopServerCommand().execute();
+    }
+
+    public GameMode getGameMode() {
+        return gameMode;
     }
 
     enum GameMode {PLAYERS, ENGINES;}

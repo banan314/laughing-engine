@@ -47,7 +47,6 @@ public class StateMachineDecorator extends ProverStateMachine {
         return territoryCalculator.getBlack();
     }
 
-    //TODO: implement
     private int computeWhiteTerritory() {
         return territoryCalculator.getWhite();
     }

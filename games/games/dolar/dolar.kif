@@ -240,13 +240,12 @@
     (index ?N1)
     (succ ?N ?N1))
 
-;TODO: it allows far squares to be evaluated as neighbors
-
 (<= (neighbor ?M ?N ?M1 ?N)
     (index ?M)
     (index ?N)
     (index ?M1)
-    (succ ?M ?M1))
+    (succ ?M ?M1)
+    )
 
 (<= (neighbor ?M ?N ?M1 ?N1)
     (index ?M)

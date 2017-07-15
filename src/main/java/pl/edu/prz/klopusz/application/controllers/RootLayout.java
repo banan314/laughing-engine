@@ -4,6 +4,7 @@ import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
+import javafx.scene.control.MenuItem;
 import pl.edu.prz.klopusz.application.common.ThreadHelper;
 import pl.edu.prz.klopusz.application.model.BoardModel;
 import pl.edu.prz.klopusz.application.DolarMainApp;
@@ -24,8 +25,8 @@ public class RootLayout {
     DolarMainApp parentApp;
 
     @FXML private Label leftStatus;
-
     @FXML private Label rightStatus;
+    @FXML private MenuItem miStopEngines;
 
     public void setBoardModel(BoardModel boardModel) {
         this.boardModel = boardModel;
@@ -53,11 +54,37 @@ public class RootLayout {
         }
     }
 
+    @FXML
+    public void handleNewGame() {
+        switch (parentApp.getBoardController().getGameMode()) {
+            case PLAYERS:
+                parentApp.getBoardController().handleNewGame();
+                break;
+            case ENGINES:
+                ConfigurableCommand command = new CreatePlayersCommand();
+                parentApp.getBoardController().execute(command);
+
+                changeModeToEngines();
+
+                prepareGameEnvironment();
+                break;
+        }
+
+        showLeftStatus(NEW_GAME);
+    }
+
+    private void changeModeToEngines() {
+        parentApp.getBoardController().setGameMode(Board.GameMode.ENGINES);
+    }
+
+    @FXML
     public void newGameWithRandomPlayers() {
         CreatePlayerCommand createPlayerCommand = new CreatePlayerCommand(9147, "RandomGamer");
         createPlayerCommand.execute();
 
         createPlayerCommand.setPort(9148).execute();
+
+        changeModeToEngines();
 
         prepareGameEnvironment();
 
@@ -95,28 +122,20 @@ public class RootLayout {
     }
 
     @FXML
-    public void handleNewGame() {
-        ConfigurableCommand command = new CreatePlayersCommand();
-        parentApp.getBoardController().execute(command);
-
-        prepareGameEnvironment();
-
-        showLeftStatus(NEW_GAME);
-    }
-
-    @FXML
     public void handleGameStop() {
         parentApp.getBoardController().stopEngineGame();
     }
 
     @FXML
     public void handleEnginesMode() {
-        parentApp.getBoardController().setGameMode(Board.GameMode.ENGINES);
+        changeModeToEngines();
+        miStopEngines.setDisable(true);
     }
 
     @FXML
     public void handlePlayersMode() {
         parentApp.getBoardController().setGameMode(Board.GameMode.PLAYERS);
+        miStopEngines.setDisable(false);
     }
 
     @FXML

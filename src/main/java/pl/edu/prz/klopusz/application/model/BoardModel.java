@@ -6,7 +6,11 @@ import javafx.beans.property.StringProperty;
 import org.ggp.base.util.observer.Event;
 import org.ggp.base.util.observer.Observer;
 import org.ggp.base.util.observer.Subject;
+import pl.edu.prz.klopusz.application.commands.impl.ShowLeftStatusCommand;
+import pl.edu.prz.klopusz.application.commands.impl.ShowRightStatusCommand;
+import pl.edu.prz.klopusz.application.common.Messages;
 import pl.edu.prz.klopusz.application.model.event.BoardEvent;
+import pl.edu.prz.klopusz.application.model.event.EndEvent;
 import pl.edu.prz.klopusz.application.model.event.MoveEvent;
 import pl.edu.prz.klopusz.application.model.game.*;
 
@@ -60,7 +64,8 @@ public class BoardModel implements Subject {
     }
 
     private void onGameEnded() {
-        //TODO: calculate goals
+        new ShowRightStatusCommand(Messages.GAME_FINISHED);
+        notifyObservers(new EndEvent());
     }
 
     private void setWhitePassed(boolean whitePassed) {
