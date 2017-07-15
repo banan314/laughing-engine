@@ -47,11 +47,27 @@ public class BoardModel implements Subject {
         return onMove;
     }
 
-    public void setWhitePassed(boolean whitePassed) {
+    public void passAsWhite() {
+        setWhitePassed(true);
+        if(blackPassed)
+            onGameEnded();
+    }
+
+    public void passAsBlack() {
+        setBlackPassed(true);
+        if(whitePassed)
+            onGameEnded();
+    }
+
+    private void onGameEnded() {
+        //TODO: calculate goals
+    }
+
+    private void setWhitePassed(boolean whitePassed) {
         this.whitePassed = whitePassed;
     }
 
-    public void setBlackPassed(boolean blackPassed) {
+    private void setBlackPassed(boolean blackPassed) {
         this.blackPassed = blackPassed;
     }
 
@@ -69,6 +85,12 @@ public class BoardModel implements Subject {
 
     public void makeMove(Move move) {
         board.set(move.getRow(), move.getFile(), new Square(move.getPiece()));
+
+        if(move.getPiece().isWhite()) {
+            whitePassed = false;
+        } else if(move.getPiece().isBlack()) {
+            blackPassed = false;
+        }
 
         MoveEvent moveEvent = new MoveEvent(move);
         notifyObservers(moveEvent);

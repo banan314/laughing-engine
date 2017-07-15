@@ -1,5 +1,6 @@
 package pl.edu.prz.klopusz.application.commands.impl.player;
 
+import org.ggp.base.player.GamePlayer;
 import pl.edu.prz.klopusz.application.exceptions.InvalidPlayerException;
 
 import java.io.IOException;
@@ -14,6 +15,7 @@ public class CreatePlayerCommand extends PlayerCommand {
     private int port;
     private String name;
     static Map<Integer, Boolean> playing = new HashMap<>();
+    static Map<Integer, GamePlayer> players = new HashMap<>();
 
     public CreatePlayerCommand(int port, String playerName) {
         this.port = port;
@@ -27,8 +29,9 @@ public class CreatePlayerCommand extends PlayerCommand {
                 return;
         }
         try {
-            playerCreator.createPlayer(port, name);
+            GamePlayer gamePlayer = playerCreator.createPlayer(port, name);
             playing.put(port, true);
+            players.put(port, gamePlayer);
         } catch (IOException e) {
             e.printStackTrace();
         } catch (InstantiationException e) {

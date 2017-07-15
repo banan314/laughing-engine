@@ -105,6 +105,11 @@ public class RootLayout {
     }
 
     @FXML
+    public void handleGameStop() {
+        parentApp.getBoardController().stopEngineGame();
+    }
+
+    @FXML
     public void handleEnginesMode() {
         parentApp.getBoardController().setGameMode(Board.GameMode.ENGINES);
     }

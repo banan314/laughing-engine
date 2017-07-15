@@ -44,6 +44,7 @@
                         <RadioMenuItem mnemonicParsing="false" onAction="#handlePlayersMode" selected="true" text="Player vs. Player" toggleGroup="$gameMode" />
                     </items>
                   </Menu>
+                  <MenuItem mnemonicParsing="false" onAction="#handleGameStop" text="Stop" />
             </items>
           </Menu>
           <Menu mnemonicParsing="false" text="Help">

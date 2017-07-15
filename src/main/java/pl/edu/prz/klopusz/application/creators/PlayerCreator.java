@@ -18,7 +18,8 @@ public class PlayerCreator {
     public static final Integer WHITE_PORT = 9147;
     public static final Integer BLACK_PORT = 9148;
 
-    public void createPlayer(int port, String name) throws IOException, InstantiationException, IllegalAccessException, InvalidPlayerException {
+    public GamePlayer createPlayer(int port, String name) throws IOException, InstantiationException,
+            IllegalAccessException, InvalidPlayerException {
         Class<?> chosenGamerClass = null;
 
         List<String> availableGamers = new ArrayList<String>();
@@ -35,6 +36,9 @@ public class PlayerCreator {
         }
 
         Gamer gamer = (Gamer) chosenGamerClass.newInstance();
-        new GamePlayer(port, gamer).start();
+
+        GamePlayer gamePlayer = new GamePlayer(port, gamer);
+        gamePlayer.start();
+        return gamePlayer;
     }
 }

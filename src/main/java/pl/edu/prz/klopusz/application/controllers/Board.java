@@ -21,6 +21,7 @@ import org.ggp.base.util.observer.Event;
 import org.ggp.base.util.observer.Observer;
 import pl.edu.prz.klopusz.application.DolarMainApp;
 import pl.edu.prz.klopusz.application.commands.ConfigurableCommand;
+import pl.edu.prz.klopusz.application.commands.impl.server.StopServerCommand;
 import pl.edu.prz.klopusz.application.common.Messages;
 import pl.edu.prz.klopusz.application.common.Point;
 import pl.edu.prz.klopusz.application.common.ThreadHelper;
@@ -101,6 +102,10 @@ public class Board implements Observer, Initializable {
 
     @FXML
     public void onSquareClick(MouseEvent event) {
+        if(gameMode == GameMode.ENGINES) {
+            return;
+        }
+
         Rectangle square = (Rectangle) event.getSource();
 
         try {
@@ -126,13 +131,13 @@ public class Board implements Observer, Initializable {
         if (passButton.getId().equals("whitePass")) {
             whitePass.setDisable(true);
             blackPass.setDisable(false);
-            boardModel.setWhitePassed(true);
+            boardModel.passAsWhite();
             turnColor();
             parentApp.showLeftStatus(WHITE_PASSED);
         } else if (passButton.getId().equals("blackPass")) {
             whitePass.setDisable(false);
             blackPass.setDisable(true);
-            boardModel.setBlackPassed(true);
+            boardModel.passAsBlack();
             turnColor();
             parentApp.showLeftStatus(BLACK_PASSED);
         }
@@ -232,6 +237,10 @@ public class Board implements Observer, Initializable {
 
             putSquarePiece(moveEvent.getMove());
         }
+    }
+
+    public void stopEngineGame() {
+        new StopServerCommand().execute();
     }
 
     enum GameMode {PLAYERS, ENGINES;}
