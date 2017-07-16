@@ -1,7 +1,7 @@
 .button {
     -fx-font-family: fantasy;
-    -fx-text-fill: linear-gradient(from 0px 0px to 0px 50px, orange, maroon 50%, darkblue 99%, darkviolet);
-    -fx-font-weight: 500;
+    -fx-text-fill: #FF4F32;
+    -fx-font-weight: 600;
     -fx-background-color: #32e2ff;
 }
 
