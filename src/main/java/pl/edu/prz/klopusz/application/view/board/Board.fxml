@@ -115,8 +115,8 @@
             </FXCollections>
          </items>
       </ChoiceBox>
-      <Label alignment="CENTER" layoutX="508.0" layoutY="65.0" prefHeight="16.0" prefWidth="150.0" text="BLACK ENGINE" />
-      <ChoiceBox fx:id="blackEngineChoiceBox" layoutX="508.0" layoutY="90.0" prefWidth="150.0" value="NoopGamer">
+      <Label alignment="CENTER" layoutX="558.0" layoutY="67.0" prefHeight="16.0" prefWidth="150.0" text="BLACK ENGINE" />
+      <ChoiceBox fx:id="blackEngineChoiceBox" layoutX="558.0" layoutY="92.0" prefWidth="150.0" value="NoopGamer">
          <items>
             <FXCollections fx:factory="observableArrayList">
                <!--<String fx:value="NoopGamer" />-->
@@ -125,11 +125,11 @@
             </FXCollections>
          </items>
       </ChoiceBox>
-      <Label alignment="CENTER" layoutX="532.0" layoutY="173.0" prefHeight="16.0" prefWidth="169.0" text="GOALS" />
-      <Label layoutX="545.0" layoutY="198.0" text="White" />
-      <Label layoutX="658.0" layoutY="198.0" text="Black" />
-      <Label fx:id="whiteGoal" layoutX="546.0" layoutY="233.0" />
-      <Label fx:id="blackGoal" layoutX="658.0" layoutY="233.0" />
+      <Label alignment="CENTER" layoutX="558.0" layoutY="328.0" prefHeight="16.0" prefWidth="169.0" text="GOALS" />
+      <Label alignment="CENTER" layoutX="571.0" layoutY="353.0" text="White" />
+      <Label alignment="CENTER" layoutX="684.0" layoutY="353.0" text="Black" />
+      <Label fx:id="whiteGoal" layoutX="585.0" layoutY="386.0" prefHeight="16.0" prefWidth="1.0" />
+      <Label fx:id="blackGoal" layoutX="695.0" layoutY="386.0" />
       <Button fx:id="whitePass" layoutX="29.0" layoutY="438.0" mnemonicParsing="false" onMouseClicked="#handlePass" opacity="0.8" prefHeight="26.0" prefWidth="52.0" text="Pass" />
       <Button fx:id="blackPass" disable="true" layoutX="484.0" layoutY="17.0" mnemonicParsing="false" onMouseClicked="#handlePass" opacity="0.8" prefHeight="26.0" prefWidth="52.0" text="Pass" />
    </children>
