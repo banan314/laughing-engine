@@ -27,8 +27,15 @@ public class Square {
     public Square(byte row, byte file) {
         this.file = file;
         this.row = row;
-        empty = false;
+        empty = false; //FIXME: should it be true?
         piece = null;
+    }
+
+    public Square(Square square) {
+        this.file = square.file;
+        this.row = square.row;
+        this.empty = square.empty;
+        this.piece = square.piece;
     }
 
     /*TODO: simplify with GdlSentence.get(index)*/
@@ -113,5 +120,9 @@ public class Square {
     private void setEmpty() {
         empty = true;
         piece = null;
+    }
+
+    public Piece.Color getColor() {
+        return piece.getColor();
     }
 }

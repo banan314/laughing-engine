@@ -3,12 +3,13 @@ package pl.edu.prz.klopusz.engine.impl;
 import lombok.*;
 import pl.edu.prz.klopusz.application.model.game.Move;
 import pl.edu.prz.klopusz.application.model.game.Piece;
+import pl.edu.prz.klopusz.engine.api.GoalCalculator;
+import pl.edu.prz.klopusz.engine.api.GoalStrategy;
 import pl.edu.prz.klopusz.engine.api.Territory;
 import pl.edu.prz.klopusz.utilities.decorators.TerritoryAnalyzer;
 import pl.edu.prz.klopusz.utilities.decorators.TerritoryAnalyzerImpl;
 
-import java.util.LinkedList;
-import java.util.List;
+import java.util.*;
 import java.util.function.IntFunction;
 
 import static java.lang.Math.abs;
@@ -44,7 +45,29 @@ public class IntelligentEngine extends EngineImpl {
 
     @Override
     protected Move bestMove(List<Move> movesConsidered) {
-        return null;
+        Map<Move, Float> moveGoal = new HashMap<>();
+        val strategy = new SmartStrategy(board);
+        val goalCalculator = new GoalCalculatorImpl(strategy);
+        for(val move : movesConsidered) {
+            float goal = goalCalculator.calculate(move);
+            moveGoal.put(move, goal);
+        }
+
+        return findBest(moveGoal);
+    }
+
+    Move findBest (Map<Move, Float> moveGoal) {
+        assert moveGoal.size() > 0;
+        val entrySet = moveGoal.entrySet().stream().max((low, high) -> {
+            if(low.getValue() == high.getValue()) {
+                return 0;
+            }
+            if (low.getValue() < high.getValue()) {
+                return -1;
+            }
+            return 1;
+        });
+        return entrySet.get().getKey();
     }
 
     @Override
