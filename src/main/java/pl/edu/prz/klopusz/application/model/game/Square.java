@@ -24,6 +24,13 @@ public class Square {
         this.piece = piece;
     }
 
+    public Square(byte row, byte file) {
+        this.file = file;
+        this.row = row;
+        empty = false;
+        piece = null;
+    }
+
     /*TODO: simplify with GdlSentence.get(index)*/
     public static Square from(GdlSentence sentence) throws InvalidCellSentenceException {
         Square square = new Square();
