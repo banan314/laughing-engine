@@ -5,6 +5,8 @@ import lombok.val;
 import java.util.ArrayList;
 import java.util.List;
 
+import java.util.logging.Logger;
+
 /**
  * Created by kamil on 13.06.17.
  */
@@ -12,6 +14,8 @@ public class DolarBoard extends Board {
 
     public static final int MIN_ARRAY_INDEX = MIN_INDEX-1;
     public static final int MAX_ARRAY_INDEX = MAX_INDEX-1;
+
+    private Logger LOG = Logger.getLogger("Dolar board");
 
     public DolarBoard() {
         initialize();
@@ -63,7 +67,8 @@ public class DolarBoard extends Board {
     public List<Square> get8Neighbors(int row, int file) {
         List<Square> adjacent = new ArrayList<>();
 
-        file--; row--;
+        row--;
+        file--;
 
         if (file > MIN_ARRAY_INDEX) {
             adjacent.add(squares[row][file-1]);
@@ -96,7 +101,17 @@ public class DolarBoard extends Board {
 
     @Override
     public boolean isLegal(Move move) {
-        return isEmpty(move.getFile(), move.getRow()) && isNeighbor(move.getFile(), move.getRow(), move.getPiece());
+        if (isEmpty(move.getRow(), move.getFile())) {
+            if (isNeighbor(move.getRow(), move.getFile(), move.getPiece())) {
+                return true;
+            } else {
+                LOG.info("no neighbor, (x, y)=(" + move.getFile() + ", " +move.getRow() + ")");
+                return false;
+            }
+        } else {
+            LOG.info("not empty, (x, y)=(" + move.getFile() + ", " +move.getRow() + ")");
+            return false;
+        }
     }
 
     private boolean isNeighbor(int row, int file, Piece piece) {
@@ -109,7 +124,7 @@ public class DolarBoard extends Board {
         return false;
     }
 
-    private boolean isEmpty(int file, int row) {
+    private boolean isEmpty(int row, int file) {
         row--;
         file--;
         return null == squares[row][file] || squares[row][file].isEmpty();

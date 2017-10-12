@@ -31,4 +31,9 @@ public class Move {
     private static boolean isMark(String mark) {
         return mark.contains("mark");
     }
+
+    @Override
+    public String toString() {
+        return "Move{"+"file="+file+", row="+row+", piece="+piece+'}';
+    }
 }

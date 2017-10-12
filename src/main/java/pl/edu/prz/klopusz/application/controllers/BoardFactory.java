@@ -1,8 +1,14 @@
 package pl.edu.prz.klopusz.application.controllers;
 
+import javafx.scene.Node;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.paint.Color;
+import javafx.scene.paint.Material;
+import javafx.scene.paint.PhongMaterial;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
+import javafx.scene.shape.Shape;
+import javafx.scene.shape.Sphere;
 import pl.edu.prz.klopusz.application.common.Point;
 import pl.edu.prz.klopusz.application.model.game.Piece;
 
@@ -10,24 +16,41 @@ public class BoardFactory {
     final static String WHITE_STYLE = "-fx-fill: white";
     final static String BLACK_STYLE = "-fx-fill: black";
 
-    static Circle makePiece(Rectangle square, Piece.Color color) {
-        Point squareCenter = new Point(square.getLayoutX()+square.getWidth() / 2, square.getLayoutY()
-                +square
+    final public static Material whitePieceMaterial =  new PhongMaterial(Color.color(0.0, 0.5019, 0.1, 0.6));
+    final public static Material blackPieceMaterial =  new PhongMaterial(Color.color(1.0, 0.60, 0.01));
+
+    static Node makePiece(Rectangle square, Piece.Color color) {
+        Point squareCenter = new Point(square.getLayoutX()+square.getWidth() / 2, square.getLayoutY()+square
                 .getHeight() / 2);
 
-        Circle piece = new Circle();
-        initializePiece(squareCenter, piece, color);
+        Sphere piece = new Sphere();
+        //initializeCirclePiece(squareCenter, piece, color);
+
+        initializeSpherePiece(squareCenter, piece, color);
+
         return piece;
     }
 
-    static void initializePiece(Point<Double> squareCenter, Circle piece, Piece.Color color) {
+    static void initializeSpherePiece(Point<Double> squareCenter, Sphere piece, Piece.Color color) {
+        piece.setLayoutX(squareCenter.x);
+        piece.setLayoutY(squareCenter.y);
+        piece.setRadius(15);
+        if (color == Piece.Color.WHITE) {
+            piece.setMaterial(whitePieceMaterial);
+        } else {
+            piece.setMaterial(blackPieceMaterial);
+        }
+    }
+
+    static void initializeCirclePiece(Point<Double> squareCenter, Circle piece, Piece.Color color) {
         piece.setCenterX(squareCenter.x);
         piece.setCenterY(squareCenter.y);
         piece.setRadius(13);
-        if(color == Piece.Color.WHITE)
+        if (color == Piece.Color.WHITE) {
             piece.setStyle(WHITE_STYLE);
-        else
+        } else {
             piece.setStyle(BLACK_STYLE);
+        }
     }
 
     public static Rectangle makeRectangle() {
@@ -45,12 +68,11 @@ public class BoardFactory {
 
     static void addOnMouseClickEventTo(Rectangle rectangle) {
         rectangle.setOnMouseClicked(event -> {
-                    try {
-                        Board.class.getMethod("onSquareClick", MouseEvent.class).invoke(new Board(), event);
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-                }
-        );
+            try {
+                Board.class.getMethod("onSquareClick", MouseEvent.class).invoke(new Board(), event);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        });
     }
 }

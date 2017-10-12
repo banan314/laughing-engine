@@ -17,12 +17,16 @@ import pl.edu.prz.klopusz.application.model.game.*;
 import java.util.ArrayList;
 import java.util.List;
 
+import java.util.logging.Logger;
+
 /**
  * Created by kamil on 22.06.17.
  */
 public class BoardModel implements Subject {
     Board board = new DolarBoard();
     private List<Observer> observers = new ArrayList<Observer>();
+
+    private Logger LOG = Logger.getLogger("Board model");
 
     Piece.Color onMove = Piece.Color.WHITE;
 
@@ -90,6 +94,8 @@ public class BoardModel implements Subject {
 
     public void makeMove(Move move) {
         board.set(move.getRow(), move.getFile(), new Square(move.getPiece()));
+
+        LOG.info("made move: " + move);
 
         if(move.getPiece().isWhite()) {
             whitePassed = false;

@@ -52,4 +52,9 @@ public class Piece {
     }
 
     public enum Color {WHITE, BLACK;}
+
+    @Override
+    public String toString() {
+        return "Piece{"+"color="+color+'}';
+    }
 }

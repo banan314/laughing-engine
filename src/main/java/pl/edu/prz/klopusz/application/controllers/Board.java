@@ -10,17 +10,15 @@ import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
-import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
+import javafx.scene.shape.Sphere;
 import lombok.val;
 import org.ggp.base.util.observer.Event;
 import org.ggp.base.util.observer.Observer;
 import pl.edu.prz.klopusz.application.DolarMainApp;
-import pl.edu.prz.klopusz.application.commands.Command;
 import pl.edu.prz.klopusz.application.commands.ConfigurableCommand;
 import pl.edu.prz.klopusz.application.commands.impl.ShowRightStatusCommand;
 import pl.edu.prz.klopusz.application.commands.impl.server.StopServerCommand;
@@ -28,19 +26,21 @@ import pl.edu.prz.klopusz.application.common.Messages;
 import pl.edu.prz.klopusz.application.common.Point;
 import pl.edu.prz.klopusz.application.common.ThreadHelper;
 import pl.edu.prz.klopusz.application.model.BoardModel;
+import pl.edu.prz.klopusz.application.model.ConfigurationModel;
 import pl.edu.prz.klopusz.application.model.event.BoardEvent;
 import pl.edu.prz.klopusz.application.model.event.EndEvent;
 import pl.edu.prz.klopusz.application.model.event.MoveEvent;
 import pl.edu.prz.klopusz.application.model.game.Move;
-import pl.edu.prz.klopusz.application.model.game.Square;
-import pl.edu.prz.klopusz.application.model.ConfigurationModel;
 import pl.edu.prz.klopusz.application.model.game.Piece;
-
+import pl.edu.prz.klopusz.application.model.game.Square;
 
 import java.net.URL;
 import java.util.ResourceBundle;
 
-import static pl.edu.prz.klopusz.application.common.Messages.*;
+import static pl.edu.prz.klopusz.application.common.Messages.BLACK_PASSED;
+import static pl.edu.prz.klopusz.application.common.Messages.WHITE_PASSED;
+
+import java.util.logging.Logger;
 
 /**
  * Created by kamil on 10.06.17.
@@ -50,6 +50,8 @@ public class Board implements Observer, Initializable {
     GameMode gameMode = GameMode.PLAYERS;
     boolean gameEnded = false;
 
+    @FXML private Sphere whitePiece;
+    @FXML private Sphere blackPiece;
     @FXML private Group board;
     @FXML private AnchorPane root;
     @FXML private Group piecesGroup;
@@ -62,6 +64,8 @@ public class Board implements Observer, Initializable {
     private ConfigurationModel configurationModel;
 
     DolarMainApp parentApp;
+
+    private Logger LOG = Logger.getLogger("Board Controller");
 
     @Override // This method is called by the FXMLLoader when initialization is complete
     public void initialize(URL fxmlFileLocation, ResourceBundle resources) {
@@ -77,6 +81,13 @@ public class Board implements Observer, Initializable {
                 configurationModel.setBlackEngine(newValue);
             }
         });
+
+        initializePieces();
+    }
+
+    private void initializePieces() {
+        whitePiece.setMaterial(BoardFactory.whitePieceMaterial);
+        blackPiece.setMaterial(BoardFactory.blackPieceMaterial);
     }
 
     public void setGameMode(GameMode gameMode) {
@@ -114,6 +125,7 @@ public class Board implements Observer, Initializable {
 
         try {
             val point = rectangle2Point(square);
+            LOG.info("clicked: (x=" + point.x + ", y=" + point.y + ")");
             Move move = new Move();
             move.setRow(point.y);
             move.setFile(point.x);
@@ -123,6 +135,8 @@ public class Board implements Observer, Initializable {
                 boardModel.makeMove(move);
                 putSquarePiece(square, boardModel.whoseTurn());
                 turnColor();
+            } else {
+                LOG.info("move not legal; " + "turn: " + boardModel.whoseTurn());
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -238,7 +252,7 @@ public class Board implements Observer, Initializable {
     }
 
     private void putSquarePiece(Rectangle rectangle, Piece.Color piece) {
-        Circle circle = BoardFactory.makePiece(rectangle, piece);
+        Node circle = BoardFactory.makePiece(rectangle, piece);
 
         if (Platform.isFxApplicationThread()) {
             piecesGroup.getChildren().add(circle);
