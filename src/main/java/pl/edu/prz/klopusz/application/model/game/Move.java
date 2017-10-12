@@ -10,8 +10,9 @@ import org.ggp.base.util.gdl.grammar.GdlSentence;
 //TODO: add a possibility to pass
 public class Move {
     @Getter @Setter int file;
-    @Getter @Setter  int row;
+    @Getter @Setter int row;
     @Getter @Setter Piece piece;
+    boolean passed = false;
 
     public static Move from(GdlSentence sentence) {
         val move = new Move();
@@ -19,7 +20,7 @@ public class Move {
         assert isMark(sentence.toString());
 
         final int file = Byte.parseByte(sentence.get(0).toString());
-        final int row =Byte.parseByte(sentence.get(1).toString());
+        final int row = Byte.parseByte(sentence.get(1).toString());
         final Piece piece = Piece.from(sentence.get(2).toString());
 
         move.setFile(file);
@@ -33,7 +34,7 @@ public class Move {
      * @return square - made out of move, using row and file
      */
     final public Square square() {
-        return new Square((byte)row, (byte)file);
+        return new Square((byte) row, (byte) file);
     }
 
     private static boolean isMark(String mark) {
@@ -43,5 +44,14 @@ public class Move {
     @Override
     public String toString() {
         return "Move{"+"file="+file+", row="+row+", piece="+piece+'}';
+    }
+
+    public Piece.Color getColor() {
+        if (passed) {
+            //TODO
+            return piece.color;
+        } else {
+            return piece.color;
+        }
     }
 }
