@@ -18,6 +18,10 @@ public abstract class Board {
 
     public abstract void set(int row, int file, Square square);
 
+    /**
+     * fills square
+     * @param square must be filled with valid file and row
+     */
     public abstract void set(Square square);
 
     public abstract List<Square> get8Neighbors(int file, int row);

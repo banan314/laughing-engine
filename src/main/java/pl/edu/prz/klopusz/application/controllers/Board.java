@@ -60,7 +60,7 @@ public class Board implements Observer, Initializable {
     @FXML private Label whiteGoal, blackGoal;
     @FXML private Button whitePass;
     @FXML private Button blackPass;
-    private BoardModel boardModel;
+    BoardModel boardModel;
     private ConfigurationModel configurationModel;
     private GameWithEngine gameWithEngine;
 

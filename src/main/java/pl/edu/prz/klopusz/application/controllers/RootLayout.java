@@ -5,6 +5,8 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
 import javafx.scene.control.MenuItem;
+import javafx.stage.FileChooser;
+import lombok.val;
 import pl.edu.prz.klopusz.application.common.ThreadHelper;
 import pl.edu.prz.klopusz.application.model.BoardModel;
 import pl.edu.prz.klopusz.application.DolarMainApp;
@@ -13,6 +15,15 @@ import pl.edu.prz.klopusz.application.commands.impl.player.CreatePlayerCommand;
 import pl.edu.prz.klopusz.application.commands.impl.player.CreatePlayersCommand;
 import pl.edu.prz.klopusz.application.commands.impl.server.ServerCommand;
 import pl.edu.prz.klopusz.application.commands.impl.server.StartServerCommand;
+import pl.edu.prz.klopusz.application.model.game.SavedState;
+
+import java.io.*;
+import java.nio.channels.ScatteringByteChannel;
+import java.nio.charset.Charset;
+import java.nio.file.Files;
+import java.nio.file.OpenOption;
+import java.util.Scanner;
+import java.util.logging.Logger;
 
 import static pl.edu.prz.klopusz.application.common.Messages.*;
 
@@ -21,6 +32,7 @@ import static pl.edu.prz.klopusz.application.common.Messages.*;
  */
 public class RootLayout {
 
+    private static final Logger LOG = Logger.getLogger("Root Layout");
     BoardModel boardModel;
     DolarMainApp parentApp;
 
@@ -52,6 +64,44 @@ public class RootLayout {
             Platform.runLater(() -> this.rightStatus.setText(rightStatus));
             ThreadHelper.sleep(30);
         }
+    }
+
+    @FXML
+    public void saveBoard() {
+        val fileChooser = new FileChooser();
+        fileChooser.setTitle("Save board in PDN");
+        File file = fileChooser.showSaveDialog(parentApp.getStage());
+
+        val savedState = new SavedState(parentApp.getBoardController().boardModel.getBoard());
+        try {
+            val outputStream = new FileOutputStream(file);
+            outputStream.write(savedState.toBytes());
+        } catch (FileNotFoundException e) {
+            LOG.severe("file " + file.getAbsolutePath() + "not found");
+        } catch (IOException e) {
+            LOG.severe("IO exception writing to file " + file.getAbsolutePath());
+        }
+    }
+
+    @FXML
+    public void loadBoard() {
+        val fileChooser = new FileChooser();
+        fileChooser.setTitle("Open board PDN");
+        fileChooser.getExtensionFilters().addAll(
+                new FileChooser.ExtensionFilter("PDN", "*.pdn"),
+                new FileChooser.ExtensionFilter("All files", "*.*")
+        );
+        File file = fileChooser.showOpenDialog(parentApp.getStage());
+
+        pl.edu.prz.klopusz.application.model.game.Board board;
+        try {
+            Scanner scanner = new Scanner(file);
+            board = SavedState.loadBoard(scanner.nextLine());
+            parentApp.getBoardController().updateBoard(board);
+        } catch (FileNotFoundException e) {
+            LOG.severe("file " + file.getAbsolutePath() + "not found");
+        }
+
     }
 
     @FXML

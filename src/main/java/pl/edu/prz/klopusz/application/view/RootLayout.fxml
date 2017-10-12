@@ -22,6 +22,16 @@
           <Menu mnemonicParsing="false" text="Dolar">
             <items>
               <MenuItem mnemonicParsing="false" onAction="#closeApplication" text="Close" />
+                  <MenuItem mnemonicParsing="false" onAction="#saveBoard" text="Save">
+                     <accelerator>
+                        <KeyCodeCombination alt="UP" code="S" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
+                     </accelerator>
+                  </MenuItem>
+                  <MenuItem mnemonicParsing="false" onAction="#loadBoard" text="Load">
+                     <accelerator>
+                        <KeyCodeCombination alt="UP" code="O" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
+                     </accelerator>
+                  </MenuItem>
             </items>
           </Menu>
           <Menu mnemonicParsing="false" text="Game">

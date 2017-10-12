@@ -13,7 +13,6 @@ import pl.edu.prz.klopusz.application.commands.impl.ShowStatusCommand;
 import pl.edu.prz.klopusz.application.controllers.Board;
 import pl.edu.prz.klopusz.application.controllers.RootLayout;
 import pl.edu.prz.klopusz.application.creators.BoardCreator;
-import sun.rmi.runtime.Log;
 
 import java.util.logging.Logger;
 
@@ -24,6 +23,12 @@ public class DolarMainApp extends Application {
 
     private BorderPane overview;
     private BoardCreator boardCreator = BoardCreator.getInstance();
+
+    public Stage getStage() {
+        return stage;
+    }
+
+    Stage stage;
 
     RootLayout rootLayoutController;
 
@@ -47,6 +52,8 @@ public class DolarMainApp extends Application {
             Scene scene = new Scene(overview);
             primaryStage.setScene(scene);
             primaryStage.show();
+
+            stage = primaryStage;
 
             boardCreator.showBoard(overview);
         } catch (Exception e) {
