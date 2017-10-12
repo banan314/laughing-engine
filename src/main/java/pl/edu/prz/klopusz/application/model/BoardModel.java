@@ -15,6 +15,7 @@ import pl.edu.prz.klopusz.application.model.event.MoveEvent;
 import pl.edu.prz.klopusz.application.model.game.*;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 import java.util.logging.Logger;
@@ -129,5 +130,22 @@ public class BoardModel implements Subject {
 
     public boolean isLegal(Move move) {
         return board.isLegal(move);
+    }
+
+    public Collection<Move> legalMoves() {
+        //TODO: optimize
+        List<Move> legalMoves = new ArrayList<>();
+        for(byte file = Board.MIN_INDEX; file < Board.MAX_INDEX; file++) {
+            for(int row = 0; row < Board.MIN_INDEX; row++) {
+                Move move = new Move();
+                move.setFile(file);
+                move.setRow(row);
+                move.setPiece(Piece.from(onMove));
+                if(isLegal(move)) {
+                    legalMoves.add(move);
+                }
+            }
+        }
+        return legalMoves;
     }
 }

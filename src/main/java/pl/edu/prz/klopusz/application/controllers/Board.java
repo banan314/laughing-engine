@@ -62,6 +62,7 @@ public class Board implements Observer, Initializable {
     @FXML private Button blackPass;
     private BoardModel boardModel;
     private ConfigurationModel configurationModel;
+    private GameWithEngine gameWithEngine;
 
     DolarMainApp parentApp;
 
@@ -301,5 +302,5 @@ public class Board implements Observer, Initializable {
         return gameMode;
     }
 
-    enum GameMode {PLAYERS, ENGINES;}
+    enum GameMode {PLAYERS, ENGINES, PLAYER_ENGINE;}
 }

@@ -15,7 +15,7 @@
 <?import javafx.scene.paint.Color?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pl.edu.prz.klopusz.application.controllers.RootLayout">
+<BorderPane prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pl.edu.prz.klopusz.application.controllers.RootLayout">
    <top>
       <MenuBar BorderPane.alignment="CENTER">
         <menus>
@@ -36,21 +36,23 @@
                      </accelerator></MenuItem>
                   <Menu mnemonicParsing="false" text="Mode">
                     <items>
-                        <RadioMenuItem mnemonicParsing="false" onAction="#handleEnginesMode" text="Engine vs. Engine">
+                        <RadioMenuItem mnemonicParsing="false" onAction="#handlePlayersMode" selected="true" text="Player vs. Player">
+                            <accelerator>
+                                <KeyCodeCombination alt="ANY" code="P" control="UP" meta="UP" shift="UP" shortcut="UP" />
+                            </accelerator>
                            <toggleGroup>
-                              <ToggleGroup fx:id="gameMode" />
-                           </toggleGroup>
-                           <accelerator>
-                              <KeyCodeCombination alt="ANY" code="E" control="UP" meta="UP" shift="UP" shortcut="UP" />
-                           </accelerator>
+                                <ToggleGroup fx:id="gameMode" />
+                           </toggleGroup></RadioMenuItem>
+                        <RadioMenuItem mnemonicParsing="false" onAction="#handlePlayerEngineMode" text="Player vs. Engine" toggleGroup="$gameMode" />
+                        <RadioMenuItem mnemonicParsing="false" onAction="#handleEnginesMode" text="Engine vs. Engine" toggleGroup="$gameMode">
+                            <accelerator>
+                                <KeyCodeCombination alt="ANY" code="E" control="UP" meta="UP" shift="UP" shortcut="UP" />
+                            </accelerator>
                         </RadioMenuItem>
-                        <RadioMenuItem mnemonicParsing="false" onAction="#handlePlayersMode" selected="true" text="Player vs. Player" toggleGroup="$gameMode">
-                           <accelerator>
-                              <KeyCodeCombination alt="ANY" code="P" control="UP" meta="UP" shift="UP" shortcut="UP" />
-                           </accelerator></RadioMenuItem>
                     </items>
                   </Menu>
                   <MenuItem fx:id="miStopEngines" disable="true" mnemonicParsing="false" onAction="#handleGameStop" text="Stop Engines" />
+                  <RadioMenuItem mnemonicParsing="false" text="Unspecified Action" />
             </items>
           </Menu>
           <Menu mnemonicParsing="false" text="Help">

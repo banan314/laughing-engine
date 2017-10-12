@@ -7,6 +7,7 @@ package pl.edu.prz.klopusz.application.model.game;
 import lombok.*;
 import org.ggp.base.util.gdl.grammar.GdlSentence;
 
+//TODO: add a possibility to pass
 public class Move {
     @Getter @Setter int file;
     @Getter @Setter  int row;

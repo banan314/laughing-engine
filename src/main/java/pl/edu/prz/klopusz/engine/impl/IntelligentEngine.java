@@ -16,6 +16,7 @@ import static java.lang.Math.abs;
 
 /**
  * Created by kamil on 06.08.17.
+ * @apiNote the board should be initialized via a setter
  */
 public class IntelligentEngine extends EngineImpl {
 

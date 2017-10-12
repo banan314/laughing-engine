@@ -139,6 +139,12 @@ public class RootLayout {
     }
 
     @FXML
+    public void handlePlayerEngineMode() {
+        parentApp.getBoardController().setGameMode(Board.GameMode.PLAYER_ENGINE);
+        miStopEngines.setDisable(true);
+    }
+
+    @FXML
     public void handleAbout() {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle("Dolar");
