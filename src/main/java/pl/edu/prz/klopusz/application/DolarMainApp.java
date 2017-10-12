@@ -13,10 +13,14 @@ import pl.edu.prz.klopusz.application.commands.impl.ShowStatusCommand;
 import pl.edu.prz.klopusz.application.controllers.Board;
 import pl.edu.prz.klopusz.application.controllers.RootLayout;
 import pl.edu.prz.klopusz.application.creators.BoardCreator;
+import sun.rmi.runtime.Log;
+
+import java.util.logging.Logger;
 
 public class DolarMainApp extends Application {
 
     public static final String BASE_VIEW_URL = "file:./src/main/java/pl/edu/prz/klopusz/application/view/";
+    private static final Logger LOG = Logger.getLogger("Dolar main app");
 
     private BorderPane overview;
     private BoardCreator boardCreator = BoardCreator.getInstance();
@@ -33,8 +37,9 @@ public class DolarMainApp extends Application {
         FXMLLoader loader = new FXMLLoader();
         try {
             java.net.URL location = new java.net.URL(BASE_VIEW_URL + "RootLayout.fxml");
-            if (null == location) throw new Exception("not found");
-            System.out.println(location);
+            if (null == location)
+                throw new Exception("not found");
+            LOG.info(location.toString());
             loader.setLocation(location);
 
             overview = loader.load();

@@ -42,7 +42,8 @@ public class BoardModel implements Subject {
     public void initialize() {
         assert board != null;
         board.initialize();
-        System.out.println("board model: initialize");
+        onMove = Piece.Color.WHITE;
+        LOG.info("board model: initialize");
 
         BoardEvent boardEvent = new BoardEvent(board);
         notifyObservers(boardEvent);
@@ -53,6 +54,7 @@ public class BoardModel implements Subject {
     }
 
     public Piece.Color whoseTurn() {
+        assert null != onMove;
         return onMove;
     }
 
@@ -60,12 +62,14 @@ public class BoardModel implements Subject {
         setWhitePassed(true);
         if(blackPassed)
             onGameEnded();
+        swapTurn();
     }
 
     public void passAsBlack() {
         setBlackPassed(true);
         if(whitePassed)
             onGameEnded();
+        swapTurn();
     }
 
     private void onGameEnded() {
@@ -86,6 +90,10 @@ public class BoardModel implements Subject {
         observers.add(observer);
     }
 
+    public void removeObserver(Observer observer) {
+        observers.remove(observer);
+    }
+
     @Override
     public void notifyObservers(Event event) {
         for(Observer observer : observers) {
@@ -103,6 +111,8 @@ public class BoardModel implements Subject {
         } else if(move.getPiece().isBlack()) {
             blackPassed = false;
         }
+
+        swapTurn();
 
         MoveEvent moveEvent = new MoveEvent(move);
         notifyObservers(moveEvent);
@@ -135,11 +145,11 @@ public class BoardModel implements Subject {
     public Collection<Move> legalMoves() {
         //TODO: optimize
         List<Move> legalMoves = new ArrayList<>();
-        for(byte file = Board.MIN_INDEX; file < Board.MAX_INDEX; file++) {
-            for(int row = 0; row < Board.MIN_INDEX; row++) {
+        for(byte file = Board.MIN_INDEX; file <= Board.MAX_INDEX; file++) {
+            for(int row = Board.MIN_INDEX; row <= Board.MAX_INDEX; row++) {
                 Move move = new Move();
-                move.setFile(file);
                 move.setRow(row);
+                move.setFile(file);
                 move.setPiece(Piece.from(onMove));
                 if(isLegal(move)) {
                     legalMoves.add(move);
@@ -147,5 +157,9 @@ public class BoardModel implements Subject {
             }
         }
         return legalMoves;
+    }
+
+    public void swapTurn() {
+        onMove = Piece.Color.opposite(onMove);
     }
 }

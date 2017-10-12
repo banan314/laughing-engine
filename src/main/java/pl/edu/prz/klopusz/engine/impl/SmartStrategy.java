@@ -17,9 +17,9 @@ public class SmartStrategy implements GoalStrategy {
     /*TODO: implement*/
     @Override
     public float goal(Move move) {
-        Factors distance1 = new Factors(0.5f, 0.3f, 0.2f);
-        Factors distance2 = new Factors(0.4f, 0.24f, 0.16f);
-        Factors distance3 = new Factors(0.4f, 0.24f, 0.16f);
+        Factors distance1 = new Factors(0.5f, 0.3f, 0.2f, 0.1f);
+        Factors distance2 = new Factors(0.4f, 0.24f, 0.16f, 0.08f);
+        Factors distance3 = new Factors(0.4f, 0.24f, 0.16f, 0.08f);
 
         float goal = 0.0f;
         goal += neighbourhood(distance1, (byte) 1, move) / 8;
@@ -73,19 +73,6 @@ public class SmartStrategy implements GoalStrategy {
         return sum;
     }
 
-    float applyFactors(Factors factors, Square square, Piece.Color color) {
-        if (isOutOfTheBoard(square)) {
-            return factors.out;
-        }
-        if (isAlly(square, color)) {
-            return factors.ally;
-        }
-        if (isEnemy(square, color)) {
-            return factors.enemy;
-        }
-        return 0;
-    }
-
     private Square otherSquare(Square square, int horizontally, int vertically) {
         return otherSquare(square, (byte) horizontally, (byte) vertically);
     }
@@ -94,6 +81,23 @@ public class SmartStrategy implements GoalStrategy {
         Square other = new Square(square);
         other.setFileRow((byte) (other.getFile()+vertically), (byte) (other.getRow()+horizontally));
         return other;
+    }
+
+    float applyFactors(Factors factors, Square square, Piece.Color color) {
+        if (isOutOfTheBoard(square)) {
+            return factors.out;
+        }
+        if (isEmpty(square)) {
+            return factors.empty;
+        }
+        // the content of square is asserted
+        if (isAlly(square, color)) {
+            return factors.ally;
+        }
+        if (isEnemy(square, color)) {
+            return factors.enemy;
+        }
+        return 0;
     }
 
     boolean isOutOfTheBoard(Square square) {
@@ -106,6 +110,10 @@ public class SmartStrategy implements GoalStrategy {
         return false;
     }
 
+    private boolean isEmpty(Square square) {
+        return board.get(square.getRow(), square.getFile()).isEmpty();
+    }
+
     boolean isAlly(Square square, Piece.Color color) {
         return board.get(square.getRow(), square.getFile()).getColor() == color;
     }
@@ -115,15 +123,16 @@ public class SmartStrategy implements GoalStrategy {
     }
 
     class Factors {
-        public float out, ally, enemy;
+        public float out, ally, enemy, empty;
 
         public Factors() {
         }
 
-        public Factors(float out, float ally, float enemy) {
+        public Factors(float out, float ally, float enemy, float empty) {
             this.out = out;
             this.ally = ally;
             this.enemy = enemy;
+            this.empty = empty;
         }
     }
 

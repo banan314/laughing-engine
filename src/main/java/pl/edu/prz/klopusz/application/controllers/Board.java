@@ -93,6 +93,11 @@ public class Board implements Observer, Initializable {
 
     public void setGameMode(GameMode gameMode) {
         this.gameMode = gameMode;
+        if(gameMode == GameMode.PLAYER_ENGINE) {
+            gameWithEngine = new GameWithEngineImpl();
+            gameWithEngine.setBoardModel(boardModel);
+            gameWithEngine.setPlayerColor(Piece.Color.WHITE);
+        }
     }
 
     public void setBoardModel(BoardModel boardModel) {
@@ -127,17 +132,17 @@ public class Board implements Observer, Initializable {
         try {
             val point = rectangle2Point(square);
             LOG.info("clicked: (x=" + point.x + ", y=" + point.y + ")");
+            val playerMoving = boardModel.whoseTurn();
             Move move = new Move();
             move.setRow(point.y);
             move.setFile(point.x);
-            move.setPiece(new Piece(boardModel.whoseTurn()));
+            move.setPiece(new Piece(playerMoving));
 
             if (boardModel.isLegal(move)) {
                 boardModel.makeMove(move);
-                putSquarePiece(square, boardModel.whoseTurn());
-                turnColor();
+                putSquarePiece(square, playerMoving);
             } else {
-                LOG.info("move not legal; " + "turn: " + boardModel.whoseTurn());
+                LOG.info("move not legal; " + "turn: " + playerMoving);
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -154,11 +159,9 @@ public class Board implements Observer, Initializable {
         if (passButton.getId().equals("whitePass")) {
             parentApp.showLeftStatus(WHITE_PASSED);
             boardModel.passAsWhite();
-            turnColor();
         } else if (passButton.getId().equals("blackPass")) {
             parentApp.showLeftStatus(BLACK_PASSED);
             boardModel.passAsBlack();
-            turnColor();
         }
         updatePassDisability();
     }
@@ -191,11 +194,6 @@ public class Board implements Observer, Initializable {
         throw new Exception("not in board children");
     }
 
-    private void turnColor() {
-        Piece.Color onMove = boardModel.whoseTurn();
-        boardModel.setTurn(onMove == Piece.Color.WHITE ? Piece.Color.BLACK : Piece.Color.WHITE);
-    }
-
     public void updateBoard(pl.edu.prz.klopusz.application.model.game.Board board) {
         takeOffPiecesFromBoard();
         for(int i = pl.edu.prz.klopusz.application.model.game.Board.MIN_INDEX; i <= pl.edu.prz.klopusz.application
@@ -218,7 +216,7 @@ public class Board implements Observer, Initializable {
     }
 
     private void takeOffPiecesFromBoard() {
-        System.out.println("take off pieces");
+        LOG.info("take off pieces");
         if (Platform.isFxApplicationThread()) {
             removeCircles();
         } else {
