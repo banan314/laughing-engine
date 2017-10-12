@@ -24,6 +24,7 @@ public class IntelligentEngine extends EngineImpl {
     Territory blackTerritory;
 
     @Override
+    @NonNull
     protected Move leaveOutMoveNearestToTheCamp(List<Move> movesConsidered) {
         int minDistance = 9;
         Move nearestMove = null;

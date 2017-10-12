@@ -52,7 +52,6 @@
                     </items>
                   </Menu>
                   <MenuItem fx:id="miStopEngines" disable="true" mnemonicParsing="false" onAction="#handleGameStop" text="Stop Engines" />
-                  <RadioMenuItem mnemonicParsing="false" text="Unspecified Action" />
             </items>
           </Menu>
           <Menu mnemonicParsing="false" text="Help">

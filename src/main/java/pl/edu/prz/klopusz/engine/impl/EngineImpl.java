@@ -20,7 +20,7 @@ public abstract class EngineImpl implements Engine {
     @Override
     public Move move(Piece.Color color, final Collection<Move> legalMoves) {
         assert board != null;
-        List<Move> movesConsidered = new LinkedList<Move>(legalMoves);
+        List<Move> movesConsidered = new LinkedList<>(legalMoves);
         if(isCampOccupied(color)) {
             movesConsidered = removeMovesOnTerritories(movesConsidered, color);
             return bestMove(movesConsidered);
