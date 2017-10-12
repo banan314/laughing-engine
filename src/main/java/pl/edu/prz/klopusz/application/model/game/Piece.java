@@ -62,7 +62,12 @@ public class Piece {
         }
     }
 
-    public enum Color {WHITE, BLACK;}
+    public enum Color {WHITE, BLACK;
+
+        public static Color opposite(Color player) {
+            return player == Piece.Color.WHITE ? Piece.Color.BLACK : Piece.Color.WHITE;
+        }
+    }
 
     @Override
     public String toString() {
