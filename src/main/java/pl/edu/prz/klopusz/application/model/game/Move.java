@@ -28,6 +28,13 @@ public class Move {
         return move;
     }
 
+    /**
+     * @return square - made out of move, using row and file
+     */
+    final public Square square() {
+        return new Square((byte)row, (byte)file);
+    }
+
     private static boolean isMark(String mark) {
         return mark.contains("mark");
     }
