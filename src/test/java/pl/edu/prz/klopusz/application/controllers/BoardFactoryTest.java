@@ -1,4 +1,4 @@
-package pl.prz.edu.banan314.application.controllers;
+package pl.edu.prz.klopusz.application.controllers;
 
 import javafx.scene.input.MouseEvent;
 import javafx.scene.shape.Rectangle;

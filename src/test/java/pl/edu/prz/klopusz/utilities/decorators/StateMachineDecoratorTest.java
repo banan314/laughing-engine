@@ -1,4 +1,4 @@
-package pl.prz.edu.banan314.utilities.decorators;
+package pl.edu.prz.klopusz.utilities.decorators;
 
 import org.ggp.base.util.game.Game;
 import org.ggp.base.util.statemachine.MachineState;

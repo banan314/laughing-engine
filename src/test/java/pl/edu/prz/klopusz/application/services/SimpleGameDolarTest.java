@@ -1,4 +1,4 @@
-package pl.prz.edu.banan314.application.services;
+package pl.edu.prz.klopusz.application.services;
 
 import org.ggp.base.util.game.Game;
 import org.ggp.base.util.statemachine.Role;

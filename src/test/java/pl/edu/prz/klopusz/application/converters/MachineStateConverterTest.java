@@ -1,4 +1,4 @@
-package pl.prz.edu.banan314.application.converters;
+package pl.edu.prz.klopusz.application.converters;
 
 import org.ggp.base.util.statemachine.MachineState;
 import org.ggp.base.util.statemachine.MachineStateTester;

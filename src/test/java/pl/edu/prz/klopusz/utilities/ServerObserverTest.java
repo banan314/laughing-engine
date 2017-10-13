@@ -1,4 +1,4 @@
-package pl.prz.edu.banan314.utilities;
+package pl.edu.prz.klopusz.utilities;
 
 import org.ggp.base.server.GameServer;
 import org.ggp.base.server.event.ServerCompletedMatchEvent;
