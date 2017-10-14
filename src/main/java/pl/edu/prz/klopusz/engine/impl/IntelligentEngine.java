@@ -3,6 +3,7 @@ package pl.edu.prz.klopusz.engine.impl;
 import lombok.*;
 import pl.edu.prz.klopusz.application.model.game.Move;
 import pl.edu.prz.klopusz.application.model.game.Piece;
+import pl.edu.prz.klopusz.application.model.game.Square;
 import pl.edu.prz.klopusz.engine.api.GoalCalculator;
 import pl.edu.prz.klopusz.engine.api.GoalStrategy;
 import pl.edu.prz.klopusz.engine.api.Territory;
@@ -40,6 +41,8 @@ public class IntelligentEngine extends EngineImpl {
 
     int distanceToTheCamp(Move move) {
         CampBorder cb = new CampBorder(move.getPiece().getColor());
+        if(cb.isWithin(move.square()))
+            return 0;
         return abs(move.getFile()-cb.lower) + abs(move.getRow()-cb.lower);
     }
 
@@ -60,7 +63,7 @@ public class IntelligentEngine extends EngineImpl {
 
     Move findBest (Map<Move, Float> moveGoal) {
         assert moveGoal.size() > 0;
-        val entrySet = moveGoal.entrySet().stream().max((low, high) -> {
+        val entrySet = moveGoal.entrySet().stream().min((low, high) -> {
             if(low.getValue() == high.getValue()) {
                 return 0;
             }
@@ -123,7 +126,7 @@ public class IntelligentEngine extends EngineImpl {
             switch (color) {
                 case WHITE:
                     lower = 5;
-                    upper = 9;
+                    upper = 9; //TODO: Board.MAX_INDEX
                     break;
                 case BLACK:
                     lower = 4;
@@ -143,6 +146,27 @@ public class IntelligentEngine extends EngineImpl {
                     return (int x)->x-1;
                 default:
                     return (int x)->x;
+            }
+        }
+
+        public boolean isWithin(Square square) {
+            val range = new Range(lower, upper);
+            return range.contains(square.getRow()) && range.contains(square.getFile());
+        }
+
+        private class Range {
+            private final int low;
+            private final int high;
+
+            public Range(int low, int high) {
+                this.low = low;
+                this.high = high;
+            }
+
+            public boolean contains(int number) {
+                if(low <= high)
+                    return low<=number && number<=high;
+                return high<=number && number<=low;
             }
         }
     }
