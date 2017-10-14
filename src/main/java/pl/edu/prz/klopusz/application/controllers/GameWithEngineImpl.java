@@ -1,8 +1,11 @@
 package pl.edu.prz.klopusz.application.controllers;
 
+import lombok.Getter;
+import lombok.Setter;
 import org.ggp.base.util.observer.Event;
 import org.ggp.base.util.observer.Observer;
 import pl.edu.prz.klopusz.application.model.BoardModel;
+import pl.edu.prz.klopusz.application.model.event.BoardEvent;
 import pl.edu.prz.klopusz.application.model.event.EndEvent;
 import pl.edu.prz.klopusz.application.model.event.MoveEvent;
 import pl.edu.prz.klopusz.application.model.game.Move;
@@ -11,10 +14,10 @@ import pl.edu.prz.klopusz.engine.api.Engine;
 import pl.edu.prz.klopusz.engine.impl.IntelligentEngine;
 
 public class GameWithEngineImpl implements GameWithEngine, Observer {
-    Piece.Color playerColor;
+    @Getter @Setter Piece.Color playerColor;
     private BoardModel boardModel;
     IntelligentEngine engine;
-    boolean active = true;
+    @Setter boolean active = true;
 
     public GameWithEngineImpl() {
         engine = new IntelligentEngine();
@@ -22,16 +25,6 @@ public class GameWithEngineImpl implements GameWithEngine, Observer {
 
     public GameWithEngineImpl(IntelligentEngine engine) {
         this.engine = engine;
-    }
-
-    @Override
-    public Piece.Color getPlayerColor() {
-        return playerColor;
-    }
-
-    @Override
-    public void setPlayerColor(Piece.Color color) {
-        playerColor = color;
     }
 
     @Override
@@ -55,6 +48,11 @@ public class GameWithEngineImpl implements GameWithEngine, Observer {
     }
 
     @Override
+    public void swapPlayer() {
+        playerColor = Piece.Color.opposite(playerColor);
+    }
+
+    @Override
     protected void finalize() throws Throwable {
         super.finalize();
         boardModel.removeObserver(this);
@@ -71,6 +69,8 @@ public class GameWithEngineImpl implements GameWithEngine, Observer {
                 assert boardModel.whoseTurn() != playerColor;
                 makeMove();
             }
+        } else if(event instanceof BoardEvent) {
+            active = true;
         }
     }
 }

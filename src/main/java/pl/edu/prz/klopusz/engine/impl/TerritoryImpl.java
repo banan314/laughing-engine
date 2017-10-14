@@ -1,15 +1,14 @@
 package pl.edu.prz.klopusz.engine.impl;
 
 import lombok.val;
-import pl.edu.prz.klopusz.application.model.game.Move;
 import pl.edu.prz.klopusz.application.model.game.Square;
 import pl.edu.prz.klopusz.engine.api.Territory;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 public class TerritoryImpl implements Territory {
-    List<Square> squares = new ArrayList<>();
+    Set<Square> squares = new HashSet<>();
 
     @Override
     public boolean contains(Square square) {

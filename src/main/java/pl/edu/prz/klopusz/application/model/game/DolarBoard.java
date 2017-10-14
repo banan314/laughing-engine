@@ -41,7 +41,11 @@ public class DolarBoard extends Board {
         if (null == squares[row][file]) {
             return new Square(); //empty - null pattern
         }
-        return squares[row][file];
+
+        Square rc = squares[row][file];
+        rc.setFile((byte) (file+1));
+        rc.setRow((byte) (row+1));
+        return rc;
     }
 
     @Override

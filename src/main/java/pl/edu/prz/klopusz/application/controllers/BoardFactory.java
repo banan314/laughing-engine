@@ -9,15 +9,16 @@ import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.Shape;
 import javafx.scene.shape.Sphere;
+import pl.edu.prz.klopusz.application.common.Assets;
 import pl.edu.prz.klopusz.application.common.Point;
 import pl.edu.prz.klopusz.application.model.game.Piece;
 
 public class BoardFactory {
-    final static String WHITE_STYLE = "-fx-fill: white";
-    final static String BLACK_STYLE = "-fx-fill: black";
+    private final static String WHITE_STYLE = "-fx-fill: white";
+    private final static String BLACK_STYLE = "-fx-fill: black";
 
-    final public static Material whitePieceMaterial =  new PhongMaterial(Color.color(0.0, 0.5019, 0.1, 0.6));
-    final public static Material blackPieceMaterial =  new PhongMaterial(Color.color(1.0, 0.60, 0.01));
+    final public static Material whitePieceMaterial =  new PhongMaterial(Assets.pieceColor(Piece.Color.WHITE));
+    final public static Material blackPieceMaterial =  new PhongMaterial(Assets.pieceColor(Piece.Color.BLACK));
 
     static Node makePiece(Rectangle square, Piece.Color color) {
         Point squareCenter = new Point(square.getLayoutX()+square.getWidth() / 2, square.getLayoutY()+square

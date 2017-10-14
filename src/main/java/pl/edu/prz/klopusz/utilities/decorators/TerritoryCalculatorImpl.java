@@ -1,17 +1,13 @@
 package pl.edu.prz.klopusz.utilities.decorators;
 
-import pl.edu.prz.klopusz.application.model.game.Square;
 import pl.edu.prz.klopusz.application.model.game.Board;
 import pl.edu.prz.klopusz.engine.api.Territory;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by kamil on 19.06.17.
  */
 
-public class TerritoryCalculatorImpl implements TerritoryCalculator {
+public class TerritoryCalculatorImpl implements ScoreCalculator {
 
     Territory whiteTerritory;
     Territory blackTerritory;

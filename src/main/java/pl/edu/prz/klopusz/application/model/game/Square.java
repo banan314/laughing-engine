@@ -96,6 +96,7 @@ public class Square {
         this.row = row;
     }
 
+    @Deprecated
     public void setFileRow(byte file, byte row) {
         this.file = file;
         this.row = row;

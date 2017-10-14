@@ -22,6 +22,7 @@ import pl.edu.prz.klopusz.application.DolarMainApp;
 import pl.edu.prz.klopusz.application.commands.ConfigurableCommand;
 import pl.edu.prz.klopusz.application.commands.impl.ShowRightStatusCommand;
 import pl.edu.prz.klopusz.application.commands.impl.server.StopServerCommand;
+import pl.edu.prz.klopusz.application.common.Assets;
 import pl.edu.prz.klopusz.application.common.Messages;
 import pl.edu.prz.klopusz.application.common.Point;
 import pl.edu.prz.klopusz.application.common.ThreadHelper;
@@ -60,6 +61,8 @@ public class Board implements Observer, Initializable {
     @FXML private Label whiteGoal, blackGoal;
     @FXML private Button whitePass;
     @FXML private Button blackPass;
+    @FXML private Button flipPlayer;
+    @FXML private Label youPlayAsLabel;
     BoardModel boardModel;
     private ConfigurationModel configurationModel;
     private GameWithEngine gameWithEngine;
@@ -83,7 +86,22 @@ public class Board implements Observer, Initializable {
             }
         });
 
+        updateButtonsFeatures();
         initializePieces();
+    }
+
+    private void updateButtonsFeatures() {
+        switch (gameMode) {
+            case PLAYERS:
+                flipPlayer.setDisable(true);
+                break;
+            case ENGINES:
+                flipPlayer.setDisable(true);
+                break;
+            case PLAYER_ENGINE:
+                flipPlayer.setDisable(false);
+                break;
+        }
     }
 
     private void initializePieces() {
@@ -98,6 +116,7 @@ public class Board implements Observer, Initializable {
             gameWithEngine.setBoardModel(boardModel);
             gameWithEngine.setPlayerColor(Piece.Color.WHITE);
         }
+        updateButtonsFeatures();
     }
 
     public void setBoardModel(BoardModel boardModel) {
@@ -174,6 +193,12 @@ public class Board implements Observer, Initializable {
             whitePass.setDisable(true);
             blackPass.setDisable(false);
         }
+    }
+
+    @FXML
+    private void flipPlayer(MouseEvent event) {
+        gameWithEngine.swapPlayer();
+        youPlayAsLabel.setText(String.format("You play as: %s", Assets.playerName(gameWithEngine.getPlayerColor()).toUpperCase()));
     }
 
     private boolean shouldIgnoreMove() {

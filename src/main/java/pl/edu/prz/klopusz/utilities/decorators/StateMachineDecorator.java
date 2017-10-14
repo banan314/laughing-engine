@@ -13,7 +13,7 @@ import pl.edu.prz.klopusz.application.model.game.Board;
 public class StateMachineDecorator extends ProverStateMachine {
 
     private Board board;
-    private TerritoryCalculator territoryCalculator;
+    private ScoreCalculator territoryCalculator;
 
     @Override
     public int getGoal(MachineState state, Role role) throws GoalDefinitionException {

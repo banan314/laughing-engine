@@ -2,6 +2,7 @@ package pl.edu.prz.klopusz.application.model.game;
 
 import lombok.val;
 
+//TODO: save whose turn as well
 public class SavedState {
     Board board;
 

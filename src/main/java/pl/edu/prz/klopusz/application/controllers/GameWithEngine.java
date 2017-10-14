@@ -10,4 +10,6 @@ public interface GameWithEngine {
 
     void setBoardModel(BoardModel model);
     Move makeMove();
+
+    void swapPlayer();
 }
