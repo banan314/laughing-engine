@@ -62,14 +62,12 @@ public class BoardModel implements Subject {
         setWhitePassed(true);
         if(blackPassed)
             onGameEnded();
-        swapTurn();
     }
 
     public void passAsBlack() {
         setBlackPassed(true);
         if(whitePassed)
             onGameEnded();
-        swapTurn();
     }
 
     private void onGameEnded() {
@@ -102,14 +100,25 @@ public class BoardModel implements Subject {
     }
 
     public void makeMove(Move move) {
-        board.set(move.getRow(), move.getFile(), new Square(move.getPiece()));
+        LOG.info("made move: "+move);
+        if(move.isPassed()) {
+            switch (move.getColor()) {
+                case WHITE:
+                    passAsWhite();
+                    break;
+                case BLACK:
+                    passAsBlack();
+                    break;
+            }
+        } else {
+            board.set(move.getRow(), move.getFile(), new Square(move.getPiece()));
 
-        LOG.info("made move: " + move);
 
-        if(move.getPiece().isWhite()) {
-            whitePassed = false;
-        } else if(move.getPiece().isBlack()) {
-            blackPassed = false;
+            if (move.getPiece().isWhite()) {
+                whitePassed = false;
+            } else if (move.getPiece().isBlack()) {
+                blackPassed = false;
+            }
         }
 
         swapTurn();

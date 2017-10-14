@@ -14,7 +14,6 @@ public class SmartStrategy implements GoalStrategy {
         this.board = board;
     }
 
-    /*TODO: implement*/
     @Override
     public float goal(Move move) {
         Factors distance1 = new Factors(0.5f, 0.3f, 0.2f, 0.1f);
@@ -22,11 +21,11 @@ public class SmartStrategy implements GoalStrategy {
         Factors distance3 = new Factors(0.4f, 0.24f, 0.16f, 0.08f);
 
         float goal = 0.0f;
-        goal += neighbourhood(distance1, (byte) 1, move) / 8;
-        goal += neighbourhood(distance2, (byte) 2, move) / 16;
-        goal += neighbourhood(distance3, (byte) 3, move) / 24;
+        goal += neighbourhood(distance1, (byte) 1, move) / 8 * getCoefficient(1);
+        goal += neighbourhood(distance2, (byte) 2, move) / 16 * getCoefficient(2);
+        goal += neighbourhood(distance3, (byte) 3, move) / 24 * getCoefficient(3);
 
-        return 0;
+        return goal;
     }
 
     float neighbourhood(Factors factors, byte distance, Move move) {

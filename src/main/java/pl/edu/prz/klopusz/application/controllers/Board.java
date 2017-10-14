@@ -158,10 +158,10 @@ public class Board implements Observer, Initializable {
         Node passButton = (Node) event.getSource();
         if (passButton.getId().equals("whitePass")) {
             parentApp.showLeftStatus(WHITE_PASSED);
-            boardModel.passAsWhite();
+            boardModel.makeMove(Move.pass(Piece.Color.WHITE));
         } else if (passButton.getId().equals("blackPass")) {
             parentApp.showLeftStatus(BLACK_PASSED);
-            boardModel.passAsBlack();
+            boardModel.makeMove(Move.pass(Piece.Color.BLACK));
         }
         updatePassDisability();
     }
@@ -285,7 +285,8 @@ public class Board implements Observer, Initializable {
         } else if (event instanceof MoveEvent) {
             MoveEvent moveEvent = (MoveEvent) event;
 
-            putSquarePiece(moveEvent.getMove());
+            if(!moveEvent.getMove().isPassed())
+                putSquarePiece(moveEvent.getMove());
         } else if (event instanceof EndEvent) {
             new ShowRightStatusCommand(Messages.GAME_FINISHED).execute();
             gameEnded = true;

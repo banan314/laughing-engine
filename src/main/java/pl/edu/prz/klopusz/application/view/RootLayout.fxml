@@ -53,7 +53,11 @@
                            <toggleGroup>
                                 <ToggleGroup fx:id="gameMode" />
                            </toggleGroup></RadioMenuItem>
-                        <RadioMenuItem mnemonicParsing="false" onAction="#handlePlayerEngineMode" text="Player vs. Engine" toggleGroup="$gameMode" />
+                        <RadioMenuItem mnemonicParsing="false" onAction="#handlePlayerEngineMode" text="Player vs. Engine" toggleGroup="$gameMode">
+                            <accelerator>
+                                <KeyCodeCombination alt="ANY" code="P" control="UP" meta="UP" shift="UP" shortcut="UP" />
+                            </accelerator>
+                        </RadioMenuItem>
                         <RadioMenuItem mnemonicParsing="false" onAction="#handleEnginesMode" text="Engine vs. Engine" toggleGroup="$gameMode">
                             <accelerator>
                                 <KeyCodeCombination alt="ANY" code="E" control="UP" meta="UP" shift="UP" shortcut="UP" />
