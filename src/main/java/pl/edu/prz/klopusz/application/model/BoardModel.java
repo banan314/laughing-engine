@@ -33,7 +33,7 @@ public class BoardModel implements Subject {
 
     boolean whitePassed = false, blackPassed = false;
 
-    StringProperty whiteGoal = new SimpleStringProperty("-1"), blackGoal = new SimpleStringProperty("-1");
+    StringProperty whiteGoal = new SimpleStringProperty("?"), blackGoal = new SimpleStringProperty("?");
 
     public Board getBoard() {
         return board;

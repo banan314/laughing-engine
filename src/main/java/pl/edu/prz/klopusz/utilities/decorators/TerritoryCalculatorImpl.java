@@ -16,7 +16,7 @@ public class TerritoryCalculatorImpl implements ScoreCalculator {
 
     private final Board board;
 
-    TerritoryCalculatorImpl(Board board) {
+    public TerritoryCalculatorImpl(Board board) {
         this.board = board;
         territoryAnalyzer = new TerritoryAnalyzerImpl(board);
     }
@@ -24,6 +24,7 @@ public class TerritoryCalculatorImpl implements ScoreCalculator {
     @Override
     public void calculate() {
         territoryAnalyzer.analyze();
+
         whiteTerritory = territoryAnalyzer.getWhiteTerritory();
         blackTerritory = territoryAnalyzer.getBlackTerritory();
     }

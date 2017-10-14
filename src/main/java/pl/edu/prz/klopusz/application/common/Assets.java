@@ -7,9 +7,9 @@ public class Assets {
     public static String playerName(Piece.Color color) {
         switch (color) {
             case WHITE:
-                return "White";
+                return "Green";
             case BLACK:
-                return "Black";
+                return "Orange";
             default:
                 return "Unknown player";
         }

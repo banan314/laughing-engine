@@ -71,6 +71,10 @@ public class RootLayout {
         val fileChooser = new FileChooser();
         fileChooser.setTitle("Save board in PDN");
         File file = fileChooser.showSaveDialog(parentApp.getStage());
+        fileChooser.getExtensionFilters().addAll(
+                new FileChooser.ExtensionFilter("PDN", "*.pdn"),
+                new FileChooser.ExtensionFilter("All files", "*.*")
+        );
 
         val savedState = new SavedState(parentApp.getBoardController().boardModel.getBoard());
         try {

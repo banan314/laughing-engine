@@ -5,6 +5,7 @@ import pl.edu.prz.klopusz.application.model.game.Board;
 import pl.edu.prz.klopusz.application.model.game.Piece;
 import pl.edu.prz.klopusz.engine.api.Territory;
 import pl.edu.prz.klopusz.engine.impl.CampBorder;
+import pl.edu.prz.klopusz.engine.impl.TerritoryImpl;
 import pl.edu.prz.klopusz.utilities.decorators.ScoreCalculator;
 
 public class CampCalculator implements ScoreCalculator {
@@ -13,12 +14,17 @@ public class CampCalculator implements ScoreCalculator {
 
     private final Board board;
 
-    CampCalculator(Board board) {
+    public CampCalculator(Board board) {
         this.board = board;
+        whiteTerritory = new TerritoryImpl();
+        blackTerritory = new TerritoryImpl();
     }
 
     @Override
     public void calculate() {
+        whiteTerritory.clear();
+        blackTerritory.clear();
+
         constructTerritory(whiteTerritory, Piece.Color.WHITE);
         constructTerritory(blackTerritory, Piece.Color.BLACK);
     }
@@ -29,6 +35,8 @@ public class CampCalculator implements ScoreCalculator {
         for(int i = cb.lower; i != cb.upper; i = next.apply(i)) {
             for(int j = cb.lower; j != cb.upper; j = next.apply(j)) {
                 val square = board.get(i, j);
+                if(square.isEmpty())
+                    continue;
                 if(square.getColor() == color) {
                     territory.add(square);
                 }

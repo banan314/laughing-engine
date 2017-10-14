@@ -32,4 +32,9 @@ public class TerritoryImpl implements Territory {
     public int size() {
         return squares.size();
     }
+
+    @Override
+    public void clear() {
+        squares.clear();
+    }
 }

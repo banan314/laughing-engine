@@ -125,6 +125,7 @@ public class Square {
     }
 
     public Piece.Color getColor() {
+        assert null != piece;
         return piece.getColor();
     }
 }

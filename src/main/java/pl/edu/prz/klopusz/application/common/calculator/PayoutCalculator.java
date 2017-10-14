@@ -5,7 +5,7 @@ import org.ggp.base.util.observer.Observer;
 import pl.edu.prz.klopusz.application.model.BoardModel;
 import pl.edu.prz.klopusz.utilities.decorators.ScoreCalculator;
 
-public class PayoutCalculator implements Observer, ScoreCalculator {
+public class PayoutCalculator implements ScoreCalculator {
     ScoreCalculator territoryCalculator;
     ScoreCalculator campCalculator;
     BoardModel boardModel;
@@ -22,19 +22,7 @@ public class PayoutCalculator implements Observer, ScoreCalculator {
 
     public PayoutCalculator observeBoardModel(BoardModel model) {
         this.boardModel = model;
-        model.addObserver(this);
         return this;
-    }
-
-    @Override
-    public void observe(Event event) {
-        //TODO
-    }
-
-    @Override
-    protected void finalize() throws Throwable {
-        super.finalize();
-        boardModel.removeObserver(this);
     }
 
     @Override
@@ -48,11 +36,13 @@ public class PayoutCalculator implements Observer, ScoreCalculator {
 
     @Override
     public int getWhite() {
-        return territoryCalculator.getWhite() + campCalculator.getWhite();
+        return territoryCalculator.getWhite() + campCalculator.getWhite()
+                - (territoryCalculator.getBlack() + campCalculator.getBlack());
     }
 
     @Override
     public int getBlack() {
-        return territoryCalculator.getBlack() + campCalculator.getBlack();
+        return territoryCalculator.getBlack() + campCalculator.getBlack()
+                - (territoryCalculator.getWhite() + campCalculator.getWhite());
     }
 }

@@ -11,4 +11,9 @@ public interface Territory {
     boolean contains(Square square);
     void add(Square square);
     int size();
+
+    /**
+     * makes territory size 0 and clears it of squares
+     */
+    void clear();
 }
