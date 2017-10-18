@@ -27,8 +27,6 @@ public class TerritoryAnalyzerImpl implements TerritoryAnalyzer {
         this.board = board;
     }
 
-    /*TODO: test it!!!!!!*/
-    /*FIXME: cell 1,1 is empty sometimes (initially)*/
     @Override
     public void analyze() {
         initializeCellBoard();
@@ -88,10 +86,6 @@ public class TerritoryAnalyzerImpl implements TerritoryAnalyzer {
             case EMPTY:
                 adjacent = getNeighbors(file, row);
                 checkEmptyCellNeighbors(file, row, adjacent);
-                break;
-            case OCCUPIED_WHITE:
-            case OCCUPIED_BLACK:
-                //TODO: needed?
                 break;
             case SEEDED_WHITE:
             case SEEDED_BLACK:
@@ -224,7 +218,6 @@ public class TerritoryAnalyzerImpl implements TerritoryAnalyzer {
         }
     }
 
-    /*TODO: CONTAMINATED is not needed anymore*/
     /*
     * EMPTY - no piece on square
     * SEEDED - square analyzed (by growth algorithm)
