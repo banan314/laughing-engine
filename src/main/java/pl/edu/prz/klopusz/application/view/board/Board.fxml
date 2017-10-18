@@ -221,8 +221,8 @@
       <Label fx:id="blackPlayerName" alignment="CENTER" layoutX="684.0" layoutY="353.0" text="Black" />
       <Label fx:id="whiteGoal" layoutX="576.0" layoutY="385.0" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="16.0" prefWidth="25.0" textAlignment="CENTER" />
       <Label fx:id="blackGoal" layoutX="695.0" layoutY="386.0" textAlignment="CENTER" />
-      <Button fx:id="whitePass" layoutX="29.0" layoutY="438.0" mnemonicParsing="false" onMouseClicked="#handlePass" opacity="0.8" prefHeight="26.0" prefWidth="52.0" text="Pass" />
-      <Button fx:id="blackPass" disable="true" layoutX="484.0" layoutY="17.0" mnemonicParsing="false" onMouseClicked="#handlePass" opacity="0.8" prefHeight="26.0" prefWidth="52.0" text="Pass" />
+      <Button fx:id="whitePass" layoutX="29.0" layoutY="438.0" mnemonicParsing="false" onMouseClicked="#handlePass" prefHeight="26.0" prefWidth="52.0" text="Pass" />
+      <Button fx:id="blackPass" disable="true" layoutX="484.0" layoutY="17.0" mnemonicParsing="false" onMouseClicked="#handlePass" prefHeight="26.0" prefWidth="52.0" text="Pass" />
       <Label fx:id="youPlayAsLabel" layoutX="605.0" layoutY="215.0" prefHeight="37.0" prefWidth="158.0" text="You play as: " />
       <Button fx:id="flipPlayer" layoutX="538.0" layoutY="221.0" mnemonicParsing="false" onMouseClicked="#flipPlayer" text="Flip" />
    </children>

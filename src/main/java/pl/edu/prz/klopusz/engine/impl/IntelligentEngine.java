@@ -42,8 +42,6 @@ public class IntelligentEngine extends EngineImpl {
         return abs(move.getFile()-cb.lower) + abs(move.getRow()-cb.lower);
     }
 
-    /*TODO: implement the best move method below*/
-
     @Override
     protected Move bestMove(List<Move> movesConsidered) {
         Map<Move, Float> moveGoal = new HashMap<>();

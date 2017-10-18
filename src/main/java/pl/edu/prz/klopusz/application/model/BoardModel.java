@@ -39,6 +39,13 @@ public class BoardModel implements Subject {
         return board;
     }
 
+    public void updateBoard(Board board) {
+        this.board = board;
+
+        BoardEvent boardEvent = new BoardEvent(board);
+        notifyObservers(boardEvent);
+    }
+
     public void initialize() {
         assert board != null;
         board.initialize();

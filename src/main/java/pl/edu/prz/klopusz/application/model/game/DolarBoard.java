@@ -121,7 +121,7 @@ public class DolarBoard extends Board {
     private boolean isNeighbor(int row, int file, Piece piece) {
         val neighbors = get8Neighbors(row, file);
         for(val neighbor : neighbors) {
-            if (neighbor != null && neighbor.getPiece().equals(piece)) {
+            if (neighbor != null && !neighbor.isEmpty() && neighbor.getPiece().equals(piece)) {
                 return true;
             }
         }

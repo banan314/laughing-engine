@@ -76,7 +76,7 @@ public class RootLayout {
                 new FileChooser.ExtensionFilter("All files", "*.*")
         );
 
-        val savedState = new SavedState(parentApp.getBoardController().boardModel.getBoard());
+        val savedState = new SavedState(parentApp.getBoardController().boardModel.getBoard()).turn(boardModel.whoseTurn());
         try {
             val outputStream = new FileOutputStream(file);
             outputStream.write(savedState.toBytes());
@@ -101,7 +101,10 @@ public class RootLayout {
         try {
             Scanner scanner = new Scanner(file);
             board = SavedState.loadBoard(scanner.nextLine());
-            parentApp.getBoardController().updateBoard(board);
+            val turn = SavedState.loadColor(scanner.nextLine());
+//            parentApp.getBoardController().updateBoard(board);
+            boardModel.updateBoard(board);
+            parentApp.getBoardController().turn(turn);
         } catch (FileNotFoundException e) {
             LOG.severe("file " + file.getAbsolutePath() + "not found");
         }
@@ -133,6 +136,8 @@ public class RootLayout {
 
     @FXML
     public void newGameWithRandomPlayers() {
+        setComboBoxesToRandoms();
+
         CreatePlayerCommand createPlayerCommand = new CreatePlayerCommand(9147, "RandomGamer");
         createPlayerCommand.execute();
 
@@ -143,6 +148,10 @@ public class RootLayout {
         prepareGameEnvironment();
 
         showLeftStatus(NEW_RANDOM_GAME);
+    }
+
+    private void setComboBoxesToRandoms() {
+        parentApp.getBoardController().setComboBoxesToRandoms();
     }
 
     private void prepareGameEnvironment() {
@@ -162,6 +171,8 @@ public class RootLayout {
     @FXML
     public void handleRules() {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setWidth(400);
+        alert.setHeight(400);
         alert.setTitle("Dolar");
         alert.setHeaderText("Rules");
         alert.setContentText("The game is played on the board of size\n"+"9 × 9 squares by two players, who put " +
@@ -172,7 +183,7 @@ public class RootLayout {
                 "of the "+"board in the corner, of size\n"+"• isolating an area, surrounding it with own pieces (it " +
                 "is similar "+"to go)");
 
-        alert.showAndWait();
+        alert.show();
     }
 
     @FXML
@@ -203,7 +214,9 @@ public class RootLayout {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle("Dolar");
         alert.setHeaderText("About");
-        alert.setContentText("Author: Kamil Łopuszański\n"+"Thanks to: GGP project (ggp.org)");
+        alert.setContentText("Author: Kamil Łopuszański\n"+
+                "University: Rzeszow University of Technical Sciences\n" +
+                "Thanks to: GGP project (ggp.org)");
 
         alert.showAndWait();
     }

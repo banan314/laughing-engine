@@ -96,9 +96,9 @@ public class Board implements Observer, Initializable {
             }
         });
 
-        updateButtonsFeatures();
         initializeLabels();
         initializePieces();
+        updateViewAccordingTo(GameMode.PLAYERS);
     }
 
     private void initializePayoutCalculator() {
@@ -111,23 +111,6 @@ public class Board implements Observer, Initializable {
     private void initializeLabels() {
         whitePlayerName.setText(Assets.playerName(Piece.Color.WHITE));
         blackPlayerName.setText(Assets.playerName(Piece.Color.BLACK));
-    }
-
-    private void updateButtonsFeatures() {
-        switch (gameMode) {
-            case PLAYERS:
-                flipPlayer.setDisable(true);
-                disablePassButtons(false, true);
-                break;
-            case ENGINES:
-                flipPlayer.setDisable(true);
-                disablePassButtons(true, true);
-                break;
-            case PLAYER_ENGINE:
-                flipPlayer.setDisable(false);
-                enableOnly1PassButton(gameWithEngine.getPlayerColor());
-                break;
-        }
     }
 
     private void disablePassButtons(boolean white, boolean black) {
@@ -153,14 +136,43 @@ public class Board implements Observer, Initializable {
 
     public void setGameMode(GameMode gameMode) {
         this.gameMode = gameMode;
+        updateViewAccordingTo(gameMode);
+    }
+
+    private void updateViewAccordingTo(GameMode gameMode) {
         if (gameMode == PLAYER_ENGINE) {
             gameWithEngine = new GameWithEngineImpl();
             gameWithEngine.setBoardModel(boardModel);
             gameWithEngine.setPlayerColor(Piece.Color.WHITE);
             triggerGameWithEngineIfNeed();
             updatePlayAsLabel();
+            youPlayAsLabel.setVisible(true);
+        } else {
+            youPlayAsLabel.setVisible(false);
+            if (gameWithEngine != null) {
+                boardModel.removeObserver(((Observer) gameWithEngine));
+                gameWithEngine = null;
+                System.gc();
+            }
         }
         updateButtonsFeatures();
+    }
+
+    private void updateButtonsFeatures() {
+        switch (gameMode) {
+            case PLAYERS:
+                flipPlayer.setDisable(true);
+                disablePassButtons(false, true);
+                break;
+            case ENGINES:
+                flipPlayer.setDisable(true);
+                disablePassButtons(true, true);
+                break;
+            case PLAYER_ENGINE:
+                flipPlayer.setDisable(false);
+                enableOnly1PassButton(gameWithEngine.getPlayerColor());
+                break;
+        }
     }
 
     private void triggerGameWithEngineIfNeed() {
@@ -367,7 +379,7 @@ public class Board implements Observer, Initializable {
                 putSquarePiece(moveEvent.getMove());
             }
 
-            if (gameMode == PLAYER_ENGINE) {
+            if (gameMode != ENGINES) {
                 initializePayoutCalculator();
                 payoutCalculator.calculate();
                 boardModel.changeGoals(payoutCalculator.getWhite(), payoutCalculator.getBlack());
@@ -377,7 +389,7 @@ public class Board implements Observer, Initializable {
         } else if (event instanceof EndEvent) {
             new ShowRightStatusCommand(GAME_FINISHED).execute();
             gameEnded = true;
-            if (gameMode == PLAYER_ENGINE) {
+            if (gameMode != ENGINES) {
                 initializePayoutCalculator();
                 payoutCalculator.calculate();
                 boardModel.changeGoals(payoutCalculator.getWhite(), payoutCalculator.getBlack());
@@ -391,6 +403,17 @@ public class Board implements Observer, Initializable {
 
     public GameMode getGameMode() {
         return gameMode;
+    }
+
+    public void turn(Piece.Color turn) {
+        boardModel.setTurn(turn);
+        if(gameMode == PLAYER_ENGINE)
+            triggerGameWithEngineIfNeed();
+    }
+
+    public void setComboBoxesToRandoms() {
+        whiteEngineChoiceBox.setValue("Random Gamer");
+        blackEngineChoiceBox.setValue("Random Gamer");
     }
 
     enum GameMode {PLAYERS, ENGINES, PLAYER_ENGINE;}
