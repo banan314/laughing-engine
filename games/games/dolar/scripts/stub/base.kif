@@ -1,0 +1,21 @@
+
+(<= (base (passed ?role))
+    (role ?role))
+
+(<= (base (cell ?x ?y ?p))
+    (index ?x)
+    (index ?y)
+    (piece ?p))
+(base (control black))
+(base (control white))
+
+(<= (base (step ?k))
+    (succ ?k ?o))
+
+(<= (input ?p noop)
+    (role ?p))
+(<= (input ?r (mark ?m ?n ?r))
+    (role ?r)
+    (index ?m)
+    (index ?n))
+    

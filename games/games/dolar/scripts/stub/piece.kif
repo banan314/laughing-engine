@@ -1,0 +1,4 @@
+(<= (piece ?p)
+    (role ?p))
+
+(piece empty)
