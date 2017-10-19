@@ -16,11 +16,11 @@ public class CampBorder {
         switch (color) {
             case WHITE:
                 lower = 6;
-                upper = 9; //TODO: Board.MAX_INDEX
+                upper = 10; //TODO: Board.MAX_INDEX+1
                 break;
             case BLACK:
                 lower = 4;
-                upper = 1;
+                upper = 0;
                 break;
             default:
                 lower = -1;

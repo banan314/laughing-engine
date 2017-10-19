@@ -23,7 +23,6 @@ import pl.edu.prz.klopusz.application.commands.ConfigurableCommand;
 import pl.edu.prz.klopusz.application.commands.impl.ShowRightStatusCommand;
 import pl.edu.prz.klopusz.application.commands.impl.server.StopServerCommand;
 import pl.edu.prz.klopusz.application.common.Assets;
-import pl.edu.prz.klopusz.application.common.Messages;
 import pl.edu.prz.klopusz.application.common.Point;
 import pl.edu.prz.klopusz.application.common.ThreadHelper;
 import pl.edu.prz.klopusz.application.common.calculator.CampCalculator;
@@ -41,13 +40,10 @@ import pl.edu.prz.klopusz.utilities.decorators.TerritoryCalculatorImpl;
 
 import java.net.URL;
 import java.util.ResourceBundle;
-
-import static pl.edu.prz.klopusz.application.common.Messages.BLACK_PASSED;
-import static pl.edu.prz.klopusz.application.common.Messages.GAME_FINISHED;
-import static pl.edu.prz.klopusz.application.common.Messages.WHITE_PASSED;
-import static pl.edu.prz.klopusz.application.controllers.Board.GameMode.*;
-
 import java.util.logging.Logger;
+
+import static pl.edu.prz.klopusz.application.common.Messages.*;
+import static pl.edu.prz.klopusz.application.controllers.Board.GameMode.*;
 
 /**
  * Created by kamil on 10.06.17.
@@ -154,6 +150,13 @@ public class Board implements Observer, Initializable {
                 gameWithEngine = null;
                 System.gc();
             }
+        }
+        if(gameMode == ENGINES) {
+            whiteEngineChoiceBox.setDisable(false);
+            blackEngineChoiceBox.setDisable(false);
+        } else {
+            whiteEngineChoiceBox.setDisable(true);
+            blackEngineChoiceBox.setDisable(true);
         }
         updateButtonsFeatures();
     }
@@ -383,9 +386,8 @@ public class Board implements Observer, Initializable {
                 initializePayoutCalculator();
                 payoutCalculator.calculate();
                 boardModel.changeGoals(payoutCalculator.getWhite(), payoutCalculator.getBlack());
+                updatePassDisability();
             }
-
-            updatePassDisability();
         } else if (event instanceof EndEvent) {
             new ShowRightStatusCommand(GAME_FINISHED).execute();
             gameEnded = true;

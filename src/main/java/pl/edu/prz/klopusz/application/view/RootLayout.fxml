@@ -58,7 +58,7 @@
                                 <KeyCodeCombination alt="ANY" code="M" control="UP" meta="UP" shift="UP" shortcut="UP" />
                             </accelerator>
                         </RadioMenuItem>
-                        <RadioMenuItem mnemonicParsing="false" onAction="#handleEnginesMode" text="Engine vs. Engine" toggleGroup="$gameMode">
+                        <RadioMenuItem fx:id="enginesRadio" mnemonicParsing="false" onAction="#handleEnginesMode" text="Engine vs. Engine" toggleGroup="$gameMode">
                             <accelerator>
                                 <KeyCodeCombination alt="ANY" code="E" control="UP" meta="UP" shift="UP" shortcut="UP" />
                             </accelerator>

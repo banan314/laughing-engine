@@ -54,8 +54,6 @@ public class DolarMainApp extends Application {
             primaryStage.show();
 
             stage = primaryStage;
-            final String version = "1.1";
-            stage.setTitle("Dolar " + version);
 
             boardCreator.showBoard(overview);
         } catch (Exception e) {

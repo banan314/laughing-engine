@@ -2,9 +2,9 @@ package pl.edu.prz.klopusz.application.controllers;
 
 import javafx.application.Platform;
 import javafx.fxml.FXML;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Label;
-import javafx.scene.control.MenuItem;
+import javafx.fxml.Initializable;
+import javafx.scene.control.*;
+import javafx.scene.layout.Region;
 import javafx.stage.FileChooser;
 import lombok.val;
 import pl.edu.prz.klopusz.application.common.ThreadHelper;
@@ -18,10 +18,12 @@ import pl.edu.prz.klopusz.application.commands.impl.server.StartServerCommand;
 import pl.edu.prz.klopusz.application.model.game.SavedState;
 
 import java.io.*;
+import java.net.URL;
 import java.nio.channels.ScatteringByteChannel;
 import java.nio.charset.Charset;
 import java.nio.file.Files;
 import java.nio.file.OpenOption;
+import java.util.ResourceBundle;
 import java.util.Scanner;
 import java.util.logging.Logger;
 
@@ -39,6 +41,7 @@ public class RootLayout {
     @FXML private Label leftStatus;
     @FXML private Label rightStatus;
     @FXML private MenuItem miStopEngines;
+    @FXML private RadioMenuItem enginesRadio;
 
     public void setBoardModel(BoardModel boardModel) {
         this.boardModel = boardModel;
@@ -81,7 +84,7 @@ public class RootLayout {
             val outputStream = new FileOutputStream(file);
             outputStream.write(savedState.toBytes());
         } catch (FileNotFoundException e) {
-            LOG.severe("file " + file.getAbsolutePath() + "not found");
+            LOG.severe("file " + file.getAbsolutePath() + " not found");
         } catch (IOException e) {
             LOG.severe("IO exception writing to file " + file.getAbsolutePath());
         }
@@ -106,7 +109,7 @@ public class RootLayout {
             boardModel.updateBoard(board);
             parentApp.getBoardController().turn(turn);
         } catch (FileNotFoundException e) {
-            LOG.severe("file " + file.getAbsolutePath() + "not found");
+            LOG.severe("file " + file.getAbsolutePath() + " not found");
         }
 
     }
@@ -132,6 +135,7 @@ public class RootLayout {
 
     private void changeModeToEngines() {
         parentApp.getBoardController().setGameMode(Board.GameMode.ENGINES);
+        enginesRadio.setSelected(true);
     }
 
     @FXML
@@ -176,13 +180,15 @@ public class RootLayout {
         alert.setTitle("Dolar");
         alert.setHeaderText("Rules");
         alert.setContentText("The game is played on the board of size\n"+"9 × 9 squares by two players, who put " +
-                "cross"+" and\n"+"circle (or white and black stones) alternately. The piece can be put if and only if" +
+                "cross"+" and\n"+"circle (or stones of different colors) alternately. The piece can be put if and " +
+                "only if" +
                 " there "+"is a\n"+"friendly piece on the adjacent square. The goal of game is to achieve more points" +
                 " than "+"the\n"+"rival. Counting takes place after the end of the game, when both players pass or " +
                 "the "+"board\n"+"is full. The point is given for:\n"+"• having a piece in opponent's camp (fragment " +
-                "of the "+"board in the corner, of size\n"+"• isolating an area, surrounding it with own pieces (it " +
+                "of the "+"board in the corner, of size 4x4\n"+"• isolating an area, surrounding it with own pieces " +
+                "(it " +
                 "is similar "+"to go)");
-
+        alert.getDialogPane().setMinHeight(Region.USE_PREF_SIZE);
         alert.show();
     }
 
@@ -194,30 +200,30 @@ public class RootLayout {
     @FXML
     public void handleEnginesMode() {
         changeModeToEngines();
-        miStopEngines.setDisable(true);
+        miStopEngines.setDisable(false);
     }
 
     @FXML
     public void handlePlayersMode() {
         parentApp.getBoardController().setGameMode(Board.GameMode.PLAYERS);
-        miStopEngines.setDisable(false);
+        miStopEngines.setDisable(true);
     }
 
     @FXML
     public void handlePlayerEngineMode() {
         parentApp.getBoardController().setGameMode(Board.GameMode.PLAYER_ENGINE);
-        miStopEngines.setDisable(true);
+        miStopEngines.setDisable(false);
     }
 
     @FXML
     public void handleAbout() {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setTitle("Dolar");
+        alert.setTitle("Dolar 1.2");
         alert.setHeaderText("About");
         alert.setContentText("Author: Kamil Łopuszański\n"+
                 "University: Rzeszow University of Technical Sciences\n" +
                 "Thanks to: GGP project (ggp.org)");
-
+        alert.getDialogPane().setMinHeight(Region.USE_PREF_SIZE);
         alert.showAndWait();
     }
 }
