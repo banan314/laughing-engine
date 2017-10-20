@@ -1,0 +1,52 @@
+;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Dynamic Components - next
+;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Cell
+(<= (next (cell ?x ?y ?player))
+    (does ?player (mark ?x ?y ?player)))
+
+(<= (next (cell ?x ?y ?mark))
+    (true (cell ?x ?y ?mark))
+    (does ?player (mark ?m ?n ?player))
+    (distinctCell ?x ?y ?m ?n))
+
+(<= (next (cell ?x ?y ?mark))
+    (true (cell ?x ?y ?mark))
+    (does ?player noop)
+    (true (control ?player)))
+
+(<= (distinctCell ?x ?y ?m ?n)
+    (distinct ?x ?m)
+    (index ?x)
+    (index ?y)
+    (index ?m)
+    (index ?n))
+(<= (distinctCell ?x ?y ?m ?n)
+    (distinct ?y ?n)
+    (index ?x)
+    (index ?y)
+    (index ?m)
+    (index ?n))
+
+;; Control
+(<= (next (control white))
+    (true (control black)))
+
+(<= (next (control black))
+    (true (control white)))
+
+;; pass
+
+(<= (next (passed ?role))
+    (true (passed ?role))
+    (not (true (control ?role))))
+
+(<= (next (passed ?role))
+    (true (control ?role))
+    (does ?role noop))
+
+;; step
+(<= (next (step ?n))
+    (true (step ?m))
+    (succ ?m ?n))
+    

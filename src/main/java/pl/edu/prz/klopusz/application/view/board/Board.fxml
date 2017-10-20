@@ -1,15 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.collections.FXCollections?>
-<?import javafx.scene.canvas.Canvas?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.effect.*?>
-<?import javafx.scene.Group?>
-<?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.shape.*?>
 <?import java.lang.String?>
+<?import javafx.collections.FXCollections?>
+<?import javafx.scene.Group?>
+<?import javafx.scene.canvas.Canvas?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ChoiceBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.effect.Glow?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.shape.Rectangle?>
+<?import javafx.scene.shape.Sphere?>
 
-<AnchorPane fx:id="root" prefHeight="550.0" prefWidth="800.0" styleClass="body" stylesheets="@board.css" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pl.edu.prz.klopusz.application.controllers.Board">
+<AnchorPane fx:id="root" prefHeight="550.0" prefWidth="800.0" styleClass="body" stylesheets="@board.css" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pl.edu.prz.klopusz.application.controllers.Board">
    <children>
       <Canvas height="272.0" layoutX="55.0" layoutY="45.0" width="307.0" />
 
@@ -177,7 +180,7 @@
                <effect>
                   <Glow />
                </effect></Rectangle>
-            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="44.0" layoutX="215.0" layoutY="395.0" onMouseClicked="#onSquareClick" stroke="BLACK" strokeWidth="2.0" width="45.0">
+            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="44.0" layoutX="215.0" layoutY="395.0" onMouseClicked="#onSquareClick" stroke="BLACK" strokeType="INSIDE" strokeWidth="2.0" width="45.0">
                <effect>
                   <Glow />
                </effect></Rectangle>
@@ -193,7 +196,7 @@
       <Sphere fx:id="whitePiece" layoutX="103.0" layoutY="417.0" radius="15.0" />
       <Sphere fx:id="blackPiece" layoutX="463.0" layoutY="65.0" radius="15.0" />
       <Button layoutX="197.0" layoutY="457.0" mnemonicParsing="false" onAction="#handleClearBoard" prefHeight="21.0" prefWidth="123.0" text="Clear board" textAlignment="CENTER" textOverrun="CLIP" wrapText="true" />
-      <Label alignment="CENTER" layoutX="26.0" layoutY="486.0" prefHeight="16.0" prefWidth="150.0" text="WHITE ENGINE" />
+      <Label alignment="CENTER" layoutX="26.0" layoutY="486.0" prefHeight="16.0" prefWidth="150.0" text="ENGINE" />
       <ChoiceBox fx:id="whiteEngineChoiceBox" layoutX="26.0" layoutY="511.0" prefWidth="150.0" value="NoopGamer">
          <items>
             <FXCollections fx:factory="observableArrayList">
@@ -203,7 +206,7 @@
             </FXCollections>
          </items>
       </ChoiceBox>
-      <Label alignment="CENTER" layoutX="558.0" layoutY="67.0" prefHeight="16.0" prefWidth="150.0" text="BLACK ENGINE" />
+      <Label alignment="CENTER" layoutX="558.0" layoutY="67.0" prefHeight="16.0" prefWidth="150.0" text="ENGINE" />
       <ChoiceBox fx:id="blackEngineChoiceBox" layoutX="558.0" layoutY="92.0" prefWidth="150.0" value="NoopGamer">
          <items>
             <FXCollections fx:factory="observableArrayList">
@@ -214,11 +217,13 @@
          </items>
       </ChoiceBox>
       <Label alignment="CENTER" layoutX="558.0" layoutY="328.0" prefHeight="16.0" prefWidth="169.0" text="GOALS" />
-      <Label alignment="CENTER" layoutX="571.0" layoutY="353.0" text="White" />
-      <Label alignment="CENTER" layoutX="684.0" layoutY="353.0" text="Black" />
-      <Label fx:id="whiteGoal" layoutX="585.0" layoutY="386.0" prefHeight="16.0" prefWidth="1.0" />
-      <Label fx:id="blackGoal" layoutX="695.0" layoutY="386.0" />
-      <Button fx:id="whitePass" layoutX="29.0" layoutY="438.0" mnemonicParsing="false" onMouseClicked="#handlePass" opacity="0.8" prefHeight="26.0" prefWidth="52.0" text="Pass" />
-      <Button fx:id="blackPass" disable="true" layoutX="484.0" layoutY="17.0" mnemonicParsing="false" onMouseClicked="#handlePass" opacity="0.8" prefHeight="26.0" prefWidth="52.0" text="Pass" />
+      <Label fx:id="whitePlayerName" alignment="CENTER" layoutX="571.0" layoutY="353.0" text="White" />
+      <Label fx:id="blackPlayerName" alignment="CENTER" layoutX="684.0" layoutY="353.0" text="Black" />
+      <Label fx:id="whiteGoal" layoutX="576.0" layoutY="385.0" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="16.0" prefWidth="25.0" textAlignment="CENTER" />
+      <Label fx:id="blackGoal" layoutX="695.0" layoutY="386.0" textAlignment="CENTER" />
+      <Button fx:id="whitePass" layoutX="29.0" layoutY="438.0" mnemonicParsing="false" onMouseClicked="#handlePass" prefHeight="26.0" prefWidth="52.0" text="Pass" />
+      <Button fx:id="blackPass" disable="true" layoutX="484.0" layoutY="17.0" mnemonicParsing="false" onMouseClicked="#handlePass" prefHeight="26.0" prefWidth="52.0" text="Pass" />
+      <Label fx:id="youPlayAsLabel" layoutX="605.0" layoutY="215.0" prefHeight="37.0" prefWidth="158.0" text="You play as: " />
+      <Button fx:id="flipPlayer" layoutX="538.0" layoutY="221.0" mnemonicParsing="false" onMouseClicked="#flipPlayer" text="Flip" />
    </children>
 </AnchorPane>

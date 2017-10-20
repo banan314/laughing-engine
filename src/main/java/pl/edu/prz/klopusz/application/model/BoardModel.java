@@ -15,6 +15,7 @@ import pl.edu.prz.klopusz.application.model.event.MoveEvent;
 import pl.edu.prz.klopusz.application.model.game.*;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 import java.util.logging.Logger;
@@ -32,16 +33,24 @@ public class BoardModel implements Subject {
 
     boolean whitePassed = false, blackPassed = false;
 
-    StringProperty whiteGoal = new SimpleStringProperty("-1"), blackGoal = new SimpleStringProperty("-1");
+    StringProperty whiteGoal = new SimpleStringProperty("?"), blackGoal = new SimpleStringProperty("?");
 
     public Board getBoard() {
         return board;
     }
 
+    public void updateBoard(Board board) {
+        this.board = board;
+
+        BoardEvent boardEvent = new BoardEvent(board);
+        notifyObservers(boardEvent);
+    }
+
     public void initialize() {
         assert board != null;
         board.initialize();
-        System.out.println("board model: initialize");
+        onMove = Piece.Color.WHITE;
+        LOG.info("board model: initialize");
 
         BoardEvent boardEvent = new BoardEvent(board);
         notifyObservers(boardEvent);
@@ -52,6 +61,7 @@ public class BoardModel implements Subject {
     }
 
     public Piece.Color whoseTurn() {
+        assert null != onMove;
         return onMove;
     }
 
@@ -85,6 +95,10 @@ public class BoardModel implements Subject {
         observers.add(observer);
     }
 
+    public void removeObserver(Observer observer) {
+        observers.remove(observer);
+    }
+
     @Override
     public void notifyObservers(Event event) {
         for(Observer observer : observers) {
@@ -93,15 +107,28 @@ public class BoardModel implements Subject {
     }
 
     public void makeMove(Move move) {
-        board.set(move.getRow(), move.getFile(), new Square(move.getPiece()));
+        LOG.info("made move: "+move);
+        if(move.isPassed()) {
+            switch (move.getColor()) {
+                case WHITE:
+                    passAsWhite();
+                    break;
+                case BLACK:
+                    passAsBlack();
+                    break;
+            }
+        } else {
+            board.set(move.getRow(), move.getFile(), new Square(move.getPiece()));
 
-        LOG.info("made move: " + move);
 
-        if(move.getPiece().isWhite()) {
-            whitePassed = false;
-        } else if(move.getPiece().isBlack()) {
-            blackPassed = false;
+            if (move.getPiece().isWhite()) {
+                whitePassed = false;
+            } else if (move.getPiece().isBlack()) {
+                blackPassed = false;
+            }
         }
+
+        swapTurn();
 
         MoveEvent moveEvent = new MoveEvent(move);
         notifyObservers(moveEvent);
@@ -129,5 +156,26 @@ public class BoardModel implements Subject {
 
     public boolean isLegal(Move move) {
         return board.isLegal(move);
+    }
+
+    public Collection<Move> legalMoves() {
+        //TODO: optimize
+        List<Move> legalMoves = new ArrayList<>();
+        for(byte file = Board.MIN_INDEX; file <= Board.MAX_INDEX; file++) {
+            for(int row = Board.MIN_INDEX; row <= Board.MAX_INDEX; row++) {
+                Move move = new Move();
+                move.setRow(row);
+                move.setFile(file);
+                move.setPiece(Piece.from(onMove));
+                if(isLegal(move)) {
+                    legalMoves.add(move);
+                }
+            }
+        }
+        return legalMoves;
+    }
+
+    public void swapTurn() {
+        onMove = Piece.Color.opposite(onMove);
     }
 }

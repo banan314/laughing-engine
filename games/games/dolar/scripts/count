@@ -1,0 +1,3 @@
+perl count.pl white > out/count/white
+perl count.pl black > out/count/black
+

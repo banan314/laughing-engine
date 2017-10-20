@@ -51,7 +51,23 @@ public class Piece {
         return color.hashCode();
     }
 
-    public enum Color {WHITE, BLACK;}
+    public static Piece from(Color color) {
+        switch (color) {
+            case WHITE:
+                return WHITE;
+            case BLACK:
+                return BLACK;
+            default:
+                throw new RuntimeException("no such color");
+        }
+    }
+
+    public enum Color {WHITE, BLACK;
+
+        public static Color opposite(Color player) {
+            return player == Piece.Color.WHITE ? Piece.Color.BLACK : Piece.Color.WHITE;
+        }
+    }
 
     @Override
     public String toString() {

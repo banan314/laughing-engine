@@ -22,9 +22,11 @@ import pl.edu.prz.klopusz.application.DolarMainApp;
 import pl.edu.prz.klopusz.application.commands.ConfigurableCommand;
 import pl.edu.prz.klopusz.application.commands.impl.ShowRightStatusCommand;
 import pl.edu.prz.klopusz.application.commands.impl.server.StopServerCommand;
-import pl.edu.prz.klopusz.application.common.Messages;
+import pl.edu.prz.klopusz.application.common.Assets;
 import pl.edu.prz.klopusz.application.common.Point;
 import pl.edu.prz.klopusz.application.common.ThreadHelper;
+import pl.edu.prz.klopusz.application.common.calculator.CampCalculator;
+import pl.edu.prz.klopusz.application.common.calculator.PayoutCalculator;
 import pl.edu.prz.klopusz.application.model.BoardModel;
 import pl.edu.prz.klopusz.application.model.ConfigurationModel;
 import pl.edu.prz.klopusz.application.model.event.BoardEvent;
@@ -33,21 +35,22 @@ import pl.edu.prz.klopusz.application.model.event.MoveEvent;
 import pl.edu.prz.klopusz.application.model.game.Move;
 import pl.edu.prz.klopusz.application.model.game.Piece;
 import pl.edu.prz.klopusz.application.model.game.Square;
+import pl.edu.prz.klopusz.utilities.decorators.ScoreCalculator;
+import pl.edu.prz.klopusz.utilities.decorators.TerritoryCalculatorImpl;
 
 import java.net.URL;
 import java.util.ResourceBundle;
-
-import static pl.edu.prz.klopusz.application.common.Messages.BLACK_PASSED;
-import static pl.edu.prz.klopusz.application.common.Messages.WHITE_PASSED;
-
 import java.util.logging.Logger;
+
+import static pl.edu.prz.klopusz.application.common.Messages.*;
+import static pl.edu.prz.klopusz.application.controllers.Board.GameMode.*;
 
 /**
  * Created by kamil on 10.06.17.
  */
 public class Board implements Observer, Initializable {
 
-    GameMode gameMode = GameMode.PLAYERS;
+    GameMode gameMode = PLAYERS;
     boolean gameEnded = false;
 
     @FXML private Sphere whitePiece;
@@ -57,11 +60,18 @@ public class Board implements Observer, Initializable {
     @FXML private Group piecesGroup;
     @FXML private ChoiceBox<String> whiteEngineChoiceBox;
     @FXML private ChoiceBox<String> blackEngineChoiceBox;
-    @FXML private Label whiteGoal, blackGoal;
+    @FXML private Label whiteGoal;
+    @FXML private Label blackGoal;
     @FXML private Button whitePass;
     @FXML private Button blackPass;
-    private BoardModel boardModel;
+    @FXML private Button flipPlayer;
+    @FXML private Label youPlayAsLabel;
+    @FXML private Label whitePlayerName;
+    @FXML private Label blackPlayerName;
+    BoardModel boardModel;
     private ConfigurationModel configurationModel;
+    private GameWithEngine gameWithEngine;
+    private PayoutCalculator payoutCalculator;
 
     DolarMainApp parentApp;
 
@@ -82,7 +92,37 @@ public class Board implements Observer, Initializable {
             }
         });
 
+        initializeLabels();
         initializePieces();
+        updateViewAccordingTo(GameMode.PLAYERS);
+    }
+
+    private void initializePayoutCalculator() {
+        ScoreCalculator territoryCalculator = new TerritoryCalculatorImpl(boardModel.getBoard());
+        ScoreCalculator campCalculator = new CampCalculator(boardModel.getBoard());
+        payoutCalculator = new PayoutCalculator().calculateTerritoryUsing(territoryCalculator).calculateCampUsing
+                (campCalculator).observeBoardModel(boardModel);
+    }
+
+    private void initializeLabels() {
+        whitePlayerName.setText(Assets.playerName(Piece.Color.WHITE));
+        blackPlayerName.setText(Assets.playerName(Piece.Color.BLACK));
+    }
+
+    private void disablePassButtons(boolean white, boolean black) {
+        whitePass.setDisable(white);
+        blackPass.setDisable(black);
+    }
+
+    private void enableOnly1PassButton(Piece.Color active) {
+        switch (active) {
+            case WHITE:
+                disablePassButtons(false, true);
+                break;
+            case BLACK:
+                disablePassButtons(true, false);
+                break;
+        }
     }
 
     private void initializePieces() {
@@ -92,6 +132,56 @@ public class Board implements Observer, Initializable {
 
     public void setGameMode(GameMode gameMode) {
         this.gameMode = gameMode;
+        updateViewAccordingTo(gameMode);
+    }
+
+    private void updateViewAccordingTo(GameMode gameMode) {
+        if (gameMode == PLAYER_ENGINE) {
+            gameWithEngine = new GameWithEngineImpl();
+            gameWithEngine.setBoardModel(boardModel);
+            gameWithEngine.setPlayerColor(Piece.Color.WHITE);
+            triggerGameWithEngineIfNeed();
+            updatePlayAsLabel();
+            youPlayAsLabel.setVisible(true);
+        } else {
+            youPlayAsLabel.setVisible(false);
+            if (gameWithEngine != null) {
+                boardModel.removeObserver(((Observer) gameWithEngine));
+                gameWithEngine = null;
+                System.gc();
+            }
+        }
+        if(gameMode == ENGINES) {
+            whiteEngineChoiceBox.setDisable(false);
+            blackEngineChoiceBox.setDisable(false);
+        } else {
+            whiteEngineChoiceBox.setDisable(true);
+            blackEngineChoiceBox.setDisable(true);
+        }
+        updateButtonsFeatures();
+    }
+
+    private void updateButtonsFeatures() {
+        switch (gameMode) {
+            case PLAYERS:
+                flipPlayer.setDisable(true);
+                disablePassButtons(false, true);
+                break;
+            case ENGINES:
+                flipPlayer.setDisable(true);
+                disablePassButtons(true, true);
+                break;
+            case PLAYER_ENGINE:
+                flipPlayer.setDisable(false);
+                enableOnly1PassButton(gameWithEngine.getPlayerColor());
+                break;
+        }
+    }
+
+    private void triggerGameWithEngineIfNeed() {
+        if (boardModel.whoseTurn() != gameWithEngine.getPlayerColor()) {
+            gameWithEngine.makeMove();
+        }
     }
 
     public void setBoardModel(BoardModel boardModel) {
@@ -117,7 +207,7 @@ public class Board implements Observer, Initializable {
 
     @FXML
     public void onSquareClick(MouseEvent event) {
-        if(shouldIgnoreMove()) {
+        if (shouldIgnoreMove()) {
             return;
         }
 
@@ -125,18 +215,18 @@ public class Board implements Observer, Initializable {
 
         try {
             val point = rectangle2Point(square);
-            LOG.info("clicked: (x=" + point.x + ", y=" + point.y + ")");
+            LOG.info("clicked: (x="+point.x+", y="+point.y+")");
+            val playerMoving = boardModel.whoseTurn();
             Move move = new Move();
             move.setRow(point.y);
             move.setFile(point.x);
-            move.setPiece(new Piece(boardModel.whoseTurn()));
+            move.setPiece(new Piece(playerMoving));
 
             if (boardModel.isLegal(move)) {
                 boardModel.makeMove(move);
-                putSquarePiece(square, boardModel.whoseTurn());
-                turnColor();
+                putSquarePiece(square, playerMoving);
             } else {
-                LOG.info("move not legal; " + "turn: " + boardModel.whoseTurn());
+                LOG.info("move not legal; "+"turn: "+playerMoving);
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -145,35 +235,39 @@ public class Board implements Observer, Initializable {
 
     @FXML
     public void handlePass(MouseEvent event) {
-        if(shouldIgnoreMove()) {
+        if (shouldIgnoreMove()) {
             return;
         }
 
         Node passButton = (Node) event.getSource();
         if (passButton.getId().equals("whitePass")) {
             parentApp.showLeftStatus(WHITE_PASSED);
-            boardModel.passAsWhite();
-            turnColor();
+            boardModel.makeMove(Move.pass(Piece.Color.WHITE));
         } else if (passButton.getId().equals("blackPass")) {
             parentApp.showLeftStatus(BLACK_PASSED);
-            boardModel.passAsBlack();
-            turnColor();
+            boardModel.makeMove(Move.pass(Piece.Color.BLACK));
         }
         updatePassDisability();
     }
 
     private void updatePassDisability() {
-        if(boardModel.whoseTurn().equals(Piece.Color.WHITE)) {
-            whitePass.setDisable(false);
-            blackPass.setDisable(true);
-        } else {
-            whitePass.setDisable(true);
-            blackPass.setDisable(false);
-        }
+        enableOnly1PassButton(boardModel.whoseTurn());
+    }
+
+    @FXML
+    private void flipPlayer(MouseEvent event) {
+        gameWithEngine.swapPlayer();
+        updatePlayAsLabel();
+        triggerGameWithEngineIfNeed(); // assuming mode PLAYER_ENGINE
+    }
+
+    private void updatePlayAsLabel() {
+        youPlayAsLabel.setText(String.format("You play as: %s", Assets.playerName(gameWithEngine.getPlayerColor())
+                .toUpperCase()));
     }
 
     private boolean shouldIgnoreMove() {
-        return gameMode == GameMode.ENGINES || gameEnded;
+        return gameMode == ENGINES || gameEnded;
     }
 
     private Point<Integer> rectangle2Point(Rectangle rectangle) throws Exception {
@@ -188,11 +282,6 @@ public class Board implements Observer, Initializable {
             which++;
         }
         throw new Exception("not in board children");
-    }
-
-    private void turnColor() {
-        Piece.Color onMove = boardModel.whoseTurn();
-        boardModel.setTurn(onMove == Piece.Color.WHITE ? Piece.Color.BLACK : Piece.Color.WHITE);
     }
 
     public void updateBoard(pl.edu.prz.klopusz.application.model.game.Board board) {
@@ -217,7 +306,7 @@ public class Board implements Observer, Initializable {
     }
 
     private void takeOffPiecesFromBoard() {
-        System.out.println("take off pieces");
+        LOG.info("take off pieces");
         if (Platform.isFxApplicationThread()) {
             removeCircles();
         } else {
@@ -231,6 +320,9 @@ public class Board implements Observer, Initializable {
         boardModel.initialize();
 
         updatePassDisability();
+        if (gameMode == PLAYER_ENGINE) {
+            triggerGameWithEngineIfNeed();
+        }
 
         takeOffPiecesFromBoard();
     }
@@ -286,10 +378,24 @@ public class Board implements Observer, Initializable {
         } else if (event instanceof MoveEvent) {
             MoveEvent moveEvent = (MoveEvent) event;
 
-            putSquarePiece(moveEvent.getMove());
+            if (!moveEvent.getMove().isPassed()) {
+                putSquarePiece(moveEvent.getMove());
+            }
+
+            if (gameMode != ENGINES) {
+                initializePayoutCalculator();
+                payoutCalculator.calculate();
+                boardModel.changeGoals(payoutCalculator.getWhite(), payoutCalculator.getBlack());
+                updatePassDisability();
+            }
         } else if (event instanceof EndEvent) {
-            new ShowRightStatusCommand(Messages.GAME_FINISHED).execute();
+            new ShowRightStatusCommand(GAME_FINISHED).execute();
             gameEnded = true;
+            if (gameMode != ENGINES) {
+                initializePayoutCalculator();
+                payoutCalculator.calculate();
+                boardModel.changeGoals(payoutCalculator.getWhite(), payoutCalculator.getBlack());
+            }
         }
     }
 
@@ -301,5 +407,16 @@ public class Board implements Observer, Initializable {
         return gameMode;
     }
 
-    enum GameMode {PLAYERS, ENGINES;}
+    public void turn(Piece.Color turn) {
+        boardModel.setTurn(turn);
+        if(gameMode == PLAYER_ENGINE)
+            triggerGameWithEngineIfNeed();
+    }
+
+    public void setComboBoxesToRandoms() {
+        whiteEngineChoiceBox.setValue("Random Gamer");
+        blackEngineChoiceBox.setValue("Random Gamer");
+    }
+
+    enum GameMode {PLAYERS, ENGINES, PLAYER_ENGINE;}
 }

@@ -52,7 +52,6 @@
 (init (step 1))
 
 (init(cell 1 1 white))
-(init(cell 1 1 empty))
 (init(cell 1 2 empty))
 (init(cell 1 3 empty))
 (init(cell 1 4 empty))

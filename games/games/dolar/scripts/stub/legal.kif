@@ -1,0 +1,15 @@
+;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Legal Moves
+;;;;;;;;;;;;;;;;;;;;;;;;;
+
+(legal white noop)
+(legal black noop)
+
+(<= (legal ?player (mark ?x ?y ?player))
+    (true (cell ?x ?y empty))
+    (neighbor ?x ?y ?M ?N)
+    (true (cell ?M ?N ?player))
+    (true (control ?player)))
+
+;TODO: distinction between noop & pass
+;see ;; pass

@@ -1,0 +1,10 @@
+;;;;;;;;;;;;;;;;;;;;
+;;terminal
+;;;;;;;;;;;;;;;;;;;;
+
+(<= terminal
+    (true (step 80)));invariant: step=n-1, n-number of pieces
+
+(<= terminal
+    (true (passed black))
+    (true (passed white)))

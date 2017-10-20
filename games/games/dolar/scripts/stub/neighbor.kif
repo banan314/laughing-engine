@@ -1,0 +1,60 @@
+;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Neighbor
+;;;;;;;;;;;;;;;;;;;;;;;;;
+
+(<= (neighbor ?M ?N ?M1 ?N1)
+    (index ?M)
+    (index ?N)
+    (index ?M1)
+    (index ?N1)
+    (succ ?M ?M1)
+    (succ ?N ?N1))
+
+(<= (neighbor ?M ?N ?M ?N1)
+    (index ?M)
+    (index ?N)
+    (index ?N1)
+    (succ ?N ?N1))
+
+(<= (neighbor ?M ?N ?M1 ?N)
+    (index ?M)
+    (index ?N)
+    (index ?M1)
+    (succ ?M ?M1)
+    )
+
+(<= (neighbor ?M ?N ?M1 ?N1)
+    (index ?M)
+    (index ?N)
+    (index ?M1)
+    (index ?N1)
+    (succ ?M1 ?M)
+    (succ ?N1 ?N))
+
+(<= (neighbor ?M ?N ?M1 ?N1)
+    (index ?M)
+    (index ?N)
+    (index ?M1)
+    (index ?N1)
+    (succ ?M ?M1)
+    (succ ?N1 ?N))
+
+(<= (neighbor ?M ?N ?M1 ?N1)
+    (index ?M)
+    (index ?N)
+    (index ?M1)
+    (index ?N1)
+    (succ ?M1 ?M)
+    (succ ?N ?N1))
+
+(<= (neighbor ?M ?N ?M ?N1)
+    (index ?M)
+    (index ?N)
+    (index ?N1)
+    (succ ?N1 ?N))
+
+(<= (neighbor ?M ?N ?M1 ?N)
+    (index ?M)
+    (index ?N)
+    (index ?M1)
+    (succ ?M1 ?M))
