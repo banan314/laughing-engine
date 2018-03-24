@@ -4,9 +4,9 @@ apply plugin: 'checkstyle'
 apply plugin: 'idea'
 apply plugin: 'scala'
 
-// We compile using Java 8.
-sourceCompatibility = 1.8
-targetCompatibility = 1.8
+// We compile using Java 9 (modules).
+sourceCompatibility = 1.9
+targetCompatibility = 1.9
 
 /*
  * For now, instead of using an online library repository (e.g. Maven), we keep
@@ -26,7 +26,6 @@ dependencies {
             'lib/Htmlparser/htmlparser-1.4.jar',
             'lib/gdl-validation/gdl-validation-0.2.2.jar',
             'lib/gdl-validation/java-cup-11b-runtime-2015.03.26.jar',
-            'lib/lombok.jar',
     )
     //TODO: move all to test directory
     testCompile files(
