@@ -1,17 +1,6 @@
 package org.ggp.base.player.gamer;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import org.ggp.base.apps.player.config.ConfigPanel;
-import org.ggp.base.apps.player.config.EmptyConfigPanel;
-import org.ggp.base.apps.player.detail.DetailPanel;
-import org.ggp.base.apps.player.detail.EmptyDetailPanel;
-import org.ggp.base.player.gamer.exception.AbortingException;
-import org.ggp.base.player.gamer.exception.GamePreviewException;
-import org.ggp.base.player.gamer.exception.MetaGamingException;
-import org.ggp.base.player.gamer.exception.MoveSelectionException;
-import org.ggp.base.player.gamer.exception.StoppingException;
+import org.ggp.base.player.gamer.exception.*;
 import org.ggp.base.util.game.Game;
 import org.ggp.base.util.gdl.grammar.GdlConstant;
 import org.ggp.base.util.gdl.grammar.GdlTerm;
@@ -19,6 +8,9 @@ import org.ggp.base.util.match.Match;
 import org.ggp.base.util.observer.Event;
 import org.ggp.base.util.observer.Observer;
 import org.ggp.base.util.observer.Subject;
+
+import java.util.ArrayList;
+import java.util.List;
 
 
 /**
@@ -71,14 +63,6 @@ public abstract class Gamer implements Subject
 
     public boolean isComputerPlayer() {
         return true;
-    }
-
-    public ConfigPanel getConfigPanel() {
-        return new EmptyConfigPanel();
-    }
-
-    public DetailPanel getDetailPanel() {
-        return new EmptyDetailPanel();
     }
 
     // ==== Accessors ====

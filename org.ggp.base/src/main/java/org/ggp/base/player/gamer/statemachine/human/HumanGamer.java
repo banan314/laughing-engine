@@ -1,13 +1,9 @@
 package org.ggp.base.player.gamer.statemachine.human;
 
-import java.util.List;
-
-import org.ggp.base.apps.player.detail.DetailPanel;
 import org.ggp.base.player.gamer.exception.GamePreviewException;
 import org.ggp.base.player.gamer.statemachine.StateMachineGamer;
 import org.ggp.base.player.gamer.statemachine.human.event.HumanNewMovesEvent;
 import org.ggp.base.player.gamer.statemachine.human.event.HumanTimeoutEvent;
-import org.ggp.base.player.gamer.statemachine.human.gui.HumanDetailPanel;
 import org.ggp.base.util.game.Game;
 import org.ggp.base.util.statemachine.Move;
 import org.ggp.base.util.statemachine.StateMachine;
@@ -16,6 +12,8 @@ import org.ggp.base.util.statemachine.exceptions.GoalDefinitionException;
 import org.ggp.base.util.statemachine.exceptions.MoveDefinitionException;
 import org.ggp.base.util.statemachine.exceptions.TransitionDefinitionException;
 import org.ggp.base.util.statemachine.implementation.prover.ProverStateMachine;
+
+import java.util.List;
 
 /**
  * HumanGamer is a simple apparatus for letting a human control a player,
@@ -55,11 +53,6 @@ public final class HumanGamer extends StateMachineGamer
     private Move move;
     public void setMove(Move move) {
         this.move = move;
-    }
-
-    @Override
-    public DetailPanel getDetailPanel() {
-        return new HumanDetailPanel();
     }
 
     @Override

@@ -1,10 +1,5 @@
 package org.ggp.base.player.gamer.statemachine.random;
 
-import java.util.List;
-import java.util.concurrent.ThreadLocalRandom;
-
-import org.ggp.base.apps.player.detail.DetailPanel;
-import org.ggp.base.apps.player.detail.SimpleDetailPanel;
 import org.ggp.base.player.gamer.event.GamerSelectedMoveEvent;
 import org.ggp.base.player.gamer.exception.GamePreviewException;
 import org.ggp.base.player.gamer.statemachine.StateMachineGamer;
@@ -16,6 +11,9 @@ import org.ggp.base.util.statemachine.exceptions.GoalDefinitionException;
 import org.ggp.base.util.statemachine.exceptions.MoveDefinitionException;
 import org.ggp.base.util.statemachine.exceptions.TransitionDefinitionException;
 import pl.edu.prz.klopusz.utilities.decorators.StateMachineDecorator;
+
+import java.util.List;
+import java.util.concurrent.ThreadLocalRandom;
 
 /**
  * RandomGamer is a very simple state-machine-based Gamer that will always
@@ -69,8 +67,4 @@ public final class RandomGamer extends StateMachineGamer
         // Random gamer does no special cleanup when the match ends abruptly.
     }
 
-    @Override
-    public DetailPanel getDetailPanel() {
-        return new SimpleDetailPanel();
-    }
 }

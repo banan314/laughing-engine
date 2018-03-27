@@ -1,12 +1,5 @@
 package org.ggp.base.player.gamer.statemachine.sample;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.concurrent.ThreadLocalRandom;
-
-import org.ggp.base.apps.player.detail.DetailPanel;
-import org.ggp.base.apps.player.detail.SimpleDetailPanel;
 import org.ggp.base.player.gamer.event.GamerSelectedMoveEvent;
 import org.ggp.base.player.gamer.exception.GamePreviewException;
 import org.ggp.base.player.gamer.statemachine.StateMachineGamer;
@@ -19,6 +12,11 @@ import org.ggp.base.util.statemachine.exceptions.GoalDefinitionException;
 import org.ggp.base.util.statemachine.exceptions.MoveDefinitionException;
 import org.ggp.base.util.statemachine.exceptions.TransitionDefinitionException;
 import org.ggp.base.util.statemachine.implementation.prover.ProverStateMachine;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.concurrent.ThreadLocalRandom;
 
 /**
  * SampleSearchLightGamer is a simple state-machine-based Gamer. It will,
@@ -177,11 +175,6 @@ public final class SampleSearchLightGamer extends StateMachineGamer
     @Override
     public String getName() {
         return "SampleSearchLight";
-    }
-
-    @Override
-    public DetailPanel getDetailPanel() {
-        return new SimpleDetailPanel();
     }
 
     @Override

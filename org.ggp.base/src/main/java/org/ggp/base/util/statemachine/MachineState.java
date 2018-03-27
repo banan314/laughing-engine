@@ -1,11 +1,11 @@
-package org.ggp.base.util.statemachine;
+    package org.ggp.base.util.statemachine;
+
+    import org.ggp.base.util.gdl.grammar.GdlSentence;
 
 import java.util.HashSet;
 import java.util.Set;
 
-import org.ggp.base.util.gdl.grammar.GdlSentence;
-
-public class MachineState {
+    public class MachineState {
     public MachineState() {
         this.contents = null;
     }

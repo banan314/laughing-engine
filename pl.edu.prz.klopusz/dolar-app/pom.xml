@@ -28,9 +28,5 @@
       <version>1.16.20</version>
     </dependency>
 
-      <dependency>
-          <groupId>org.ggp.base</groupId>
-          <artifactId>org.ggp.base</artifactId>
-      </dependency>
   </dependencies>
 </project>

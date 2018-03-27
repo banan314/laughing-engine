@@ -1,7 +1,5 @@
 package org.ggp.base.player.gamer.statemachine.sample;
 
-import org.ggp.base.apps.player.detail.DetailPanel;
-import org.ggp.base.apps.player.detail.SimpleDetailPanel;
 import org.ggp.base.player.gamer.exception.GamePreviewException;
 import org.ggp.base.player.gamer.statemachine.StateMachineGamer;
 import org.ggp.base.util.game.Game;
@@ -46,14 +44,6 @@ public abstract class SampleGamer extends StateMachineGamer
     public StateMachine getInitialStateMachine() {
         return new CachedStateMachine(new StateMachineDecorator());
     }
-
-    // This is the defaul Sample Panel
-    @Override
-    public DetailPanel getDetailPanel() {
-        return new SimpleDetailPanel();
-    }
-
-
 
     @Override
     public void stateMachineStop() {

@@ -1,7 +1,5 @@
 package org.ggp.base.player.gamer.statemachine.sample;
 
-import org.ggp.base.apps.player.detail.DetailPanel;
-import org.ggp.base.apps.player.detail.EmptyDetailPanel;
 import org.ggp.base.util.gdl.grammar.GdlPool;
 import org.ggp.base.util.statemachine.Move;
 import org.ggp.base.util.statemachine.exceptions.GoalDefinitionException;
@@ -18,10 +16,5 @@ public final class SampleNoopGamer extends SampleGamer
     public Move stateMachineSelectMove(long timeout) throws TransitionDefinitionException, MoveDefinitionException, GoalDefinitionException
     {
         return new Move(GdlPool.getConstant("noop"));
-    }
-
-    @Override
-    public DetailPanel getDetailPanel() {
-        return new EmptyDetailPanel();
     }
 }
